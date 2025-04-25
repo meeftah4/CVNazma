@@ -15,7 +15,7 @@
             </button>
 
             <!-- Navigation Links -->
-            <ul id="menu" class="hidden md:flex md:space-x-8 items-center">
+            <ul id="menu" class="hidden md:flex md:justify-center md:space-x-8 items-center flex-grow">
                 <li>
                     <a href="/" class="font-kantumruy text-[20px] font-bold text-blue-900 hover:text-orange-500 transition duration-300">
                         Home
@@ -31,15 +31,15 @@
                         Template Cv
                     </a>
                 </li>
-                <li class="flex space-x-4">
-                    <a href="/masuk" class="font-kantumruy text-[20px] font-bold text-blue-900 hover:text-orange-500 transition duration-300">
-                        Masuk
-                    </a>
-                    <a href="/daftar" class="font-kantumruy text-[20px] font-bold text-blue-900 hover:text-orange-500 transition duration-300">
-                        Daftar
-                    </a>
-                </li>
             </ul>
+            <div class="hidden md:flex md:space-x-4 items-center">
+                <a href="/masuk" class="font-kantumruy text-[20px] font-bold text-blue-900 hover:text-orange-500 transition duration-300">
+                    Masuk
+                </a>
+                <a href="/daftar" class="font-kantumruy text-[20px] font-bold text-blue-900 hover:text-orange-500 transition duration-300">
+                    Daftar
+                </a>
+            </div>
         </div>
     </div>
 
