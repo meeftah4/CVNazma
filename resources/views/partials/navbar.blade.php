@@ -22,12 +22,12 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/about" class="font-kantumruy text-[20px] font-bold text-blue-900 hover:text-orange-500 transition duration-300">
+                    <a href="/CvAts" class="font-kantumruy text-[20px] font-bold text-blue-900 hover:text-orange-500 transition duration-300">
                         Cv Ats
                     </a>
                 </li>
                 <li>
-                    <a href="/contact" class="font-kantumruy text-[20px] font-bold text-blue-900 hover:text-orange-500 transition duration-300">
+                    <a href="/TemplateCv" class="font-kantumruy text-[20px] font-bold text-blue-900 hover:text-orange-500 transition duration-300">
                         Template Cv
                     </a>
                 </li>
