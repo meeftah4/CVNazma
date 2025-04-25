@@ -1,5 +1,5 @@
 {{-- filepath: resources/views/partials/footer.blade.php --}}
-<footer class="bg-blue-900 text-white py-8">
+<footer class="bg-[#01287E] text-white py-8">
     <div class="container mx-auto px-4">
         <div class="flex flex-col md:flex-row justify-between items-center">
 
@@ -15,6 +15,7 @@
 
             <!-- Contact Icons -->
             <div class="flex space-x-4 mb-4 md:mb-0">
+                <p class="text-lg font-bold text-center">Kontak Kami</p>
                 <a href="#" class="text-white hover:text-gray-300">
                     <i class="fas fa-envelope"></i>
                 </a>
