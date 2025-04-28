@@ -13,7 +13,7 @@
         {{-- Header --}}
 
         {{-- Navbar --}}
-        @include('partials.navbar')
+        @include('components.navbar')
 
         {{-- Main Content --}}
         <main class="min-h-screen">
@@ -21,6 +21,6 @@
         </main>
 
         {{-- Footer --}}
-        @include('partials.footer')
+        @include('components.footer')
     </body>
 </html>
