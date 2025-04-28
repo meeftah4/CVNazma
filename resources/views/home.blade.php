@@ -2,17 +2,12 @@
 
 @section('title', 'CV Nazma')
 
-@section('content')
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NaZMaLogy</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="{{ asset('resources/css/home.css') }}">
-</head>
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+@endsection
+
 <body class="home-page">
+    @section('content')
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container mx-auto flex flex-col md:flex-row items-center">
@@ -58,7 +53,5 @@
             </div>
         </div>
     </section>
+    @endsection
 </body>
-</html>
-@endsection
-
