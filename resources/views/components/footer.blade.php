@@ -16,22 +16,25 @@
 
                     <!-- Kontak Kami -->
                     <div class="flex-1 mt-4 md:mt-0 md:text-right">
-                        <p class="text-lg font-bold">Kontak Kami</p>
-                        <div class="flex justify-center md:justify-end space-x-4 mt-2">
+                        <p class="text-lg font-bold mr-14 mt-5">Kontak Kami</p>
+                        <div class="flex justify-center md:justify-end space-x-4 mt-5">
                             <a href="#" class="text-white hover:text-gray-300">
-                                <i class="fas fa-envelope"></i>
+                                <img src="{{ asset('images/mail.png') }}" alt="Email Icon" class="h-6 w-6">
                             </a>
                             <a href="#" class="text-white hover:text-gray-300">
-                                <i class="fab fa-instagram"></i>
+                                <img src="{{ asset('images/instagram.png') }}" alt="Email Icon" class="h-6 w-6">
                             </a>
                             <a href="#" class="text-white hover:text-gray-300">
-                                <i class="fab fa-linkedin"></i>
+                                <img src="{{ asset('images/facebook.png') }}" alt="Email Icon" class="h-6 w-6">
                             </a>
                             <a href="#" class="text-white hover:text-gray-300">
-                                <i class="fab fa-tiktok"></i>
+                                <img src="{{ asset('images/linkedin.png') }}" alt="Email Icon" class="h-6 w-6">
                             </a>
                             <a href="#" class="text-white hover:text-gray-300">
-                                <i class="fab fa-youtube"></i>
+                                <img src="{{ asset('images/tiktok.png') }}" alt="Email Icon" class="h-6 w-6">
+                            </a>
+                            <a href="#" class="text-white hover:text-gray-300">
+                                <img src="{{ asset('images/youtube.png') }}" alt="Email Icon" class="h-6 w-6">
                             </a>
                         </div>
                     </div>
