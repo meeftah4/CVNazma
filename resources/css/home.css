@@ -1,0 +1,71 @@
+/* Body styling */
+.home-page {
+    background-color: #F4F8FF; /* Tailwind's bg-blue-50 */
+    font-family: 'font-kantumruy';
+}
+
+.home-page .hero-section {
+    text-align: center;
+    padding: 3rem 0;
+}
+
+.home-page .hero-section h1 {
+    font-size: 20px; /* Tailwind's text-4xl */
+    font-weight: bold;
+    color: #1e3a8a; /* Tailwind's text-blue-900 */
+}
+
+.home-page .hero-section p {
+    margin-top: 1rem;
+    font-size: 1.125rem; /* Tailwind's text-lg */
+    color: #3b82f6; /* Tailwind's text-blue-700 */
+}
+
+.home-page .cta-button {
+    margin-top: 1.5rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #f97316; /* Tailwind's bg-orange-500 */
+    color: white;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s;
+}
+
+.home-page .cta-button:hover {
+    background-color: #ea580c; /* Tailwind's hover:bg-orange-600 */
+}
+
+.home-page .hero-image {
+    margin: 0 auto;
+    width: 75%; /* Tailwind's w-3/4 */
+    max-width: 100%; /* Tailwind's md:w-full */
+}
+
+.home-page .bagaimana-caranya {
+    padding: 3rem 0;
+}
+
+.home-page .bagaimana-caranya h2 {
+    font-size: 1.875rem; /* Tailwind's text-3xl */
+    font-weight: bold;
+    text-align: center;
+    color: #1e3a8a; /* Tailwind's text-blue-900 */
+}
+
+.home-page .bagaimana-caranya .card {
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Tailwind's shadow-md */
+    border-radius: 0.5rem; /* Tailwind's rounded-lg */
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.home-page .bagaimana-caranya .card img {
+    margin: 0 auto 1rem;
+}
+
+.home-page .bagaimana-caranya .card p {
+    margin-top: 0.5rem;
+    font-size: 0.875rem; /* Tailwind's text-sm */
+    color: #4b5563; /* Tailwind's text-gray-600 */
+}
