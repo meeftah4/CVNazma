@@ -10,24 +10,24 @@
 }
 
 .home-page .hero-section h1 {
-    font-size: 20px; /* Tailwind's text-4xl */
+    font-size: 45px; /* Tailwind's text-4xl */
     font-weight: bold;
-    color: #1e3a8a; /* Tailwind's text-blue-900 */
+    color: #01287E; /* Tailwind's text-blue-900 */
 }
 
 .home-page .hero-section p {
     margin-top: 1rem;
-    font-size: 1.125rem; /* Tailwind's text-lg */
-    color: #3b82f6; /* Tailwind's text-blue-700 */
+    font-size: 22px; /* Tailwind's text-lg */
+    color: #FF9500; /* Tailwind's text-blue-700 */
 }
 
 .home-page .cta-button {
     margin-top: 1.5rem;
     padding: 0.75rem 1.5rem;
-    background-color: #f97316; /* Tailwind's bg-orange-500 */
-    color: white;
+    background-color: #FFBC5D; /* Tailwind's bg-orange-500 */
+    color: #01287E;
     font-weight: 600;
-    border-radius: 0.5rem;
+    border-radius: 30px;
     transition: background-color 0.3s;
 }
 
@@ -37,19 +37,18 @@
 
 .home-page .hero-image {
     margin: 0 auto;
-    width: 75%; /* Tailwind's w-3/4 */
-    max-width: 100%; /* Tailwind's md:w-full */
+    width: 50%; /* Tailwind's w-3/4 */
 }
 
 .home-page .bagaimana-caranya {
     padding: 3rem 0;
 }
 
-.home-page .bagaimana-caranya h2 {
-    font-size: 1.875rem; /* Tailwind's text-3xl */
+.home-page .bagaimana-caranya h1 {
+    font-size: 35px; /* Tailwind's text-3xl */
     font-weight: bold;
     text-align: center;
-    color: #1e3a8a; /* Tailwind's text-blue-900 */
+    color: #01287E; /* Tailwind's text-blue-900 */
 }
 
 .home-page .bagaimana-caranya .card {
@@ -67,5 +66,5 @@
 .home-page .bagaimana-caranya .card p {
     margin-top: 0.5rem;
     font-size: 0.875rem; /* Tailwind's text-sm */
-    color: #4b5563; /* Tailwind's text-gray-600 */
+    color: #01287E; /* Tailwind's text-gray-600 */
 }
