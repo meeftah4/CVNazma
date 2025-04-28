@@ -1,10 +1,8 @@
 {{-- filepath: resources/views/partials/footer.blade.php --}}
-<footer class="bg-[#01287E] text-white py-8">
-    <div class="container mx-auto px-4 w-full">
+<footer class="bg-[#01287E] text-white">
+    <img class="absolute left-0 h-[250px] hidden md:block" src="{{ asset('images/logo kotak.png') }}" alt="Logo">
+    <div class="container mx-auto px-4 w-full py-8">
         <div class="flex flex-col md:flex-row justify-between items-center relative">
-
-            <img class="absolute left-0 h-[250px] hidden md:block" src="{{ asset('images/logo kotak.png') }}" alt="Logo">
-            
             <!-- Logo and Description -->
             <div class="w-full text-center md:text-left md:ml-40">
                 <div class="flex flex-col md:flex-row justify-between items-start mb-4">
