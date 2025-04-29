@@ -2,11 +2,12 @@
 
 @section('title', 'CV Nazma')
 
-@section('styles')
+@push('styles')
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
-@endsection
+@endpush
 
-<body class="home-page">
+@section('content')
+<div class="home-page">
     @section('content')
     <!-- Hero Section -->
     <section class="hero-section">
@@ -29,29 +30,41 @@
     <section class="bagaimana-caranya">
     <div class="container mx-auto">
         <h1>Bagaimana caranya?</h1>
-        <div class="mt-8 grid grid-cols-1 md:grid-cols-4 gap-6 px-6">
+        <div class="grid">
             <div class="card">
                 <img src="{{ asset('images/langkah1.png') }}" alt="Icon 1">
-                <p class="font-semibold">Lengkapi data diri</p>
-                <p>Isi data diri sesuai dengan kebutuhan untuk CV ATS Anda.</p>
+                <div class="header">
+                    <span class="number">1</span>
+                    <span class="title">Lengkapi data diri</span>
+                </div>
+                <p>Isi data diri anda sesuai kebutuhan dan lihat sebelah kanan terdapat live preview yang bisa diubah sesuka hati anda!</p>
             </div>
             <div class="card">
                 <img src="{{ asset('images/langkah2.png') }}" alt="Icon 2">
-                <p class="font-semibold">Pilih template</p>
-                <p>Pilih template CV yang sesuai dengan keinginan Anda.</p>
+                <div class="header">
+                    <span class="number">2</span>
+                    <span class="title">Pilih template</span>
+                </div>
+                <p>Pilih template dan sesuaikan CV ATS anda berdasarkan prefensi untuk membantu Anda mendapatkan wawancara.</p>
             </div>
             <div class="card">
                 <img src="{{ asset('images/langkah3.png') }}" alt="Icon 3">
-                <p class="font-semibold">Review CV Anda</p>
-                <p>Periksa kembali CV Anda sebelum mengunduhnya.</p>
+                <div class="header">
+                    <span class="number">3</span>
+                    <span class="title">Bayar CV ATS</span>
+                </div>
+                <p>Bayar CV ATS anda sesuai template yang anda pilih. (Ingat template ini tidak semuanya berbayar!)</p>
             </div>
             <div class="card">
                 <img src="{{ asset('images/langkah4.png') }}" alt="Icon 4">
-                <p class="font-semibold">Unduh CV</p>
-                <p>Unduh CV ATS Anda dalam format yang sesuai.</p>
+                <div class="header">
+                    <span class="number">4</span>
+                    <span class="title">Unduh CV</span>
+                </div>
+                <p>Unduh CV ATS anda dalam format file yang diinginkan. Kini Anda siap melamar pekerjaan berikutnya.</p>
             </div>
         </div>
     </div>
 </section>
-    @endsection
-</body>
+</div>
+@endsection

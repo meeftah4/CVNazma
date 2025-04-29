@@ -4,6 +4,7 @@
     font-family: 'Kantumruy', sans-serif;
 }
 
+/* Hero Section */
 .home-page .hero-section {
     text-align: center;
     padding: 3rem 0;
@@ -40,31 +41,86 @@
     width: 50%; /* Tailwind's w-3/4 */
 }
 
+/* Bagaimana Caranya Section */
 .home-page .bagaimana-caranya {
-    padding: 3rem 0;
-}
+    padding: 4rem 0;
+    background-color: #ffffff; /* Warna biru muda untuk seluruh section */
+    position: relative; /* Untuk membuat layer */}
 
 .home-page .bagaimana-caranya h1 {
     font-size: 35px; /* Tailwind's text-3xl */
     font-weight: bold;
     text-align: center;
-    color: #01287E; /* Tailwind's text-blue-900 */
+    color: #01287E; /* Warna teks biru */
+    margin-bottom: 2rem;
+}
+
+.home-page .bagaimana-caranya .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(215px, 1fr)); /* Responsif dengan lebar minimum 215px */
+    justify-content: center; /* Pusatkan grid */
+    gap: 1.5rem; /* Jarak antar card */
 }
 
 .home-page .bagaimana-caranya .card {
-    background-color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Tailwind's shadow-md */
-    border-radius: 0.5rem; /* Tailwind's rounded-lg */
-    padding: 1.5rem;
-    text-align: center;
+    background-color: white; /* Warna latar card */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bayangan */
+    border-radius: 12px; /* Sudut melengkung */
+    text-align: left; /* Rata kiri */
+    padding: 1.5rem; /* Ruang dalam card */
+    position: relative;
+    overflow: hidden;
+    display: flex; /* Flexbox untuk tata letak vertikal */
+    flex-direction: column;
+    width: 290px; /* Lebar card */
+    height: 330px; /* Tinggi card */
+    transition: transform 0.3s, box-shadow 0.3s; /* Animasi hover */
+}
+
+.home-page .bagaimana-caranya .card:hover {
+    transform: translateY(-5px); /* Efek hover naik */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Bayangan lebih tegas */
 }
 
 .home-page .bagaimana-caranya .card img {
-    margin: 0 auto 1rem;
+    margin: 0 auto;
+    width: 150px; /* Ukuran gambar */
+    height: auto;
+}
+
+.home-page .bagaimana-caranya .card .header {
+    display: flex; /* Flexbox untuk nomor dan judul */
+    align-items: center; /* Nomor dan teks sejajar secara vertikal */
+    gap: 0.5rem; /* Jarak antara nomor dan teks */
+    margin-bottom: 0; /* Hilangkan margin bawah header */
+}
+
+.home-page .bagaimana-caranya .card .header .number {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border: 2px solid #01287E; /* Garis biru */
+    color: #01287E; /* Warna teks biru */
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 50%; /* Membuat lingkaran */
+    flex-shrink: 0; /* Nomor tidak menyusut */
+}
+
+.home-page .bagaimana-caranya .card .header .title {
+    font-size: 16px; /* Ukuran teks judul */
+    font-weight: bold;
+    color: #01287E; /* Warna teks biru */
+    line-height: 1.5; /* Konsistensi tinggi baris */
 }
 
 .home-page .bagaimana-caranya .card p {
-    margin-top: 0.5rem;
-    font-size: 0.875rem; /* Tailwind's text-sm */
-    color: #01287E; /* Tailwind's text-gray-600 */
+    margin-top: 0.5rem; /* Jarak antara judul dan paragraf */
+    font-size: 13px; /* Ukuran teks */
+    color: #4B5563; /* Warna teks */
+    text-align: left; /* Rata kiri */
+    line-height: 1.5; /* Jarak antar baris */
+    padding-left: 2.5rem; /* Tambahkan padding agar sejajar dengan judul */
 }
