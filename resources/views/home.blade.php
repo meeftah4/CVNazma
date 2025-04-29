@@ -26,8 +26,8 @@
         </div>
     </section>
 
-    <!-- Bagaimana Caranya Section -->
-    <section class="bagaimana-caranya">
+<!-- Bagaimana Caranya Section -->
+<section class="bagaimana-caranya">
     <div class="container mx-auto">
         <h1>Bagaimana caranya?</h1>
         <div class="grid">
@@ -66,5 +66,49 @@
         </div>
     </div>
 </section>
+
+<!-- Rating Section -->
+<section class="rating">
+    <div class="container mx-auto">
+        <h1 class="rating-title">Bagaimana pendapat pengguna CV ATS</h1>
+        <div class="grid">
+            <div class="card">
+                <h2>Marsa</h2>
+                <div class="stars">
+                    <img src="{{ asset('images/star.png') }}" alt="Star Icon">
+                    <img src="{{ asset('images/star.png') }}" alt="Star Icon">
+                    <img src="{{ asset('images/star.png') }}" alt="Star Icon">
+                    <img src="{{ asset('images/star.png') }}" alt="Star Icon">
+                    <img src="{{ asset('images/star.png') }}" alt="Star Icon">
+                </div>
+                <p>Jelas, CV ATS adalah kesuksesan besar untuk saya. Dalam 15 menit, saya sudah membuat CV dan mengirimnya dengan program email.</p>
+            </div>
+            <div class="card">
+                <h2>Miftah</h2>
+                <div class="stars">
+                    <img src="{{ asset('images/star.png') }}" alt="Star Icon">
+                    <img src="{{ asset('images/star.png') }}" alt="Star Icon">
+                    <img src="{{ asset('images/star.png') }}" alt="Star Icon">
+                    <img src="{{ asset('images/star.png') }}" alt="Star Icon">
+                    <img src="{{ asset('images/half.png') }}" alt="Half Star Icon">
+                </div>
+                <p>Jelas, CV ATS adalah kesuksesan besar untuk saya. Dalam 15 menit, saya sudah membuat CV dan mengirimnya dengan program email.</p>
+            </div>
+            <div class="card">
+                <h2>Anas</h2>
+                <div class="stars">
+                    <img src="{{ asset('images/star.png') }}" alt="Star Icon">
+                    <img src="{{ asset('images/star.png') }}" alt="Star Icon">
+                    <img src="{{ asset('images/star.png') }}" alt="Star Icon">
+                    <img src="{{ asset('images/star.png') }}" alt="Star Icon">
+                    <img src="{{ asset('images/star.png') }}" alt="Star Icon">
+                </div>
+                <p>Jelas, CV ATS adalah kesuksesan besar untuk saya. Dalam 15 menit, saya sudah membuat CV dan mengirimnya dengan program email.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
 </div>
 @endsection

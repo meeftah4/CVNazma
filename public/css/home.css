@@ -45,7 +45,9 @@
 .home-page .bagaimana-caranya {
     padding: 4rem 0;
     background-color: #ffffff; /* Warna biru muda untuk seluruh section */
-    position: relative; /* Untuk membuat layer */}
+    display: flex; /* Gunakan Flexbox untuk section */
+    position: relative; /* Untuk membuat layer */
+}
 
 .home-page .bagaimana-caranya h1 {
     font-size: 35px; /* Tailwind's text-3xl */
@@ -57,14 +59,14 @@
 
 .home-page .bagaimana-caranya .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(215px, 1fr)); /* Responsif dengan lebar minimum 215px */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Lebar minimum card 250px */
     justify-content: center; /* Pusatkan grid */
     gap: 1.5rem; /* Jarak antar card */
 }
 
 .home-page .bagaimana-caranya .card {
     background-color: white; /* Warna latar card */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bayangan */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Bayangan */
     border-radius: 12px; /* Sudut melengkung */
     text-align: left; /* Rata kiri */
     padding: 1.5rem; /* Ruang dalam card */
@@ -72,14 +74,15 @@
     overflow: hidden;
     display: flex; /* Flexbox untuk tata letak vertikal */
     flex-direction: column;
-    width: 290px; /* Lebar card */
+    width: 100%; /* Lebar card mengikuti grid */
+    max-width: 290px; /* Lebar maksimum card */
     height: 330px; /* Tinggi card */
     transition: transform 0.3s, box-shadow 0.3s; /* Animasi hover */
 }
 
 .home-page .bagaimana-caranya .card:hover {
     transform: translateY(-5px); /* Efek hover naik */
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Bayangan lebih tegas */
+    box-shadow: 0 6px 10px rgba(31, 86, 204, 0.5); /* Bayangan lebih tegas */
 }
 
 .home-page .bagaimana-caranya .card img {
@@ -123,4 +126,64 @@
     text-align: left; /* Rata kiri */
     line-height: 1.5; /* Jarak antar baris */
     padding-left: 2.5rem; /* Tambahkan padding agar sejajar dengan judul */
+}
+
+/* Rating Section */
+.rating {
+    padding: 4rem 0;
+    background-color: #F4F8FF; /* Warna biru muda */
+    text-align: center;
+}
+
+.rating-title {
+    font-size: 35px; /* Ukuran judul */
+    font-weight: bold;
+    color: #01287E; /* Warna teks biru */
+    margin-bottom: 2rem;
+}
+
+.rating .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsif */
+    gap: 2rem; /* Jarak antar card */
+    justify-content: center;
+}
+
+.rating .card {
+    background-color: white; /* Warna latar card */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bayangan */
+    border-radius: 10px; /* Sudut melengkung */
+    padding: 1rem; /* Kurangi ruang dalam card */
+    text-align: center; /* Pusatkan semua teks dalam card */
+    max-width: 250px; /* Lebar maksimum card */
+    height: 220px; /* Tinggi card */
+}
+
+.rating .card h2 {
+    font-size: 16px; /* Ukuran nama lebih kecil */
+    font-weight: bold;
+    color: #01287E; /* Warna teks biru */
+    margin-bottom: 0.5rem;
+    text-align: center; /* Pusatkan nama */
+}
+
+.rating .card .stars {
+    display: flex;
+    justify-content: center; /* Pusatkan bintang */
+    margin-bottom: 0.5rem; /* Kurangi jarak bawah bintang */
+}
+
+.rating .card .stars img {
+    width: 16px; /* Ukuran ikon bintang lebih kecil */
+    height: auto;
+    display: inline-block;
+    margin-right: 0.2rem; /* Jarak antar bintang */
+}
+
+.rating .card p {
+    font-size: 14px; /* Ukuran teks ulasan lebih kecil */
+    color: #4B5563; /* Warna teks abu-abu */
+    line-height: 1.4; /* Kurangi jarak antar baris */
+    margin-top: 0.5rem; /* Kurangi jarak atas ulasan */
+    text-align: left; /* Pusatkan ulasan */
 }
