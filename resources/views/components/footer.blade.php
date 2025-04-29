@@ -2,7 +2,7 @@
 <footer class="bg-[#01287E] text-white relative overflow-hidden">
     <img class="absolute left-0 h-[250px] hidden md:block" src="{{ asset('images/logo kotak.png') }}" alt="Logo Background">
 
-    <div class="container mx-auto px-4 w-full py-8">
+    <div class="container mx-auto px-4 w-11/12 lg:w-10/12 py-8">
         <!-- Konten utama footer -->
         <div class="flex flex-col md:flex-row md:justify-between md:items-start items-center text-center md:text-left relative">
             <!-- Logo dan Deskripsi -->
