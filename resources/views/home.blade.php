@@ -4,6 +4,7 @@
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+
 @endpush
 
 @section('content')
@@ -70,7 +71,8 @@
 <!-- Rating Section -->
 <section class="rating">
     <div class="container mx-auto">
-        <h1 class="rating-title">Bagaimana pendapat pengguna CV ATS</h1>
+        <h1 class="rating-title">Bagaimana pendapat pengguna</h1>
+        <h1>CV ATS</h1>
         <div class="grid">
             <div class="card">
                 <h2>Marsa</h2>
@@ -109,6 +111,55 @@
     </div>
 </section>
 
+<!-- FAQ Section -->
+<section class="faq">
+    <div class="container mx-auto">
+        <h1 class="faq-title">
+            Pertanyaan yang sering <br> ditanyakan!
+        </h1>        
+        <div class="faq-item">
+            <button class="faq-question">
+                Apa itu CV ATS?
+                <span class="faq-icon">-</span>
+            </button>
+            <div class="faq-answer">
+                <p>CV ATS adalah singkatan dari Curriculum Vitae Applicant Tracking System-friendly. Artinya, CV ini dibuat agar mudah dibaca dan diproses oleh sistem pelacak pelamar kerja (ATS) yang digunakan oleh banyak perusahaan untuk menyaring dan menyeleksi CV secara otomatis sebelum dibaca oleh HR atau rekruter.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question">
+                Apa itu CV ATS?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                <p>Isi jawaban untuk pertanyaan ini.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question">
+                Apa itu CV ATS?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                <p>Isi jawaban untuk pertanyaan ini.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 
 </div>
+
+<script>
+    document.querySelectorAll('.faq-question').forEach(button => {
+        button.addEventListener('click', () => {
+            const faqItem = button.parentElement;
+            faqItem.classList.toggle('active');
+
+            // Ubah ikon + dan -
+            const icon = button.querySelector('.faq-icon');
+            icon.textContent = faqItem.classList.contains('active') ? '-' : '+';
+        });
+    });
+</script>
 @endsection

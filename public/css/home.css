@@ -33,7 +33,7 @@
 }
 
 .home-page .cta-button:hover {
-    background-color: #ea580c; /* Tailwind's hover:bg-orange-600 */
+    background-color: #FF9500; /* Tailwind's hover:bg-orange-600 */
 }
 
 .home-page .hero-image {
@@ -49,7 +49,7 @@
 }
 
 .home-page .bagaimana-caranya h1 {
-    font-size: 35px; /* Tailwind's text-3xl */
+    font-size: 40px; /* Tailwind's text-3xl */
     font-weight: bold;
     text-align: center;
     color: #01287E; /* Warna teks biru */
@@ -67,7 +67,7 @@
     background-color: white; /* Warna latar card */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Bayangan */
     border-radius: 10px; /* Sudut melengkung */
-    text-align: left; /* Rata kiri */
+    text-align: center; /* Rata kiri */
     padding: 1.5rem; /* Ruang dalam card */
     overflow: hidden;
     display: flex; /* Flexbox untuk tata letak vertikal */
@@ -134,10 +134,9 @@
 }
 
 .rating-title {
-    font-size: 35px; /* Ukuran judul */
+    font-size: 40px; /* Ukuran judul */
     font-weight: bold;
     color: #01287E; /* Warna teks biru */
-    margin-bottom: 2rem;
 }
 
 .rating .grid {
@@ -184,7 +183,112 @@
 .rating .card p {
     font-size: 14px; /* Ukuran teks ulasan lebih kecil */
     color: #01287E; /* Warna teks abu-abu */
-    line-height: 1.4; /* Kurangi jarak antar baris */
+    line-height: 1.8; /* Kurangi jarak antar baris */
     margin-top: 0.5rem; /* Kurangi jarak atas ulasan */
     text-align: left; /* Pusatkan ulasan */
+}
+
+/* Styling untuk tombol CV ATS */
+.rating-title + h1 {
+    display: inline-block; /* Agar tombol hanya selebar teks */
+    background-color: #FFBC5D; /* Warna oranye */
+    color: #01287E; /* Warna teks biru */
+    font-weight: bold; /* Teks tebal */
+    font-size: 35px; /* Ukuran teks */
+    padding: 0.5rem 1rem; /* Ruang dalam tombol */
+    border-radius: 10px; /* Sudut melengkung */
+    text-align: center; /* Pusatkan teks */
+    margin: 0 auto 2rem auto; /* Jarak atas dan bawah tombol */
+    cursor: pointer; /* Ubah kursor menjadi pointer */
+    transition: background-color 0.3s ease; /* Animasi hover */
+}
+
+/* FAQ Section */
+.faq {
+    padding: 4rem 0;
+    background-color: #ffffff; /* Warna latar belakang */
+    text-align: center;
+}
+
+.faq-title {
+    font-size: 40px; /* Ukuran judul */
+    font-weight: bold;
+    color: #01287E; /* Warna teks biru */
+    margin-bottom: 2rem;   
+}
+
+.faq-item {
+    background-color: #F4F8FF; /* Warna biru muda untuk item */
+    border-radius: 10px; /* Sudut melengkung */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bayangan */
+    margin-bottom: 1.5rem; /* Jarak antar item */
+    overflow: hidden; /* Sembunyikan konten yang meluap */
+    max-width: 905px; /* Batasi lebar maksimum */
+    margin-left: auto; /* Pusatkan item */
+    margin-right: auto; /* Pusatkan item */
+}
+
+.faq-question {
+    width: 100%; /* Gunakan lebar penuh */
+    background-color: transparent;
+    border: none;
+    font-size: 20px; /* Ukuran teks */
+    font-weight: bold;
+    color: #01287E; /* Warna teks biru */
+    text-align: left;
+    padding: 1rem 1.5rem; /* Tambahkan padding kiri dan kanan */
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.faq-question:hover {
+    background-color: #F4F8FF; /* Warna hover */
+}
+
+.faq-icon {
+    font-size: 24px;
+    font-weight: bold;
+    color: #01287E; /* Warna ikon */
+    margin-left: 1rem; /* Tambahkan jarak dari teks */
+}
+
+.faq-answer {
+    display: none; /* Sembunyikan jawaban secara default */
+    padding: 1rem 1.5rem; /* Tambahkan padding kiri dan kanan */
+    font-size: 20px;
+    color: #01287E; /* Warna teks abu-abu */
+    text-align: left;
+}
+
+.faq-item.active .faq-answer {
+    display: block; /* Tampilkan jawaban jika item aktif */
+}
+
+/* Hilangkan gambar pada tampilan mobile */
+@media (max-width: 768px) {
+    .home-page .bagaimana-caranya {
+        display: flex; /* Gunakan Flexbox */
+        flex-direction: column; /* Susun elemen secara vertikal */
+        align-items: center; /* Pusatkan elemen secara horizontal */
+        text-align: center; /* Pusatkan teks */
+    }
+
+    .home-page .bagaimana-caranya .grid {
+        display: flex; /* Gunakan Flexbox untuk grid */
+        flex-direction: column; /* Susun card secara vertikal */
+        gap: 1rem; /* Jarak antar card */
+        width: 100%; /* Pastikan grid memenuhi lebar penuh */
+        align-items: center; /* Pusatkan card di dalam grid */
+    }
+
+    .home-page .bagaimana-caranya .card img {
+        display: none; /* Sembunyikan gambar */
+    }
+
+    .home-page .bagaimana-caranya .card {
+        height: auto; /* Sesuaikan tinggi card */
+        padding: 1rem; /* Kurangi padding agar lebih rapi */
+    }
 }
