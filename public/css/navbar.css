@@ -1,0 +1,454 @@
+.nav {
+    padding: 24px;
+    font-size: 18px;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    max-width: 1200px; /* Atau lebar container yang Anda inginkan */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.flex {
+    display: flex;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.logo img {
+    height: 32px; /* h-8 = 2rem = 32px */
+}
+
+.hamburger-button {
+    display: block; /* Tampilkan di layar kecil */
+    border: none;
+    background: none;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    z-index: 10; /* Pastikan di atas menu saat terbuka */
+}
+
+.bar {
+    width: 100%;
+    height: 3px;
+    background-color: #1e3a8a;
+    margin-bottom: 5px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.bar:last-child {
+    margin-bottom: 0;
+}
+
+.nav-links {
+    display: none; /* Sembunyikan di layar kecil */
+    width: 100%;
+    background-color: white;
+    flex-direction: column; /* Atur link secara vertikal */
+    align-items: center;
+    padding: 20px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 5; /* Di atas konten utama */
+    position: absolute;
+    top: 60px; /* Tinggi nav */
+    left: 0;
+}
+
+.nav-links.open {
+    display: flex; /* Tampilkan saat tombol hamburger diklik */
+}
+
+.nav-links li {
+    margin-bottom: 10px;
+}
+
+.nav-links li:last-child {
+    margin-bottom: 0;
+}
+
+.nav-links a {
+    display: block; /* Agar memenuhi lebar */
+    padding: 10px 20px;
+    text-align: center;
+    color: #1e3a8a;
+    font-family: 'Kantumruy', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #f97316;
+}
+
+.auth-buttons {
+    display: none; /* Sembunyikan tombol auth di layar kecil untuk sementara */
+}
+
+@media (min-width: 768px) {
+    .hamburger-button {
+        display: none; /* Sembunyikan tombol hamburger di layar besar */
+    }
+
+    .nav-links {
+        display: flex;
+        position: static; /* Kembali ke posisi statis */
+        flex-direction: row; /* Atur link secara horizontal */
+        justify-content: center;
+        gap: 2rem; /* md:space-x-8 = 2rem = 32px */
+        flex-grow: 1;
+        align-items: center;
+        padding: 0;
+        box-shadow: none;
+    }
+
+    .nav-links li {
+        margin-bottom: 0;
+    }
+
+    .nav-links a {
+        display: inline-block; /* Kembali ke inline-block */
+        padding: 0;
+        text-align: left;
+    }
+
+    .auth-buttons {
+        display: flex;
+        gap: 1rem; /* md:space-x-4 = 1rem = 16px */
+        align-items: center;
+    }
+}
+
+.auth-buttons button {
+    font-family: 'Kantumruy', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    color: #1e3a8a; /* text-blue-900 */
+    transition: color 0.3s;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.auth-buttons-in-nav {
+    font-family: 'Kantumruy', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    color: #1e3a8a; /* text-blue-900 */
+    transition: color 0.3s;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.auth-buttons button:hover {
+    color: #f97316;
+}
+
+/* Animasi Tombol Hamburger saat Menu Terbuka */
+.hamburger-button.open .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger-button.open .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-button.open .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Gaya untuk kontainer modal secara keseluruhan */
+.login-modal-container,
+.register-modal-container {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    z-index: 50;
+    overflow: auto; /* Tambahkan overflow agar modal bisa di-scroll jika kontennya melebihi layar */
+    padding: 1rem; /* Berikan sedikit padding di sekitar modal */
+}
+
+/* Gaya untuk konten utama modal (kotak putih) */
+.login-modal-content,
+.register-modal-content {
+    background-color: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    width: 95%; /* Lebar hampir penuh pada mobile */
+    max-width: 450px; /* Kurangi lebar maksimum pada mobile */
+    max-height: 90%; /* Tinggi maksimum agar bisa di-scroll */
+    position: relative;
+    display: flex;
+    flex-direction: column; /* Atur menjadi kolom pada mobile */
+    border-radius: 10px;
+}
+
+/* Gaya untuk sisi kiri (ilustrasi) - Disembunyikan pada layar kecil */
+.login-modal-left,
+.register-modal-left {
+    display: none; /* Tetap disembunyikan secara default */
+}
+
+/* Tampilkan sisi kiri pada layar medium ke atas */
+@media (min-width: 768px) {
+    .login-modal-left,
+    .register-modal-left {
+        display: block;
+        width: 50%;
+        background-color: white;
+        padding: 3.5rem;
+        border-radius: 10px 0 0 10px;
+    }
+
+    .login-modal-content,
+    .register-modal-content {
+        flex-direction: row; /* Kembali ke baris pada layar besar */
+        max-width: 800px; /* Lebar maksimum seperti semula */
+        max-height: 600px; /* Tinggi maksimum seperti semula */
+    }
+}
+
+.login-modal-illustration-wrapper,
+.register-modal-illustration-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.login-modal-illustration,
+.register-modal-illustration {
+    object-fit: contain; /* Ubah menjadi contain agar gambar tidak terpotong */
+    max-height: 200px; /* Kurangi tinggi maksimum ilustrasi pada layar besar */
+}
+
+/* Gaya untuk sisi kanan (formulir) */
+.login-modal-right,
+.register-modal-right {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 2rem; /* Kurangi padding pada mobile */
+    background-color: #F4F8FF;
+    border-radius: 0 0 10px 10px; /* Sesuaikan border radius untuk mobile */
+}
+
+@media (min-width: 768px) {
+    .login-modal-right,
+    .register-modal-right {
+        width: 50%;
+        border-radius: 0 10px 10px 0; /* Kembali ke border radius semula */
+        padding: 3.5rem; /* Kembali ke padding semula */
+    }
+}
+
+/* Gaya untuk grup tombol "Daftar" dan "Masuk" */
+.login-modal-button-group,
+.register-modal-button-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem; /* Kurangi margin bottom pada mobile */
+    border: 1px solid #EEECEC;
+    background-color: #EEECEC;
+    padding: 0.75rem; /* Kurangi padding pada mobile */
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%; /* Lebar penuh pada mobile */
+    max-width: 300px; /* Pertahankan lebar maksimum */
+    height: auto; /* Biarkan tinggi menyesuaikan */
+    border-radius: 25px;
+    margin-top: 1rem; /* Berikan sedikit margin top */
+}
+
+/* Gaya untuk tombol "Daftar" / "Masuk" (switch) */
+.login-modal-switch-button,
+.register-modal-switch-button {
+    font-size: 1rem; /* Kurangi ukuran font pada mobile */
+    font-weight: bold;
+    color: #01287E;
+    background-color: #EEECEC;
+    transition: background-color 0.3s ease;
+    padding: 0.5rem; /* Kurangi padding pada mobile */
+    border-radius: 20px;
+    width: 50%; /* Bagi dua lebar tombol */
+    height: auto; /* Biarkan tinggi menyesuaikan */
+    border: none;
+    cursor: pointer;
+    text-align: center; /* Tengahkan teks */
+}
+
+.login-modal-switch-button:hover,
+.register-modal-switch-button:hover {
+    background-color: #FFBC5D;
+}
+
+/* Gaya untuk tombol "Masuk" / "Daftar" yang aktif */
+.login-modal-active-button,
+.register-modal-active-button {
+    font-size: 1rem; /* Kurangi ukuran font pada mobile */
+    font-weight: bold;
+    color: #01287E;
+    background-color: #FFBC5D;
+    transition: background-color 0.3s ease;
+    padding: 0.5rem; /* Kurangi padding pada mobile */
+    border-radius: 20px;
+    width: 50%; /* Bagi dua lebar tombol */
+    height: auto; /* Biarkan tinggi menyesuaikan */
+    border: none;
+    cursor: pointer;
+    text-align: center; /* Tengahkan teks */
+}
+
+.login-modal-active-button:hover,
+.register-modal-active-button:hover {
+    background-color: #f9dcb2;
+}
+
+/* Gaya untuk form login */
+.login-modal-form {
+    margin-top: 1.5rem; /* Kurangi margin top pada mobile */
+}
+
+/* Gaya untuk form pendaftaran */
+.register-modal-form {
+    margin-top: 1.5rem; /* Kurangi margin top pada mobile */
+}
+
+/* Gaya untuk grup input (email dan password) */
+.login-modal-input-group,
+.register-modal-input-group {
+    margin-bottom: 1rem; /* Kurangi margin bottom pada mobile */
+    position: relative;
+}
+
+.login-modal-input-group {
+    margin-top: 1rem; /* Kurangi margin top pada mobile */
+}
+
+.login-modal-submit-button {
+    margin-bottom: 2rem; /* Kurangi margin bottom pada mobile */
+}
+
+/* Gaya untuk input fields */
+.login-modal-input,
+.register-modal-input {
+    width: 100%;
+    background-color: #EEECEC;
+    border-radius: 0.5rem;
+    padding: 0.6rem; /* Kurangi padding pada mobile */
+    border: none;
+    font-size: 1rem; /* Sesuaikan ukuran font input */
+}
+
+.login-modal-input::placeholder,
+.register-modal-input::placeholder {
+    color: #9CA3AF;
+}
+
+/* Gaya untuk tombol submit "Masuk" / "Daftar" di form */
+.login-modal-submit-button,
+.register-modal-submit-button {
+    margin-top: 1.5rem; /* Kurangi margin top pada mobile */
+    background-color: #FFBC5D;
+    color: #01287E;
+    font-weight: bold;
+    font-size: 1rem; /* Kurangi ukuran font pada mobile */
+    padding: 0.5rem 2rem; /* Kurangi padding pada mobile */
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    border: none;
+    cursor: pointer;
+}
+
+.login-modal-submit-button:hover,
+.register-modal-submit-button:hover {
+    background-color: #FFA947;
+}
+
+/* Gaya untuk teks "Atau masuk/daftar dengan" */
+.login-modal-social-text,
+.register-modal-social-text {
+    text-align: center;
+    margin-top: 1rem; /* Kurangi margin top pada mobile */
+    color: #6B7280;
+    font-size: 0.9rem; /* Kurangi ukuran font pada mobile */
+}
+
+/* Gaya untuk tombol "Masuk/Daftar dengan Google" */
+.login-modal-google-button,
+.register-modal-google-button {
+    width: 100%;
+    background-color: #F3F4F6;
+    color: #374151;
+    padding: 0.6rem; /* Kurangi padding pada mobile */
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease;
+    margin-top: 0.75rem; /* Kurangi margin top pada mobile */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem; /* Kurangi ukuran font pada mobile */
+}
+
+.login-modal-google-button:hover,
+.register-modal-google-button:hover {
+    background-color: #E5E7EB;
+}
+
+/* Gaya untuk ikon Google */
+.login-modal-google-icon,
+.register-modal-google-icon {
+    width: 1rem; /* Kurangi ukuran ikon pada mobile */
+    height: 1rem; /* Kurangi ukuran ikon pada mobile */
+    margin-right: 0.5rem; /* Kurangi margin kanan pada mobile */
+}
+
+/* Gaya untuk tombol close (X) */
+.login-modal-close-button,
+.register-modal-close-button {
+    position: absolute;
+    top: 0.5rem; /* Kurangi jarak dari atas pada mobile */
+    right: 0.5rem; /* Kurangi jarak dari kanan pada mobile */
+    color: #01287E;
+    font-size: 1.2rem; /* Kurangi ukuran font pada mobile */
+    width: 1.2rem; /* Kurangi lebar pada mobile */
+    height: 1.2rem; /* Kurangi tinggi pada mobile */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid #01287E;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    background: none;
+    cursor: pointer;
+}
+
+.login-modal-close-button:hover,
+.register-modal-close-button:hover {
+    background-color: #EF4444;
+    color: white;
+    border-color: white;
+}

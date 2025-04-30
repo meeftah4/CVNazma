@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>@yield('title', 'Laravel')</title>
         @stack('styles')
+        <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
         @vite(['resources/css/app.css','resources/js/app.js'])
     </head>
@@ -15,6 +16,11 @@
 
         {{-- Navbar --}}
         @include('components.navbar')
+        @include('components.login-modal')
+        @include('components.register-modal')
+
+        {{-- Scripts --}}
+        @stack('scripts')
 
         {{-- Main Content --}}
         <main class="min-h-screen">
