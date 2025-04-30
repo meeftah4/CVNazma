@@ -46,7 +46,6 @@
     padding: 4rem 0;
     background-color: #ffffff; /* Warna biru muda untuk seluruh section */
     display: flex; /* Gunakan Flexbox untuk section */
-    position: relative; /* Untuk membuat layer */
 }
 
 .home-page .bagaimana-caranya h1 {
@@ -67,10 +66,9 @@
 .home-page .bagaimana-caranya .card {
     background-color: white; /* Warna latar card */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Bayangan */
-    border-radius: 12px; /* Sudut melengkung */
+    border-radius: 10px; /* Sudut melengkung */
     text-align: left; /* Rata kiri */
     padding: 1.5rem; /* Ruang dalam card */
-    position: relative;
     overflow: hidden;
     display: flex; /* Flexbox untuk tata letak vertikal */
     flex-direction: column;
@@ -144,9 +142,11 @@
 
 .rating .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsif */
-    gap: 2rem; /* Jarak antar card */
-    justify-content: center;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Lebar minimum card lebih kecil */
+    gap: 1rem; /* Kurangi jarak antar card */
+    justify-content: center; /* Pusatkan grid */
+    max-width: 900px; /* Batasi lebar maksimum grid */
+    margin: 0 auto; /* Pusatkan grid di dalam container */
 }
 
 .rating .card {
@@ -156,7 +156,8 @@
     padding: 1rem; /* Kurangi ruang dalam card */
     text-align: center; /* Pusatkan semua teks dalam card */
     max-width: 250px; /* Lebar maksimum card */
-    height: 220px; /* Tinggi card */
+    height: auto; /* Tinggi card fleksibel */
+    margin: 0 auto; /* Pusatkan card di dalam grid */
 }
 
 .rating .card h2 {
@@ -182,7 +183,7 @@
 
 .rating .card p {
     font-size: 14px; /* Ukuran teks ulasan lebih kecil */
-    color: #4B5563; /* Warna teks abu-abu */
+    color: #01287E; /* Warna teks abu-abu */
     line-height: 1.4; /* Kurangi jarak antar baris */
     margin-top: 0.5rem; /* Kurangi jarak atas ulasan */
     text-align: left; /* Pusatkan ulasan */
