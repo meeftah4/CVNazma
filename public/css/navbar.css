@@ -340,11 +340,11 @@
 }
 
 .login-modal-input-group {
-    margin-top: 1rem; /* Kurangi margin top pada mobile */
+    margin-top: 21px; /* Kurangi margin top pada mobile */
 }
 
 .login-modal-submit-button {
-    margin-bottom: 2rem; /* Kurangi margin bottom pada mobile */
+    margin-bottom: 30px; /* Kurangi margin bottom pada mobile */
 }
 
 /* Gaya untuk input fields */

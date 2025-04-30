@@ -20,15 +20,15 @@
                 <li><a href="/">Home</a></li>
                 <li><a href="/CvAts">Cv Ats</a></li>
                 <li><a href="/TemplateCv">Template Cv</a></li>
-                <li class="auth-buttons-in-nav">
+                <li class="auth-buttons-in-nav lg:hidden">
                     <button id="open-login-modal">Masuk</button>
                 </li>
-                <li class="auth-buttons-in-nav">
+                <li class="auth-buttons-in-nav lg:hidden">
                     <button id="open-register-modal">Daftar</button>
                 </li>
             </ul>
 
-            <div class="auth-buttons hidden lg:flex">
+            <div class="auth-buttons max-lg:hidden">
                 <button id="open-login-modal">Masuk</button>
                 <button id="open-register-modal">Daftar</button>
             </div>
