@@ -1,5 +1,5 @@
 {{-- filepath: resources/views/partials/footer.blade.php --}}
-<footer class="bg-[#01287E] text-white relative overflow-hidden">
+<footer class="bg-[#01287E] text-white overflow-hidden">
     <img class="absolute left-0 h-[250px] hidden md:block" src="{{ asset('images/logo kotak.png') }}" alt="Logo Background">
 
     <div class="container mx-auto px-4 w-11/12 lg:w-10/12 py-8">
