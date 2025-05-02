@@ -7,5 +7,13 @@ Route::get('/', function () {
 });
 
 Route::get('/profile', function () {
-    return view('pages.profile');
+    return view('pages.profile', [
+        'content' => 'components.main-profil',
+    ]);
+});
+
+Route::get('/profile/ats', function () {
+    return view('pages.profile', [
+        'content' => 'components.ats-profil',
+    ]);
 });

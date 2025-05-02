@@ -1,8 +1,4 @@
 {{-- filepath: d:\Magang\CVNazma\resources\views\components\navbar.blade.php --}}
-@push('scripts')
-    <script src="{{ asset('js/nav.js') }}" defer></script>
-@endpush
-
 <nav class="nav">
     <div class="container mx-auto">
         <div class="flex justify-between items-center">

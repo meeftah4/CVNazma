@@ -2,10 +2,6 @@
 
 @section('title', 'CV Nazma')
 
-@push('styles')
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
-@endpush
-
 @section('content')
 <div class="home-page">
     @section('content')
