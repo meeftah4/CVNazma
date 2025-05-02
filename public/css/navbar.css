@@ -158,6 +158,10 @@
     color: #f97316;
 }
 
+.auth-buttons-in-nav button:hover {
+    color: #f97316;
+}
+
 /* Animasi Tombol Hamburger saat Menu Terbuka */
 .hamburger-button.open .bar:nth-child(1) {
     transform: translateY(8px) rotate(45deg);
