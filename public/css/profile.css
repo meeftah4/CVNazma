@@ -165,22 +165,60 @@ body {
     display: flex; /* Gunakan flexbox untuk membuat elemen sejajar */
     gap: 1rem; /* Tambahkan jarak antar elemen */
     margin-bottom: 1rem; /* Jarak antar baris */
+    
 }
 
 .edit-profile .form-group label {
     display: block;
-    font-size: 14px;
+    font-size: 16px;
     color: #01287E;
     margin-bottom: 0.5rem;
 }
 
+/* Form Input */
 .edit-profile .form-group input {
-    flex: 1; /* Membagi ruang secara proporsional */
-    padding: 0.5rem;
-    border: 1px solid #E5E7EB;
-    border-radius: 5px;
+    border: 1px solid #E5E7EB; /* Warna border seragam */
+    border-radius: 15px; /* Sudut melengkung lebih kecil */
+    font-size: 14px; /* Ukuran font tetap proporsional */
+    padding: 0.5rem 1rem; /* Padding lebih kecil */
+    box-sizing: border-box;
+    outline: none; /* Hilangkan outline default */
+}
+
+/* Form Nama Lengkap Full Width */
+.edit-profile .form-group.full-width {
+    width: 100%; /* Pastikan elemen induk memiliki lebar penuh */
+    display: block; /* Pastikan elemen tidak menggunakan flex */
+}
+
+.edit-profile .form-group.full-width input {
+    width: 100%; /* Lebar penuh untuk input Nama Lengkap */
+    border-radius: 10px; /* Sudut melengkung lebih kecil */
+    padding: 0.5rem 1rem; /* Padding lebih kecil */
+    border: 1px solid #E5E7EB; /* Warna border seragam */
     font-size: 14px;
     box-sizing: border-box;
+    outline: none; /* Hilangkan outline default */
+}
+
+/* Textarea */
+.edit-profile .form-group.full-width textarea {
+    width: 100%; /* Lebar penuh */
+    height: 120px; /* Tinggi textarea lebih kecil */
+    border-radius: 15px; /* Sudut melengkung lebih kecil */
+    padding: 0.5rem 1rem; /* Padding lebih kecil */
+    border: 1px solid #E5E7EB; /* Warna border seragam */
+    font-size: 14px;
+    box-sizing: border-box;
+    outline: none; /* Hilangkan outline default */
+    resize: none; /* Hilangkan opsi resize */
+}
+
+/* Fokus pada Input dan Textarea */
+.edit-profile .form-group input:focus,
+.edit-profile .form-group.full-width textarea:focus {
+    border-color: #01287E; /* Warna border saat fokus */
+    box-shadow: 0 0 5px rgba(1, 40, 126, 0.3); /* Efek bayangan saat fokus */
 }
 
 /* Textarea tetap full width */
@@ -188,9 +226,30 @@ body {
     width: 100%;
 }
 
+/* Form Group untuk Elemen 50-50 */
+.edit-profile .form-group.half-width {
+    display: flex; /* Gunakan flexbox untuk membuat elemen sejajar */
+    gap: 1rem; /* Tambahkan jarak antar elemen */
+    margin-bottom: 1rem; /* Jarak antar baris */
+}
+
+.edit-profile .form-group.half-width > div {
+    flex: 1; /* Membagi ruang secara proporsional (50% untuk masing-masing) */
+}
+
+.edit-profile .form-group.half-width input {
+    width: 100%; /* Pastikan input memanfaatkan lebar penuh dari elemen flex */
+    border-radius: 10px; /* Sudut melengkung lebih kecil */
+    padding: 0.5rem 1rem; /* Padding lebih kecil */
+    border: 1px solid #E5E7EB; /* Warna border seragam */
+    font-size: 14px;
+    box-sizing: border-box;
+    outline: none; /* Hilangkan outline default */
+}
+
 .edit-profile .btn-save {
     background-color: #FFBC5D;
-    color: #ffffff;
+    color: #01287E;
     border: none;
     padding: 0.5rem 1rem;
     border-radius: 5px;

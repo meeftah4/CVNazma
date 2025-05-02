@@ -38,16 +38,18 @@
                 <a href="#" class="btn-logout">Keluar</a>
             </div>
 
+            <!-- Edit Profile -->
             <div class="edit-profile">
                 <h2>Edit Profil</h2>
                 <form action="#" method="POST">
-                    <div class="form-group">
-                        <div>
-                            <label for="name">Nama Lengkap</label>
-                            <input type="text" id="name" name="name">
-                        </div>
+                    <!-- Nama Lengkap -->
+                    <div class="form-group full-width">
+                        <label for="full_name">Nama Lengkap</label>
+                        <input type="text" id="full_name" name="full_name">
                     </div>
-                    <div class="form-group">
+
+                    <!-- Username dan Password -->
+                    <div class="form-group half-width">
                         <div>
                             <label for="username">Username</label>
                             <input type="text" id="username" name="username">
@@ -57,20 +59,26 @@
                             <input type="password" id="password" name="password">
                         </div>
                     </div>
-                    <div class="form-group">
+
+                    <!-- Alamat Email dan Nomor Handphone -->
+                    <div class="form-group half-width">
                         <div>
                             <label for="email">Alamat Email</label>
                             <input type="email" id="email" name="email">
                         </div>
                         <div>
-                            <label for="phone">Nomor Handphone</label>
-                            <input type="text" id="phone" name="phone">
+                            <label for="phone_number">Nomor Handphone</label>
+                            <input type="text" id="phone_number" name="phone_number">
                         </div>
                     </div>
+
+                    <!-- Alamat -->
                     <div class="form-group full-width">
                         <label for="address">Alamat</label>
                         <textarea id="address" name="address"></textarea>
                     </div>
+
+                    <!-- Tombol Simpan -->
                     <button type="submit" class="btn-save">Simpan</button>
                 </form>
             </div>
