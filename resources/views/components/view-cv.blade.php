@@ -15,3 +15,10 @@
     <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-2">Kode Pos</h2>
     <p id="previewZipcode" class="text-sm text-gray-600">Kode Pos</p>
 </section>
+
+<section class="mb-6">
+    <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-2">Pendidikan</h2>
+    <div id="educationPreview" class="space-y-4">
+        <!-- Preview pendidikan akan muncul di sini -->
+    </div>
+</section>

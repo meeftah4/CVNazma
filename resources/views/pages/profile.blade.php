@@ -2,9 +2,7 @@
 
 @section('title', 'CV Nazma')
 
-@push('styles')
-    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
-@endpush
+@vite(['resources/css/profile.css'])
 
 @section('content')
 <div class="profile-page">
