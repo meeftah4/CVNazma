@@ -76,12 +76,6 @@ body {
     margin: 0.5rem 0;
 }
 
-.profile-card ul li a {
-    text-decoration: none;
-    color: #01287E;
-    font-weight: bold;
-}
-
 /* Sidebar Menu */
 .profile-card ul li a {
     text-decoration: none;
@@ -89,20 +83,33 @@ body {
     font-weight: bold;
     padding: 0.5rem 1rem;
     display: block; /* Buat elemen menjadi block untuk area klik penuh */
-    border-radius: 5px; /* Tambahkan sudut melengkung */
+    border-radius: 0; /* Hilangkan sudut melengkung */
     transition: background-color 0.3s, color 0.3s; /* Animasi transisi */
+    position: relative; /* Untuk menempatkan garis biru */
 }
 
 /* Warna biru untuk menu aktif */
 .profile-card ul li a.active {
-    background-color: #01287E; /* Warna biru untuk menu aktif */
-    color: #ffffff; /* Warna teks putih */
+    background-color: #F4F8FF; /* Warna latar belakang biru muda */
+    color: #01287E; /* Warna teks biru */
+    font-weight: bold;
+}
+
+/* Garis biru di sebelah kiri menu aktif */
+.profile-card ul li a.active::before {
+    content: ""; /* Pseudo-element untuk garis */
+    position: absolute;
+    left: 0; /* Tempatkan di sebelah kiri */
+    top: 0;
+    height: 100%; /* Tinggi penuh */
+    width: 5px; /* Lebar garis */
+    background-color: #01287E; /* Warna garis biru */
 }
 
 /* Hover efek untuk menu */
 .profile-card ul li a:hover {
-    background-color: #01287E; /* Warna biru saat hover */
-    color: #ffffff; /* Warna teks putih saat hover */
+    background-color: #F4F8FF; /* Warna latar belakang biru muda saat hover */
+    color: #01287E; /* Warna teks biru saat hover */
 }
 
 /* Main Content */
