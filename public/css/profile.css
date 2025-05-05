@@ -82,6 +82,29 @@ body {
     font-weight: bold;
 }
 
+/* Sidebar Menu */
+.profile-card ul li a {
+    text-decoration: none;
+    color: #01287E; /* Warna teks default */
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    display: block; /* Buat elemen menjadi block untuk area klik penuh */
+    border-radius: 5px; /* Tambahkan sudut melengkung */
+    transition: background-color 0.3s, color 0.3s; /* Animasi transisi */
+}
+
+/* Warna biru untuk menu aktif */
+.profile-card ul li a.active {
+    background-color: #01287E; /* Warna biru untuk menu aktif */
+    color: #ffffff; /* Warna teks putih */
+}
+
+/* Hover efek untuk menu */
+.profile-card ul li a:hover {
+    background-color: #01287E; /* Warna biru saat hover */
+    color: #ffffff; /* Warna teks putih saat hover */
+}
+
 /* Main Content */
 .main-content {
     width: 75%;
