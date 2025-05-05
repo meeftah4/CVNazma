@@ -17,3 +17,8 @@ Route::get('/profile/ats', function () {
         'content' => 'components.ats-profil',
     ]);
 });
+
+Route::get('/CvAts', function () {
+    return view('pages.buatcv', [
+    ]);
+});
