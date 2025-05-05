@@ -2,6 +2,8 @@
 
 @section('title', 'CV Nazma')
 
+@vite(['resources/css/home.css', 'resources/js/home.js'])
+
 @section('content')
 <div class="home-page">
     @section('content')
