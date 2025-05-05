@@ -1,7 +1,8 @@
 <!-- filepath: d:\Magang\CVNazma\resources\views\templates\cv1.blade.php -->
 <header class="mb-6">
     <h1 id="previewName" class="text-3xl font-bold text-gray-900">Nama Lengkap</h1>
-    <p id="previewContact" class="text-sm text-gray-600">nama@email.com | 0812-3456-7890 | Jakarta, Indonesia</p>
+    <p id="previewContact" class="text-sm text-gray-600">nama@email.com | 0812-3456-7890 | Jakarta, Indonesia | LinkedIn Profile URL | Portfolio/Website URL</p>
+    <p id="previewAddress" class="text-sm text-gray-600">Jakarta, Indonesia</p>
 </header>
 
 <section class="mb-6">

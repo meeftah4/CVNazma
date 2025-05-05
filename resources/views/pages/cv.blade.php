@@ -44,10 +44,6 @@
                         <textarea id="addressInput" name="address" class="mt-1 block w-full border border-gray-300 rounded-md p-2"></textarea>
                     </div>
                     <div class="mb-4">
-                        <label class="block text-gray-700">Kode Pos</label>
-                        <input type="text" id="zipcodeInput" name="zipcode" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
-                    </div>
-                    <div class="mb-4">
                         <label class="block text-gray-700">LinkedIn Profile URL</label>
                         <input type="url" id="linkedinInput" name="linkedin" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
                     </div>
@@ -77,13 +73,13 @@
             const email = document.getElementById('emailInput').value || 'nama@email.com';
             const phone = document.getElementById('phoneInput').value || '0812-3456-7890';
             const address = document.getElementById('addressInput').value || 'Jakarta, Indonesia';
-            const zipcode = document.getElementById('zipcodeInput').value || 'Kode Pos';
             const linkedin = document.getElementById('linkedinInput').value || 'LinkedIn Profile URL';
             const portfolio = document.getElementById('portfolioInput').value || 'Portfolio/Website URL';
 
             // Update elemen di template
             document.getElementById('previewName').innerText = name;
-            document.getElementById('previewContact').innerText = `${email} | ${phone} | ${address}`;
+            document.getElementById('previewContact').innerText = `${email} | ${phone} | ${linkedin} | ${portfolio}`;
+            document.getElementById('previewAddress').innerText = `${address}`;
             document.getElementById('previewZipcode').innerText = zipcode;
             document.getElementById('previewLinkedin').innerText = linkedin;
             document.getElementById('previewPortfolio').innerText = portfolio;

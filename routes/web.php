@@ -19,7 +19,7 @@ Route::get('/profile/ats', function () {
 });
 
 Route::get('/CvAts', function () {
-    return view('pages.buatcv', [
+    return view('pages.cv', [
     ]);
 });
 
