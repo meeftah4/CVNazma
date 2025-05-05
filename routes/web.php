@@ -22,3 +22,7 @@ Route::get('/CvAts', function () {
     return view('pages.buatcv', [
     ]);
 });
+
+Route::get('/cv', function () {
+    return view('templates.cv1');
+});
