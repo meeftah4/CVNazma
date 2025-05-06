@@ -1,4 +1,4 @@
-{{-- filepath: d:\Magang\CVNazma\resources\views\forms\partials\pengalaman-kerja.blade.php --}}
+{{-- filepath: d:\Magang\CVNazma\resources\views\partials\pengalaman-kerja.blade.php --}}
 <div id="pengalamankerjaForm" class="bg-gray-100 p-4 rounded-md hidden">
     <div class="mb-4">
         <label class="block text-gray-700">Nama Perusahaan</label>

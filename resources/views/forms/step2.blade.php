@@ -12,7 +12,7 @@
                 <div id="{{ strtolower(str_replace(' ', '', $field)) }}List" class="bg-gray-100 p-4 rounded-md">
                     <!-- Data yang disimpan sementara akan ditampilkan di sini -->
                 </div>
-                @include('forms.partials.' . strtolower(str_replace(' ', '-', $field)))
+                @include('partials.' . strtolower(str_replace(' ', '-', $field)))
             </div>
         </div>
     @endforeach
