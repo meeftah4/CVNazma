@@ -16,8 +16,12 @@
                 </div>
                 <h2>Shery Marsaraina Dabit</h2>
                 <ul>
-                    <li><a href="/profile">Profil</a></li>
-                    <li><a href="/profile/ats">CV ATS Saya</a></li>
+                    <li>
+                        <a href="/profile" class="{{ Request::is('profile') ? 'active' : '' }}">Profil</a>
+                    </li>
+                    <li>
+                        <a href="/profile/ats" class="{{ Request::is('profile/ats') ? 'active' : '' }}">CV ATS Saya</a>
+                    </li>
                 </ul>
             </div>
         </div>
