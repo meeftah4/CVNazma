@@ -42,6 +42,12 @@
     function toggleDropdown(id) {
         const dropdown = document.getElementById(id + 'Dropdown');
         dropdown.classList.toggle('hidden');
+
+        // Tampilkan atau sembunyikan form target
+        const form = document.getElementById(id + 'Form');
+        if (form) {
+            form.classList.toggle('hidden');
+        }
     }
 
     function saveData(id) {
