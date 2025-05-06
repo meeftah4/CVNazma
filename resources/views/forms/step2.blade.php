@@ -51,12 +51,20 @@
     }
 
     function saveData(id) {
-        const inputs = document.querySelectorAll(`#${id}Form input, #${id}Form textarea`);
+        const inputs = document.querySelectorAll(`#${id}Form input, #${id}Form textarea, #${id}Form select`);
         const data = {};
         inputs.forEach(input => {
-            data[input.id] = input.value;
+            data[input.id] = input.value || (input.id === 'skillLevel' ? 'Pemula' : ''); // Tetapkan default 'Pemula' untuk skillLevel
         });
-        tempData[id].push(data);
+
+        // Jika id adalah 'profil', ganti data yang ada dan sembunyikan form
+        if (id === 'profil') {
+            tempData[id] = [data]; // Ganti seluruh array dengan data baru
+            document.getElementById(id + 'Form').classList.add('hidden'); // Sembunyikan form
+        } else {
+            tempData[id].push(data); // Tambahkan data baru untuk kategori lain
+        }
+
         renderData(id);
         resetForm(id);
     }
@@ -66,18 +74,105 @@
         listContainer.innerHTML = '';
 
         tempData[id].forEach((item, index) => {
-            const entry = `
-                <div class="flex justify-between items-center mb-2">
-                    <div>
-                        <p class="text-gray-700 font-bold">${item.jobPosition || item.skillsInput || item.languagesInput || item.hobbiesInput || item.educationInstitution}</p>
-                        <p class="text-gray-500">${item.startDate || item.educationStartDate} - ${item.endDate || item.educationEndDate}</p>
+            let entry = '';
+
+            if (id === 'pendidikan') {
+                // Format data untuk Pendidikan
+                entry = `
+                    <div class="flex justify-between items-center mb-2">
+                        <div>
+                            <p class="text-gray-700 font-bold">${item.educationDegree || 'Gelar tidak tersedia'}</p>
+                            <p class="text-gray-500">${item.educationStartDate || 'Tanggal Mulai tidak tersedia'} - ${item.educationEndDate || 'Tanggal Selesai tidak tersedia'}</p>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="text-red-500" onclick="deleteData('${id}', ${index})">X</button>
+                            <button class="text-blue-500" onclick="editData('${id}', ${index})">✎</button>
+                        </div>
                     </div>
-                    <div class="flex space-x-2">
-                        <button class="text-red-500" onclick="deleteData('${id}', ${index})">X</button>
-                        <button class="text-blue-500" onclick="editData('${id}', ${index})">✎</button>
+                `;
+            } else if (id === 'profil') {
+                // Format data untuk Profil
+                entry = `
+                    <div class="flex justify-between items-center mb-2">
+                        <div>
+                            <p class="text-gray-700 font-bold">${item.descriptionInput || 'Deskripsi tidak tersedia'}</p>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="text-red-500" onclick="deleteData('${id}', ${index})">X</button>
+                            <button class="text-blue-500" onclick="editData('${id}', ${index})">✎</button>
+                        </div>
                     </div>
-                </div>
-            `;
+                `;
+            } else if (id === 'pengalamankerja') {
+                // Format data untuk Pengalaman Kerja
+                entry = `
+                    <div class="flex justify-between items-center mb-2">
+                        <div>
+                            <p class="text-gray-700 font-bold">${item.jobPosition || 'Posisi tidak tersedia'}</p>
+                            <p class="text-gray-500">${item.startDate || 'Tanggal Mulai tidak tersedia'} - ${item.endDate || 'Tanggal Selesai tidak tersedia'}</p>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="text-red-500" onclick="deleteData('${id}', ${index})">X</button>
+                            <button class="text-blue-500" onclick="editData('${id}', ${index})">✎</button>
+                        </div>
+                    </div>
+                `;
+            } else if (id === 'keahlian') {
+                // Format data untuk Keahlian
+                entry = `
+                    <div class="flex justify-between items-center mb-2">
+                        <div>
+                            <p class="text-gray-700 font-bold">${item.skillName || 'Keahlian tidak tersedia'}</p>
+                            <p class="text-gray-500">${item.skillLevel || 'Tingkat Keahlian tidak tersedia'}</p>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="text-red-500" onclick="deleteData('${id}', ${index})">X</button>
+                            <button class="text-blue-500" onclick="editData('${id}', ${index})">✎</button>
+                        </div>
+                    </div>
+                `;
+            } else if (id === 'bahasa') {
+                // Format data untuk Bahasa
+                entry = `
+                    <div class="flex justify-between items-center mb-2">
+                        <div>
+                            <p class="text-gray-700 font-bold">${item.languageName || 'Bahasa tidak tersedia'}</p>
+                            <p class="text-gray-500">${item.languageLevel || 'Tingkat Bahasa tidak tersedia'}</p>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="text-red-500" onclick="deleteData('${id}', ${index})">X</button>
+                            <button class="text-blue-500" onclick="editData('${id}', ${index})">✎</button>
+                        </div>
+                    </div>
+                `;
+            } else if (id === 'hobi') {
+                // Format data untuk Hobi
+                entry = `
+                    <div class="flex justify-between items-center mb-2">
+                        <div>
+                            <p class="text-gray-700 font-bold">${item.hobbyName || 'Hobi tidak tersedia'}</p>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="text-red-500" onclick="deleteData('${id}', ${index})">X</button>
+                            <button class="text-blue-500" onclick="editData('${id}', ${index})">✎</button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Format data untuk kategori lain
+                entry = `
+                    <div class="flex justify-between items-center mb-2">
+                        <div>
+                            <p class="text-gray-700 font-bold">${item.addressInput || 'Deskripsi tidak tersedia'}</p>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="text-red-500" onclick="deleteData('${id}', ${index})">X</button>
+                            <button class="text-blue-500" onclick="editData('${id}', ${index})">✎</button>
+                        </div>
+                    </div>
+                `;
+            }
+
             listContainer.innerHTML += entry;
         });
     }
@@ -88,11 +183,38 @@
     }
 
     function deleteData(id, index) {
+        // Hapus data dari tempData
         tempData[id].splice(index, 1);
-        renderData(id);
+
+        // Jika id adalah 'profil', tampilkan kembali form
+        if (id === 'profil') {
+            document.getElementById(id + 'Form').classList.remove('hidden'); // Tampilkan form
+        }
+
+        renderData(id); // Render ulang data
     }
 
     function showForm(id) {
         document.getElementById(id + 'Form').classList.remove('hidden');
+    }
+
+    function editData(id, index) {
+        // Ambil data yang akan diedit
+        const dataToEdit = tempData[id][index];
+
+        // Isi form dengan data yang akan diedit
+        const inputs = document.querySelectorAll(`#${id}Form input, #${id}Form textarea`);
+        inputs.forEach(input => {
+            input.value = dataToEdit[input.id] || '';
+        });
+
+        // Hapus data lama dari tempData
+        tempData[id].splice(index, 1);
+
+        // Tampilkan form untuk diedit
+        document.getElementById(id + 'Form').classList.remove('hidden');
+
+        // Render ulang data
+        renderData(id);
     }
 </script>
