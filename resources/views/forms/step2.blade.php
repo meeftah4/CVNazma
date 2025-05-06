@@ -1,159 +1,92 @@
 {{-- filepath: d:\Magang\CVNazma\resources\views\forms\step2.blade.php --}}
-<div id="step-2" class="step hidden space-y-4">
+<div id="step-2" class="step hidden">
+    <h2 class="text-xl mb-4">Langkah 2: Informasi Tambahan</h2>
 
-    @foreach ([
-        'Profil' => 'profile',
-        'Pengalaman Kerja' => 'experience',
-        'Keahlian' => 'skills',
-        'Bahasa' => 'languages',
-        'Hobi' => 'hobbies',
-        'Pendidikan' => 'education'
-    ] as $label => $id)
-
-    <div class="border rounded-lg overflow-hidden">
-        {{-- HEADER DROPDOWN --}}
-        <button
-            type="button"
-            class="w-full flex justify-between items-center px-4 py-3 bg-gray-100 hover:bg-gray-200"
-            onclick="toggleDropdown('{{ $id }}')"
-        >
-            <span class="font-semibold text-blue-900">{{ $label }}</span>
-            <span id="icon-{{ $id }}" class="text-blue-900 text-xl font-bold">+</span>
-        </button>
-
-        {{-- ISI DROPDOWN --}}
-        <div id="content-{{ $id }}" class="hidden bg-white px-4 py-3 space-y-3">
-            @if ($id === 'education')
-                {{-- Form pendidikan --}}
-                <div id="content-education">
-                    @include('partials.form-education')
+    @foreach (['Profil', 'Pengalaman Kerja', 'Keahlian', 'Bahasa', 'Hobi', 'Pendidikan'] as $field)
+        <div class="mb-4">
+            <button type="button" class="w-full flex justify-between items-center py-2 px-4 bg-white border rounded-md shadow" onclick="toggleDropdown('{{ strtolower(str_replace(' ', '', $field)) }}')">
+                <span>{{ $field }}</span>
+                <span class="text-blue-500 font-bold">+</span>
+            </button>
+            <div id="{{ strtolower(str_replace(' ', '', $field)) }}Dropdown" class="hidden mt-2">
+                <div id="{{ strtolower(str_replace(' ', '', $field)) }}List" class="bg-gray-100 p-4 rounded-md">
+                    <!-- Data yang disimpan sementara akan ditampilkan di sini -->
                 </div>
-            @else
-                {{-- Form sederhana untuk bagian lain --}}
-                <textarea
-                    name="{{ $id }}"
-                    rows="4"
-                    class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="Tulis {{ strtolower($label) }} Anda..."
-                ></textarea>
-            @endif
+                @include('forms.partials.' . strtolower(str_replace(' ', '-', $field)))
+            </div>
         </div>
-    </div>
     @endforeach
 
-    {{-- Tambahkan Foto --}}
-    <div class="flex flex-col items-center">
-        <label for="photoInput" class="cursor-pointer">
-            <div class="bg-gray-100 rounded-lg p-6 text-center">
-                <img src="{{ asset('images/icon-camera.svg') }}" alt="Icon Kamera" class="w-12 h-12 mx-auto">
-                <p class="mt-2 text-sm text-blue-900 font-medium">Tambahkan foto</p>
-            </div>
-        </label>
-        <input type="file" id="photoInput" name="photo" class="hidden">
+    <div class="mb-4">
+        <label class="block text-gray-700">Tambahkan Foto</label>
+        <div class="flex items-center">
+            <button class="flex flex-col items-center justify-center w-24 h-24 bg-gray-100 border rounded shadow">
+                <span class="text-sm text-gray-500">Tambahkan foto</span>
+            </button>
+        </div>
     </div>
 
-    {{-- Navigasi --}}
-    <div class="mt-4 flex justify-between">
-        <button type="button" onclick="goToStep(1)" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold px-6 py-2 rounded-lg">
-            Kembali
-        </button>
-        <button type="submit" class="bg-orange-400 hover:bg-orange-500 text-white font-semibold px-6 py-2 rounded-lg">
-            Langkah Selanjutnya
-        </button>
-    </div>
+    <button type="button" onclick="goToStep(3)" class="bg-orange-500 text-white px-4 py-2 rounded-md">Langkah Selanjutnya</button>
 </div>
 
 <script>
-    let educationData = [];
-
-    function saveEducation() {
-        const school = document.querySelector('input[name="school"]').value;
-        const degree = document.querySelector('input[name="degree"]').value;
-        const city = document.querySelector('input[name="city"]').value;
-        const startDate = document.querySelector('input[name="start_date"]').value;
-        const endDate = document.querySelector('input[name="end_date"]').value;
-        const description = document.querySelector('textarea[name="description"]').value;
-
-        if (!school || !degree || !city || !startDate || !endDate) {
-            alert('Harap lengkapi semua data pendidikan.');
-            return;
-        }
-
-        const newEducation = { school, degree, city, startDate, endDate, description };
-        educationData.push(newEducation);
-
-        updateEducationPreview();
-        resetEducationForm();
-        toggleDropdown('education');
-    }
-
-    function resetEducationForm() {
-        document.querySelector('input[name="school"]').value = '';
-        document.querySelector('input[name="degree"]').value = '';
-        document.querySelector('input[name="city"]').value = '';
-        document.querySelector('input[name="start_date"]').value = '';
-        document.querySelector('input[name="end_date"]').value = '';
-        document.querySelector('textarea[name="description"]').value = '';
-    }
-
-    function updateEducationPreview() {
-        const previewContainer = document.getElementById('educationPreview');
-        previewContainer.innerHTML = '';
-
-        educationData.forEach((edu) => {
-            const eduElement = `
-                <div class="mb-4 border p-3 rounded bg-gray-50">
-                    <h3 class="font-semibold">${edu.school} (${edu.degree})</h3>
-                    <p>${edu.city} | ${edu.startDate} - ${edu.endDate}</p>
-                    <p>${edu.description}</p>
-                </div>
-            `;
-            previewContainer.innerHTML += eduElement;
-        });
-    }
+    let tempData = {
+        profil: [],
+        pengalamankerja: [],
+        keahlian: [],
+        bahasa: [],
+        hobi: [],
+        pendidikan: []
+    };
 
     function toggleDropdown(id) {
-        const content = document.getElementById('content-' + id);
-        const icon = document.getElementById('icon-' + id);
-
-        content.classList.toggle('hidden');
-        icon.textContent = content.classList.contains('hidden') ? '+' : '–';
-
-        if (id === 'education' && !content.classList.contains('hidden')) {
-            updateEducationDropdown();
-        }
+        const dropdown = document.getElementById(id + 'Dropdown');
+        dropdown.classList.toggle('hidden');
     }
 
-    function updateEducationDropdown() {
-        const dropdownContainer = document.getElementById('content-education');
-        dropdownContainer.innerHTML = '';
+    function saveData(id) {
+        const inputs = document.querySelectorAll(`#${id}Form input, #${id}Form textarea`);
+        const data = {};
+        inputs.forEach(input => {
+            data[input.id] = input.value;
+        });
+        tempData[id].push(data);
+        renderData(id);
+        resetForm(id);
+    }
 
-        educationData.forEach((edu, index) => {
-            const eduElement = `
-                <div class="mb-4 border p-3 rounded bg-gray-50">
-                    <h3 class="font-semibold">${edu.school} (${edu.degree})</h3>
-                    <p>${edu.city} | ${edu.startDate} - ${edu.endDate}</p>
-                    <p>${edu.description}</p>
-                    <button onclick="removeEducation(${index})" class="text-red-500 text-sm">Hapus</button>
+    function renderData(id) {
+        const listContainer = document.getElementById(id + 'List');
+        listContainer.innerHTML = '';
+
+        tempData[id].forEach((item, index) => {
+            const entry = `
+                <div class="flex justify-between items-center mb-2">
+                    <div>
+                        <p class="text-gray-700 font-bold">${item.jobPosition || item.skillsInput || item.languagesInput || item.hobbiesInput || item.educationInstitution}</p>
+                        <p class="text-gray-500">${item.startDate || item.educationStartDate} - ${item.endDate || item.educationEndDate}</p>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button class="text-red-500" onclick="deleteData('${id}', ${index})">X</button>
+                        <button class="text-blue-500" onclick="editData('${id}', ${index})">✎</button>
+                    </div>
                 </div>
             `;
-            dropdownContainer.innerHTML += eduElement;
+            listContainer.innerHTML += entry;
         });
-
-        dropdownContainer.innerHTML += `
-            <button type="button" onclick="resetEducationForm()" class="text-sm text-blue-900 font-medium flex items-center gap-1">
-                <span class="text-lg">+</span> Tambahkan pendidikan lain
-            </button>
-        `;
     }
 
-    function removeEducation(index) {
-        educationData.splice(index, 1);
-        updateEducationDropdown();
-        updateEducationPreview();
+    function resetForm(id) {
+        const inputs = document.querySelectorAll(`#${id}Form input, #${id}Form textarea`);
+        inputs.forEach(input => input.value = '');
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-        updateEducationDropdown();
-    });
+    function deleteData(id, index) {
+        tempData[id].splice(index, 1);
+        renderData(id);
+    }
+
+    function showForm(id) {
+        document.getElementById(id + 'Form').classList.remove('hidden');
+    }
 </script>
