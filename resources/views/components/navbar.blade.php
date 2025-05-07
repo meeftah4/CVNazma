@@ -18,7 +18,7 @@
                 <li><a href="/TemplateCv">Template Cv</a></li>
                 @if (Auth::check())
                     <li class="auth-buttons-in-nav lg:hidden">
-                        <span>{{ Auth::user()->name }}</span>
+                        <a href="{{ route('profile.main') }}" class="profile-user">{{ Auth::user()->name }}</a>
                     </li>
                 @else
                     <li class="auth-buttons-in-nav lg:hidden">
