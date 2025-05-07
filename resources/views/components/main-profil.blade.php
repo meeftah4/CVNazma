@@ -6,7 +6,6 @@
         <img src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : asset('images/profile2.png') }}" alt="Avatar">
     </div>
     <button class="btn-upload-sampul">Upload Sampul</button>
-    <button class="btn-upload-profil">Upload Profil</button>
     <h2>{{ $user->name }}</h2>
     <a href="#" class="btn-logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Keluar</a>
     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

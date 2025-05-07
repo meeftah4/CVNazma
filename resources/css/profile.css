@@ -164,19 +164,6 @@ body {
 
 }
 
-.btn-upload-profil {
-    background-color: #FFFFFF;
-    color: #01287E;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: bold;
-    position: absolute; /* Set posisi absolut */
-    top: 90px; /* 2px di bawah btn-upload-sampul (40px + 30px + 2px) */
-    right: 60px; /* Tempatkan sejajar dengan btn-upload-sampul */
-}
-
 .profile-header .btn-upload-sampul {
     background-color: #FFFFFF;
     color: #01287E;
