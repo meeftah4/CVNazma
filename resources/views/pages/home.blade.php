@@ -143,5 +143,21 @@
         </div>
     </div>
 </section>
-</div>
+
+@if (session('success'))
+    <div id="alert-container" class="fixed top-4 right-4 z-50">
+        <div id="alert-message" class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    </div>
+@endif
+
+@if (session('error'))
+    <div id="alert-container" class="fixed top-4 right-4 z-50">
+        <div id="alert-message" class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    </div>
+@endif
+
 @endsection

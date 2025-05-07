@@ -10,3 +10,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const alertContainer = document.getElementById("alert-container");
+
+    if (alertContainer) {
+        // Hilangkan alert setelah 5 detik
+        setTimeout(() => {
+            alertContainer.style.display = "none";
+        }, 2000);
+    }
+});

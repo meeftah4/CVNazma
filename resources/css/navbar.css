@@ -175,6 +175,19 @@
     transform: translateY(-8px) rotate(-45deg);
 }
 
+.profile-user {
+    color: #1e3a8a; /* Sama dengan warna teks nav-links */
+    font-family: 'Kantumruy', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s; /* Efek transisi */
+}
+
+.profile-user:hover {
+    color: #f97316; /* Sama dengan efek hover nav-links */
+}
+
 /* Gaya untuk kontainer modal secara keseluruhan */
 .login-modal-container,
 .register-modal-container {
@@ -184,7 +197,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 20px;
     z-index: 50;
     overflow: auto; /* Tambahkan overflow agar modal bisa di-scroll jika kontennya melebihi layar */
     padding: 1rem; /* Berikan sedikit padding di sekitar modal */

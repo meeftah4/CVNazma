@@ -14,19 +14,19 @@
                 <div class="profile-avatar">
                     <img src="{{ asset('images/profile2.png') }}" alt="Avatar">
                 </div>
-                <h2>Shery Marsaraina Dabit</h2>
+                <h2>{{ $user->name }}</h2>
                 <ul>
                     <li>
-                        <a href="/profile" class="{{ Request::is('profile') ? 'active' : '' }}">Profil</a>
+                        <a href="{{ route('profile.main') }}" class="{{ Request::is('profile/main') ? 'active' : '' }}">Profil</a>
                     </li>
                     <li>
-                        <a href="/profile/ats" class="{{ Request::is('profile/ats') ? 'active' : '' }}">CV ATS Saya</a>
+                        <a href="{{ route('profile.ats') }}" class="{{ Request::is('profile/ats') ? 'active' : '' }}">CV ATS Saya</a>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="main-content">
-            @include($content)
+            @include($content, ['user' => $user]) <!-- Kirim variabel $user ke view -->
         </div>
     </div>
 </div>

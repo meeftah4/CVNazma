@@ -3,10 +3,28 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable; // Gunakan Authenticatable
 
-class Users extends Model
+class Users extends Authenticatable // Warisi Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UsersFactory> */
     use HasFactory;
+
+    protected $table = 'users';
+
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'username',
+        'address',
+        'telephone',
+        'bio',
+        'profile_picture',
+        'role',
+        'profile_link',
+    ];
+
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
 }
