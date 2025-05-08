@@ -32,7 +32,7 @@
 
             <div class="auth-buttons max-lg:hidden">
                 @if (Auth::check())
-                    <a href="{{ route('profile.main') }}" class="profile-user">{{ Auth::user()->name }}</a>
+                    <a href="{{ route('profile.main') }}" class="profile-user">{{ Auth::user()->username }}</a>
                 @else
                     <button id="open-login-modal">Masuk</button>
                     <button id="open-register-modal">Daftar</button>
