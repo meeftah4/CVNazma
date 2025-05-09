@@ -24,14 +24,14 @@
                     <input type="email" id="email" name="email" class="register-modal-input" placeholder="Email" required>
                 </div>
                 <div class="register-modal-input-group">
-                    <input type="password" id="password" name="password" class="register-modal-input" placeholder="Password" required>
+                    <input type="password" id="password" name="password" class="register-modal-input" placeholder="Password" minlength="8" required>
                 </div>
                 <button type="submit" class="register-modal-submit-button">
                     Daftar
                 </button>
             </form>
             <p class="register-modal-social-text">Atau daftar dengan</p>
-            <button class="register-modal-google-button">
+            <button class="register-modal-google-button" onclick="window.location.href='{{ route('google.login') }}'">
                 <img src="{{ asset('images/google_logo.png') }}" alt="Google" class="register-modal-google-icon">
                 Daftar dengan Google
             </button>

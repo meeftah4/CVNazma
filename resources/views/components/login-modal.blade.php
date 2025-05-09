@@ -28,8 +28,8 @@
                 </button>
             </form>
             <p class="login-modal-social-text">Atau masuk dengan</p>
-            <button class="login-modal-google-button">
-                <img src="{{ asset('images/google_logo.png') }}" alt="Google" class="login-modal-google-icon">
+            <button class="login-modal-google-button" onclick="window.location.href='{{ route('google.login') }}'">
+                <img src="{{ asset('images/google_logo.png') }}" alt="Google" class="register-modal-google-icon">
                 Masuk dengan Google
             </button>
         </div>

@@ -20,6 +20,7 @@ class Users extends Authenticatable // Warisi Authenticatable
         'telephone',
         'bio',
         'profile_picture',
+        'profile_sampul',
         'role',
         'profile_link',
     ];

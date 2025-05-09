@@ -1,11 +1,30 @@
 <!-- Tambahkan H1 untuk "Profil Saya" di atas card -->
 <h1 class="profile-title">Profil Saya</h1>
 <div class="profile-header">
-    <img src="{{ asset('images/profile1.png') }}" alt="Background" class="header-bg">
-    <div class="header-avatar">
-        <img src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : asset('images/profile2.png') }}" alt="Avatar">
+    <img src="{{ $user->profile_sampul ? asset('storage/' . $user->profile_sampul) : asset('images/profile1.png') }}" alt="Background" class="header-bg">
+    <div class="header-avatar" style="text-align: left; margin-left: 10px;">
+        <button class="btn-edit-profile-picture" onclick="document.getElementById('profile_picture_input').click()">
+            @if ($user->profile_picture && filter_var($user->profile_picture, FILTER_VALIDATE_URL))
+            <img src="{{ $user->profile_picture }}" alt="Profile Picture">
+            @elseif ($user->profile_picture && file_exists(public_path('storage/' . $user->profile_picture)))
+            <img src="{{ asset('storage/' . $user->profile_picture) }}" alt="Profile Picture">
+            @else
+            <img src="{{ asset('images/profile2.png') }}" alt="Default Profile Picture">
+            @endif
+        </button>
+        <form id="profile_picture_form" action="{{ route('profile.picture.update') }}" method="POST" enctype="multipart/form-data" style="display: none;">
+            @csrf
+            <input type="file" id="profile_picture_input" name="profile_picture" accept="image/*" onchange="document.getElementById('profile_picture_form').submit();">
+        </form>
     </div>
-    <button class="btn-upload-sampul">Upload Sampul</button>
+
+    <!-- Button Upload Sampul -->
+    <button class="btn-upload-sampul" onclick="document.getElementById('profile_sampul_input').click()">Upload Sampul</button>
+    <form id="profile_sampul_form" action="{{ route('profile.sampul.update') }}" method="POST" enctype="multipart/form-data" style="display: none;">
+        @csrf
+        <input type="file" id="profile_sampul_input" name="profile_sampul" accept="image/*" onchange="document.getElementById('profile_sampul_form').submit();">
+    </form>
+
     <h2>{{ $user->name }}</h2>
     <a href="#" class="btn-logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Keluar</a>
     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

@@ -10,9 +10,15 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <div class="profile-card">
-                <img src="{{ asset('images/profile.png') }}" alt="Background" class="profile-bg">
+                <img src="{{ $user->profile_sampul ? asset('storage/' . $user->profile_sampul) : asset('images/profile1.png') }}" alt="Background" class="profile-bg">
                 <div class="profile-avatar">
-                    <img src="{{ asset('images/profile2.png') }}" alt="Avatar">
+                    @if ($user->profile_picture && filter_var($user->profile_picture, FILTER_VALIDATE_URL))
+                        <img src="{{ $user->profile_picture }}" alt="Profile Picture">
+                    @elseif ($user->profile_picture && file_exists(public_path('storage/' . $user->profile_picture)))
+                        <img src="{{ asset('storage/' . $user->profile_picture) }}" alt="Profile Picture">
+                    @else
+                        <img src="{{ asset('images/profile2.png') }}" alt="Default Profile Picture">
+                    @endif
                 </div>
                 <h2>{{ $user->name }}</h2>
                 <ul>

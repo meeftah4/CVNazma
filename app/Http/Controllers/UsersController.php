@@ -20,11 +20,14 @@ class UsersController extends Controller
             ]);
 
             // Simpan data ke database
-            Users::create([
+            $user = Users::create([
                 'name' => $validatedData['name'],
                 'email' => $validatedData['email'],
                 'password' => Hash::make($validatedData['password']),
             ]);
+
+            // Login pengguna setelah registrasi
+            Auth::login($user);
 
             // Flash message sukses
             return redirect('/')->with('success', 'Registrasi berhasil! Selamat datang di CV Nazma.');
@@ -118,6 +121,72 @@ class UsersController extends Controller
         } catch (\Exception $e) {
             // Redirect dengan pesan error
             return redirect()->route('profile')->with('error', 'Terjadi kesalahan saat memperbarui profil.');
+        }
+    }
+
+    public function updateProfilePicture(Request $request)
+    {
+        try {
+            // Validasi file gambar
+            $request->validate([
+                'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
+
+            // Ambil pengguna yang sedang login
+            $user = Auth::user();
+
+            // Simpan file gambar ke folder 'public/storage/profile_pictures'
+            $file = $request->file('profile_picture');
+            $filePath = $file->store('profile_pictures', 'public');
+
+            // Hapus gambar lama jika ada
+            if ($user->profile_picture && file_exists(public_path('storage/' . $user->profile_picture))) {
+                unlink(public_path('storage/' . $user->profile_picture));
+            }
+
+            // Update path gambar di database
+            $user->update([
+                'profile_picture' => $filePath,
+            ]);
+
+            // Redirect dengan pesan sukses
+            return redirect()->route('profile')->with('success', 'Foto profil berhasil diperbarui.');
+        } catch (\Exception $e) {
+            // Redirect dengan pesan error
+            return redirect()->route('profile')->with('error', 'Terjadi kesalahan saat memperbarui foto profil.');
+        }
+    }
+
+    public function updateProfileSampul(Request $request)
+    {
+        try {
+            // Validasi file gambar
+            $request->validate([
+                'profile_sampul' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
+
+            // Ambil pengguna yang sedang login
+            $user = Auth::user();
+
+            // Simpan file gambar ke folder 'public/storage/profile_sampul'
+            $file = $request->file('profile_sampul');
+            $filePath = $file->store('profile_sampul', 'public');
+
+            // Hapus gambar lama jika ada
+            if ($user->profile_sampul && file_exists(public_path('storage/' . $user->profile_sampul))) {
+                unlink(public_path('storage/' . $user->profile_sampul));
+            }
+
+            // Update path gambar di database
+            $user->update([
+                'profile_sampul' => $filePath,
+            ]);
+
+            // Redirect dengan pesan sukses
+            return redirect()->route('profile')->with('success', 'Sampul profil berhasil diperbarui.');
+        } catch (\Exception $e) {
+            // Redirect dengan pesan error
+            return redirect()->route('profile')->with('error', 'Terjadi kesalahan saat memperbarui sampul profil.');
         }
     }
 }

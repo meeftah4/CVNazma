@@ -14,7 +14,7 @@
 
             <ul class="nav-links" id="navLinks">
                 <li><a href="/">Home</a></li>
-                <li><a href="/CvAts">Cv Ats</a></li>
+                <li><a href="/cvats">Cv Ats</a></li>
                 <li><a href="/TemplateCv">Template Cv</a></li>
                 @if (Auth::check())
                     <li class="auth-buttons-in-nav lg:hidden">

@@ -16,11 +16,12 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('username')->default('profile');
+            $table->string('username')->default('Profile');
             $table->text('address')->nullable();
             $table->string('telephone')->nullable();
             $table->text('bio')->nullable();
             $table->string('profile_picture')->nullable();
+            $table->string('profile_sampul')->nullable();
             $table->string('role')->default('user');
             $table->string('profile_link')->nullable();
             $table->timestamps();
