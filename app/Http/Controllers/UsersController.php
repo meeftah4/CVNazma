@@ -50,8 +50,17 @@ class UsersController extends Controller
             if (Auth::attempt($credentials)) {
                 $request->session()->regenerate();
 
-                // Flash message sukses
-                return redirect('/')->with('success', 'Login berhasil! Selamat datang kembali.');
+                // Ambil pengguna yang sedang login
+                $user = Auth::user();
+
+                // Cek apakah pengguna adalah admin
+                if ($user->role === 'admin') {
+                    // Redirect ke dashboard admin
+                    return redirect('/dashboard')->with('success', 'Login berhasil! Selamat datang, Admin.');
+                }
+
+                // Jika bukan admin, redirect ke halaman utama
+                return redirect('/')->with('success', 'Login berhasil! Selamat datang, ' . $user->name . '.');
             }
 
             // Flash message gagal
@@ -188,5 +197,18 @@ class UsersController extends Controller
             // Redirect dengan pesan error
             return redirect()->route('profile')->with('error', 'Terjadi kesalahan saat memperbarui sampul profil.');
         }
+    }
+
+    public function dashboard()
+    {
+        $user = Auth::user();
+
+        // Cek apakah pengguna adalah admin
+        if ($user && $user->role === 'admin') {
+            return view('dashboard.home');
+        }
+
+        // Jika bukan admin, redirect ke halaman utama
+        return redirect('/')->with('error', 'Akses ditolak! Halaman ini hanya untuk admin.');
     }
 }

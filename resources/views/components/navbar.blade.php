@@ -15,8 +15,14 @@
             <ul class="nav-links" id="navLinks">
                 <li><a href="/">Home</a></li>
                 <li><a href="/cvats">Cv Ats</a></li>
-                <li><a href="/TemplateCv">Template Cv</a></li>
+                <li><a href="/template">Template Cv</a></li>
                 @if (Auth::check())
+                    {{-- Jika admin, tambahkan tombol ke dashboard --}}
+                    @if (Auth::user()->role === 'admin')
+                        <li class="lg:hidden">
+                            <a href="/dashboard" class="btn btn-primary admin-button">Admin</a>
+                        </li>
+                    @endif
                     <li class="auth-buttons-in-nav lg:hidden">
                         <a href="{{ route('profile.main') }}" class="profile-user">{{ Auth::user()->name }}</a>
                     </li>
@@ -32,6 +38,10 @@
 
             <div class="auth-buttons max-lg:hidden">
                 @if (Auth::check())
+                    {{-- Jika admin, tambahkan tombol ke dashboard --}}
+                    @if (Auth::user()->role === 'admin')
+                        <a href="/dashboard" class="btn btn-primary admin-button">Admin</a>
+                    @endif
                     <a href="{{ route('profile.main') }}" class="profile-user">{{ Auth::user()->username }}</a>
                 @else
                     <button id="open-login-modal">Masuk</button>

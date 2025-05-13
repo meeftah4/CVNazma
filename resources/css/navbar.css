@@ -468,3 +468,44 @@
     color: white;
     border-color: white;
 }
+
+/* Gaya untuk tombol Admin di desktop */
+.admin-button {
+    background-color: #1e3a8a; /* Warna biru */
+    color: white;
+    font-family: 'Kantumruy', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-block; /* Pastikan tombol terlihat */
+    text-align: center;
+    white-space: nowrap; /* Hindari teks terpotong */
+}
+
+.admin-button:hover {
+    background-color: #f97316; /* Warna oranye saat hover */
+    transform: scale(1.05); /* Efek zoom saat hover */
+}
+
+/* Gaya untuk tombol Admin di mobile */
+@media (max-width: 768px) {
+    .admin-button {
+        background-color: #f97316; /* Warna oranye */
+        color: #FFFFFF;
+        font-size: 14px; /* Ukuran font lebih kecil */
+        padding: 6px 12px; /* Padding lebih kecil */
+        border-radius: 5px;
+        text-align: center;
+        display: block; /* Pastikan tombol terlihat */
+        width: 100%; /* Lebar penuh di mobile */
+        margin: 10px 0; /* Beri jarak atas dan bawah */
+    }
+
+    .admin-button:hover {
+        background-color: #1e3a8a; /* Warna biru saat hover */
+        transform: none; /* Tidak ada efek zoom di mobile */
+    }
+}

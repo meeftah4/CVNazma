@@ -18,5 +18,11 @@
                 <i class="fas fa-cogs mr-3"></i> Transactions
             </a>
         </li>
+        {{-- Tombol Switch ke Halaman Utama --}}
+        <li>
+            <a href="/" class="flex items-center p-4 hover:bg-blue-700">
+                <i class="fas fa-home mr-3"></i> Switch ke Halaman Utama
+            </a>
+        </li>
     </ul>
 </aside>

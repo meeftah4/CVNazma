@@ -9,9 +9,12 @@ use App\Http\Controllers\Auth\GoogleController;
 Route::get('/', function () {
     return view('pages.home');
 });
-
 Route::get('/cvats', function () {
     return view('pages.cv', [
+    ]);
+});
+Route::get('/template', function () {
+    return view('pages.template', [
     ]);
 });
 
@@ -30,13 +33,41 @@ Route::post('/logout', function () {Auth::logout();request()->session()->invalid
 Route::middleware(['auth'])->group(function () {Route::get('/profile/main', [UsersController::class, 'showMainProfile'])->name('profile.main');
 Route::get('/profile/ats', [UsersController::class, 'showAtsProfile'])->name('profile.ats');});
 
-// Dashboard Admin Routes
-Route::get('/dashboard', function () {
-        return view('dashboard.home');
-});
-Route::get('/dashboard/users', function () {
-    return view('dashboard.users');
-});
-Route::get('/dashboard/transactions', function () {
-    return view('dashboard.transactions');
+// Admin Routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function () {
+        $user = Auth::user();
+
+        // Cek apakah pengguna adalah admin
+        if ($user && $user->role === 'admin') {
+            return view('dashboard.home');
+        }
+
+        // Jika bukan admin, redirect ke halaman utama
+        return redirect('/')->with('error', 'Akses ditolak! Halaman ini hanya untuk admin.');
+    })->name('dashboard');
+
+    Route::get('/dashboard/users', function () {
+        $user = Auth::user();
+
+        // Cek apakah pengguna adalah admin
+        if ($user && $user->role === 'admin') {
+            return view('dashboard.users');
+        }
+
+        // Jika bukan admin, redirect ke halaman utama
+        return redirect('/')->with('error', 'Akses ditolak! Halaman ini hanya untuk admin.');
+    })->name('dashboard.users');
+
+    Route::get('/dashboard/transactions', function () {
+        $user = Auth::user();
+
+        // Cek apakah pengguna adalah admin
+        if ($user && $user->role === 'admin') {
+            return view('dashboard.transactions');
+        }
+
+        // Jika bukan admin, redirect ke halaman utama
+        return redirect('/')->with('error', 'Akses ditolak! Halaman ini hanya untuk admin.');
+    })->name('dashboard.transactions');
 });
