@@ -18,7 +18,7 @@
 
     <div class="mb-4">
         <label class="block text-gray-700">Alamat</label>
-        <textarea id="addressInput" name="address" class="mt-1 block w-full border border-gray-300 rounded-md p-2"></textarea>
+        <textarea id="addressInput" name="addressInput" class="mt-1 block w-full border border-gray-300 rounded-md p-2"></textarea>
     </div>
 
     <div class="mb-4">
