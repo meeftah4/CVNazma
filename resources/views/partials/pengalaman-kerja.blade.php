@@ -1,5 +1,9 @@
 {{-- filepath: d:\Magang\CVNazma\resources\views\partials\pengalaman-kerja.blade.php --}}
-<div id="pengalamankerjaForm" class="bg-gray-100 p-4 rounded-md hidden">
+<div id="pengalamankerjaList" class="mb-4">
+    <!-- Baris data akan ditampilkan di sini -->
+</div>
+
+<div id="pengalamankerjaForm" class="bg-gray-100 p-4 rounded-md">
     <div class="mb-4">
         <label class="block text-gray-700">Nama Perusahaan</label>
         <input type="text" id="companyName" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
@@ -21,7 +25,7 @@
         </div>
         <div>
             <label class="block text-gray-700">Tanggal Selesai</label>
-            <input type="date" id="endDate" class="mt-1 block w-full border border-gray-300 rounded-md p-2" disabled>
+            <input type="date" id="endDate" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
         </div>
     </div>
     <div class="mb-4">
@@ -38,7 +42,7 @@
         <button type="button" class="bg-red-500 text-white px-4 py-2 rounded-md flex items-center" onclick="resetForm('pengalamankerja')">
             Hapus
         </button>
-        <button type="button" class="bg-orange-500 text-white px-4 py-2 rounded-md flex items-center" onclick="saveData('pengalamankerja')">
+        <button type="button" class="bg-orange-500 text-white px-4 py-2 rounded-md flex items-center" onclick="saveDataPengalamanKerja()">
             Simpan
         </button>
     </div>

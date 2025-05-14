@@ -2,25 +2,6 @@
 
 @section('title', 'CV Nazma')
 
-@push('styles')
-    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
-    <style>
-        /* Membungkus teks panjang di elemen form */
-        textarea, input[type="text"] {
-            word-wrap: break-word; /* Membungkus kata panjang */
-            overflow-wrap: break-word; /* Alternatif untuk browser lain */
-            white-space: normal; /* Pastikan teks tidak dalam satu baris */
-        }
-
-        /* Tambahkan untuk elemen lain jika diperlukan */
-        .break-words {
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            white-space: normal;
-        }
-    </style>
-@endpush
-
 @section('content')
 <div class="bg-blue-50 min-h-screen py-10">
     <div class="container mx-auto px-4">
