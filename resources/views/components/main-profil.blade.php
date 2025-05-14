@@ -60,6 +60,26 @@
             <input type="text" id="full_name" name="full_name" value="{{ $user->name }}">
         </div>
 
+        <!-- Email dan Password-->
+        <div class="form-group half-width">
+            <div>
+                <label for="username">Email</label>
+                <input type="email" id="email" name="email" value="{{ $user->email }}" readonly>
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Masukkan password baru" 
+                       @if($user->is_google_account) disabled @endif>
+                <small>
+                    @if($user->is_google_account)
+                        Password tidak dapat diubah untuk akun Google.
+                    @else
+                        Biarkan kosong jika tidak ingin mengubah password.
+                    @endif
+                </small>
+            </div>
+        </div>
+
         <!-- Username dan Nomor Telepon-->
         <div class="form-group half-width">
             <div>

@@ -23,6 +23,7 @@ class Users extends Authenticatable // Warisi Authenticatable
         'profile_sampul',
         'role',
         'profile_link',
+        'is_google_account', // Tambahkan ini
     ];
 
     protected $hidden = [

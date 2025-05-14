@@ -2,11 +2,20 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.faq-question').forEach(button => {
         button.addEventListener('click', () => {
             const faqItem = button.parentElement;
-            faqItem.classList.toggle('active');
-
-            // Ubah ikon + dan -
+            const answer = faqItem.querySelector('.faq-answer');
             const icon = button.querySelector('.faq-icon');
-            icon.textContent = faqItem.classList.contains('active') ? '-' : '+';
+
+            if (faqItem.classList.contains('active')) {
+                // Tutup dropdown
+                answer.style.height = '0px';
+                faqItem.classList.remove('active');
+                icon.textContent = '+';
+            } else {
+                // Buka dropdown
+                answer.style.height = `${answer.scrollHeight}px`;
+                faqItem.classList.add('active');
+                icon.textContent = '-';
+            }
         });
     });
 });

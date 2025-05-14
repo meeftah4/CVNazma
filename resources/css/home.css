@@ -255,15 +255,18 @@
 }
 
 .faq-answer {
-    display: none; /* Sembunyikan jawaban secara default */
-    padding: 1rem 1.5rem; /* Tambahkan padding kiri dan kanan */
+    display: block; /* Ubah dari 'none' ke 'block' untuk animasi */
+    height: 0; /* Awalnya tinggi 0 */
+    overflow: hidden; /* Sembunyikan konten yang meluap */
+    transition: height 0.3s ease; /* Tambahkan transisi untuk animasi */
+    padding: 0 1.5rem; /* Tambahkan padding horizontal */
     font-size: 20px;
-    color: #01287E; /* Warna teks abu-abu */
+    color: #01287E; /* Warna teks */
     text-align: left;
 }
 
 .faq-item.active .faq-answer {
-    display: block; /* Tampilkan jawaban jika item aktif */
+    /* Tinggi akan diatur secara dinamis oleh JavaScript */
 }
 
 /* Hilangkan gambar pada tampilan mobile */

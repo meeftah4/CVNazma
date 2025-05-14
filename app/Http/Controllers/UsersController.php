@@ -112,10 +112,16 @@ class UsersController extends Controller
                 'username' => 'required|string|max:255',
                 'phone_number' => 'nullable|string|max:15',
                 'address' => 'nullable|string|max:255',
+                'password' => 'nullable|string|min:8', // Validasi password
             ]);
 
             // Ambil pengguna yang sedang login
             $user = Auth::user();
+
+            // Cek apakah akun adalah akun Google
+            if ($user->is_google_account && $request->filled('password')) {
+                return redirect()->route('profile')->with('error', 'Password tidak dapat diubah untuk akun Google.');
+            }
 
             // Update data pengguna
             $user->update([
@@ -124,6 +130,13 @@ class UsersController extends Controller
                 'telephone' => $validatedData['phone_number'],
                 'address' => $validatedData['address'],
             ]);
+
+            // Update password jika diisi dan bukan akun Google
+            if (!$user->is_google_account && $request->filled('password')) {
+                $user->update([
+                    'password' => Hash::make($validatedData['password']),
+                ]);
+            }
 
             // Redirect dengan pesan sukses
             return redirect()->route('profile')->with('success', 'Profil berhasil diperbarui.');
@@ -203,12 +216,55 @@ class UsersController extends Controller
     {
         $user = Auth::user();
 
-        // Cek apakah pengguna adalah admin
-        if ($user && $user->role === 'admin') {
-            return view('dashboard.home');
+        // Cek apakah pengguna sudah login
+        if (!$user) {
+            return redirect('/')->with('error', 'Silahkan login untuk mengakses halaman ini.');
         }
 
-        // Jika bukan admin, redirect ke halaman utama
-        return redirect('/')->with('error', 'Akses ditolak! Halaman ini hanya untuk admin.');
+        // Cek apakah pengguna adalah admin
+        if ($user->role !== 'admin') {
+            return redirect('/')->with('error', 'Akses ditolak! Halaman ini hanya untuk admin.');
+        }
+
+        // Hitung total pengguna dan tampilkan dashboard
+        $totalUsers = Users::count();
+        return view('dashboard.home', compact('totalUsers'));
+    }
+
+    public function index()
+    {
+        $users = Users::all(); // Ambil semua data pengguna
+        return view('dashboard.users', compact('users')); // Kirim data ke view
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $user = Users::findOrFail($id); // Cari pengguna berdasarkan ID
+            $user->delete(); // Hapus pengguna
+            return redirect()->route('dashboard.users')->with('success', 'User berhasil dihapus.');
+        } catch (\Exception $e) {
+            return redirect()->route('dashboard.users')->with('error', 'Terjadi kesalahan saat menghapus user.');
+        }
+    }
+
+    public function edit($id)
+    {
+        $user = Users::findOrFail($id);
+        return view('dashboard.edit-user', compact('user'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'role' => 'required|string',
+        ]);
+
+        $user = Users::findOrFail($id);
+        $user->update($validatedData);
+
+        return redirect()->route('dashboard.users')->with('success', 'User berhasil diperbarui.');
     }
 }

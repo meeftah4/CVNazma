@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('profile_sampul')->nullable();
             $table->string('role')->default('user');
             $table->string('profile_link')->nullable();
+            $table->boolean('is_google_account')->default(false);
+            $table->rememberToken();
             $table->timestamps();
         });
     }

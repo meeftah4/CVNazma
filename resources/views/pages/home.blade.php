@@ -117,7 +117,7 @@
         <div class="faq-item">
             <button class="faq-question">
                 Apa itu CV ATS?
-                <span class="faq-icon">-</span>
+                <span class="faq-icon">+</span>
             </button>
             <div class="faq-answer">
                 <p>CV ATS adalah singkatan dari Curriculum Vitae Applicant Tracking System-friendly. Artinya, CV ini dibuat agar mudah dibaca dan diproses oleh sistem pelacak pelamar kerja (ATS) yang digunakan oleh banyak perusahaan untuk menyaring dan menyeleksi CV secara otomatis sebelum dibaca oleh HR atau rekruter.</p>

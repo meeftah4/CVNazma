@@ -17,27 +17,31 @@ class GoogleController extends Controller
     public function handleGoogleCallback()
     {
         try {
-            $googleUser = Socialite::driver('google')->user();
+            $googleUser = Socialite::driver('google')->user(); // Tambahkan stateless()
 
             // Cari pengguna berdasarkan email
             $user = Users::where('email', $googleUser->getEmail())->first();
 
             if (!$user) {
-                // Jika pengguna belum ada, buat akun baru
                 $user = Users::create([
                     'name' => $googleUser->getName(),
                     'email' => $googleUser->getEmail(),
                     'profile_picture' => $googleUser->getAvatar(),
-                    'password' => bcrypt('defaultpassword'), // Password default (tidak akan digunakan)
+                    'password' => bcrypt('defaultpassword'),
+                    'is_google_account' => true, // Tandai sebagai akun Google
                 ]);
             }
 
             // Login pengguna
-            Auth::login($user);
+            Auth::login($user, true);
+
+            // Regenerate sesi
+            session()->regenerate();
 
             return redirect('/')->with('success', 'Login berhasil menggunakan Google!');
         } catch (\Exception $e) {
-            return redirect('/')->with('error', 'Terjadi kesalahan saat login dengan Google.');
+            // Tangani error dengan lebih spesifik
+            return redirect('/')->with('error', 'Terjadi kesalahan saat login dengan Google: ' . $e->getMessage());
         }
     }
 }
