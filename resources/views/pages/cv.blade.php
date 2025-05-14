@@ -89,7 +89,7 @@
         const endDate = document.getElementById('endDate')?.value || 'Tanggal Selesai tidak tersedia';
         const jobDescription = document.getElementById('jobDescription')?.value || 'Deskripsi tidak tersedia';
 
-        document.getElementById('previewExperience').innerHTML = `
+        document.getElementById('previewPengalamankerja').innerHTML = `
             <p><strong>${companyName}</strong> - ${jobPosition}</p>
             <p>${jobCity}</p>
             <p>${startDate} - ${endDate}</p>

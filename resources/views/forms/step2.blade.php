@@ -83,31 +83,33 @@
     }
 
     function saveData(id) {
-        console.log(`saveData called with id: ${id}`);
-        const inputs = document.querySelectorAll(`#${id}Form input, #${id}Form textarea`);
-        const data = {};
+    console.log(`saveData called with id: ${id}`);
+    const inputs = document.querySelectorAll(`#${id}Form input, #${id}Form textarea`);
+    const data = {};
 
-        // Ambil nilai dari semua input dan textarea
-        inputs.forEach(input => {
-            data[input.id] = input.value || ''; // Simpan nilai input ke dalam objek data
-        });
+    // Ambil nilai dari semua input dan textarea
+    inputs.forEach(input => {
+        data[input.id] = input.value || ''; // Simpan nilai input ke dalam objek data
+    });
 
-        // Pastikan array untuk kategori `id` ada di `tempData`
-        if (!tempData[id]) {
-            tempData[id] = [];
-        }
+    console.log(`Data to save:`, data);
 
-        // Tambahkan data ke array `tempData`
-        tempData[id].push(data);
-
-        console.log(`Data saved for ${id}:`, data);
-
-        // Render ulang data yang disimpan ke live preview
-        renderData(id);
-
-        // Reset form setelah data disimpan
-        resetForm(id);
+    // Pastikan array untuk kategori `id` ada di `tempData`
+    if (!tempData[id]) {
+        tempData[id] = [];
     }
+
+    // Tambahkan data ke array `tempData`
+    tempData[id].push(data);
+
+    console.log(`Data saved for ${id}:`, tempData[id]);
+
+    // Render ulang data yang disimpan ke live preview
+    renderData(id);
+
+    // Reset form setelah data disimpan
+    resetForm(id);
+}
 
     function renderData(id) {
         const listContainer = document.getElementById(id + 'List');
@@ -130,19 +132,31 @@
             let entry = '';
             if (id === 'pengalamankerja') {
                 entry = `
-                    <div class="mb-4">
-                        <div class="flex justify-between items-center">
-                            <p><strong>${item.companyName || ''}</strong></p>
-                            <p class="text-gray-500">${item.startDate || ''} - ${item.endDate || ''}</p>
-                        </div>
-                        <p>${item.jobPosition || ''} - ${item.jobCity || ''}</p>
-                        <p>${item.jobDescription || ''}</p>
-                        <div class="flex space-x-2 mt-1">
+                   <div class="mb-4">
+                    <div class="flex justify-between items-center">
+                        <p><strong>${item.jobPosition || 'Posisi tidak tersedia'}</strong></p>
+                        <div class="flex space-x-2">
                             <button class="text-red-500" onclick="deleteData('${id}', ${index})">X</button>
                             <button class="text-blue-500" onclick="editData('${id}', ${index})">✎</button>
                         </div>
                     </div>
-                `;
+                    <p class="text-gray-500">${item.startDate ? formatDate(item.startDate) : ''} - ${isPresent ? 'Present' : item.endDate ? formatDate(item.endDate) : ''}</p>
+                </div>
+            `;
+            } if (id === 'pendidikan') {
+                entry = `
+                   <div class="mb-4">
+                    <div class="flex justify-between items-center">
+                        <p><strong>${item.educationDegree || 'Gelar tidak tersedia'}</strong></p>
+                        <div class="flex space-x-2">
+                            <button class="text-red-500" onclick="deleteData('${id}', ${index})">X</button>
+                            <button class="text-blue-500" onclick="editData('${id}', ${index})">✎</button>
+                        </div>
+                    </div>
+                    <p class="text-gray-500">${item.educationStartDate ? formatDate(item.educationStartDate) : ''} - ${isPresent ? 'Present' : item.educationEndDate ? formatDate(item.educationEndDate) : ''}</p>
+                </div>
+            `;
+
             } else {
                 entry = `
                     <div class="flex justify-between items-center mb-2">
@@ -158,6 +172,7 @@
             }
 
             listContainer.innerHTML += entry;
+            
 
             // Tambahkan data ke preview
             if (id === 'bahasa') {
@@ -167,6 +182,30 @@
                 previewContainer.innerHTML += `<p class="break-words">${item.descriptionInput || ''}</p>`;
             }
         });
+
+        // Khusus untuk bagian pengalaman kerja, perbarui preview dengan format yang lebih terstruktur
+        if (id === 'pengalamankerja') {
+            previewContainer.innerHTML = ''; // Kosongkan preview sebelum menambahkan data baru
+            tempData[id].forEach(item => {
+                const entry = `
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center">
+                            <p><strong>${item.companyName || 'Nama Perusahaan tidak tersedia'}</strong> - ${item.jobCity || 'Kota tidak tersedia'}</p>
+                            ${item.startDate || isPresent ? `<p class="text-gray-500">${formatDate(item.startDate)} - ${isPresent ? 'Present' : formatDate(item.endDate)}</p>` : ''}                        </div>
+                        <p>${item.jobPosition || 'Posisi tidak tersedia'}</p>
+                        <ul class="list-disc pl-5 text-gray-600">
+                            ${item.jobDescription
+                                ? item.jobDescription
+                                      .split('\n')
+                                      .map(desc => `<li>${desc}</li>`)
+                                      .join('')
+                                : '<li>Deskripsi tidak tersedia</li>'}
+                        </ul>
+                    </div>
+                `;
+                previewContainer.innerHTML += entry; // Tambahkan data ke preview
+            });
+        }
     }
 
     function updateLivePreview(id) {
@@ -190,6 +229,11 @@
     function resetForm(id) {
         const inputs = document.querySelectorAll(`#${id}Form input, #${id}Form textarea`);
         inputs.forEach(input => input.value = '');
+        const isPresentCheckbox = document.getElementById('isPresent');
+        if (isPresentCheckbox) {
+            isPresentCheckbox.checked = false;
+            toggleEndDate(); // Pastikan tanggal selesai diaktifkan kembali
+        }
     }
 
     function capitalizeFirstLetter(string) {
@@ -209,22 +253,132 @@
     }
 
     function editData(id, index) {
-        // Ambil data yang akan diedit
-        const dataToEdit = tempData[id][index];
+    // Ambil data yang akan diedit
+    const dataToEdit = tempData[id][index];
 
-        // Isi form dengan data yang akan diedit
-        const inputs = document.querySelectorAll(`#${id}Form input, #${id}Form textarea`);
+    // Isi form dengan data yang akan diedit
+    const inputs = document.querySelectorAll(`#${id}Form input, #${id}Form textarea`);
+    inputs.forEach(input => {
+        input.value = dataToEdit[input.id] || '';
+    });
+
+    // Hapus data lama dari tempData
+    tempData[id].splice(index, 1);
+
+    // Tampilkan form untuk diedit
+    document.getElementById(id + 'Form').classList.remove('hidden');
+
+    // Tambahkan event listener untuk tombol simpan
+    const saveButton = document.querySelector(`#${id}Form button[onclick="saveData('${id}')"]`);
+    saveButton.onclick = () => {
+        // Simpan data yang diedit
+        const updatedData = {};
         inputs.forEach(input => {
-            input.value = dataToEdit[input.id] || '';
+            updatedData[input.id] = input.value || '';
         });
 
-        // Hapus data lama dari tempData
-        tempData[id].splice(index, 1);
-
-        // Tampilkan form untuk diedit
-        document.getElementById(id + 'Form').classList.remove('hidden');
+        // Tambahkan data yang diperbarui ke tempData
+        tempData[id].splice(index, 0, updatedData);
 
         // Render ulang data
         renderData(id);
+
+        // Reset form setelah data disimpan
+        resetForm(id);
+
+        // Kembalikan fungsi tombol simpan ke default
+        saveButton.onclick = () => saveData(id);
+    };
+}
+
+    function enableLivePreviewPengalamanKerja() {
+        const inputs = document.querySelectorAll('#pengalamankerjaForm input, #pengalamankerjaForm textarea');
+        const previewContainer = document.getElementById('previewPengalamankerja');
+
+        inputs.forEach(input => {
+            input.addEventListener('input', () => {
+                const data = {};
+
+                // Ambil nilai dari semua input dan textarea
+                inputs.forEach(input => {
+                    data[input.id] = input.value || '';
+                });
+
+                const isPresent = document.getElementById('isPresent').checked;
+
+                // Render data langsung ke live preview
+                previewContainer.innerHTML = `
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center">
+                            <p><strong>${data.companyName || ''}</strong>${data.jobCity ? ` - ${data.jobCity}` : ''}</p>
+                            ${data.startDate || isPresent ? `<p class="text-gray-500">${formatDate(data.startDate)} - ${isPresent ? 'Present' : formatDate(data.endDate)}</p>` : ''}
+                        </div>
+                        ${data.jobPosition ? `<p>${data.jobPosition}</p>` : ''}
+                        ${data.jobDescription ? `
+                            <ul class="list-disc pl-5 text-gray-600">
+                                ${data.jobDescription.split('\n').map(desc => `<li>${desc}</li>`).join('')}
+                            </ul>
+                        ` : ''}
+                    </div>
+                `;
+            });
+        });
+    }
+
+    function enableLivePreviewPendidikan() {
+        const inputs = document.querySelectorAll('#pendidikanForm input, #pendidikanForm textarea');
+        const previewContainer = document.getElementById('previewEducation');
+
+        inputs.forEach(input => {
+            input.addEventListener('input', () => {
+                const data = {};
+
+                // Ambil nilai dari semua input dan textarea
+                inputs.forEach(input => {
+                    data[input.id] = input.value || '';
+                });
+
+                // Render data langsung ke live preview
+                previewContainer.innerHTML = `
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center">
+                            <p><strong>${data.educationInstitution || ''}</strong></p>
+                            ${data.educationStartDate || isPresent ? `<p class="text-gray-500">${formatDate(data.educationStartDate)} - ${isPresent ? 'Present' : formatDate(data.educationEndDate)}</p>` : ''}
+                        </div>
+                        ${data.educationDegree ? `<p>${data.educationDegree}</p>` : ''}
+                        ${data.educationDegree ? `
+                            <ul class="list-disc pl-5 text-gray-600">
+                                ${data.educationDescription.split('\n').map(desc => `<li>${desc}</li>`).join('')}
+                            </ul>
+                        ` : ''}
+                    </div>
+                `;
+            });
+        });
+    }
+
+    // Fungsi untuk memformat tanggal menjadi "Jan 2024"
+function formatDate(date) {
+    if (!date) return '';
+    const options = { year: 'numeric', month: 'short' };
+    return new Date(date).toLocaleDateString('en-US', options);
+}
+
+        // Panggil fungsi saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', () => {
+        enableLivePreviewPengalamanKerja();
+        enableLivePreviewPendidikan();
+    });
+
+    function toggleEndDate() {
+        const isPresentCheckbox = document.getElementById('isPresent');
+        const endDateInput = document.getElementById('endDate');
+
+        if (isPresentCheckbox.checked) {
+            endDateInput.value = ''; // Kosongkan nilai tanggal selesai
+            endDateInput.disabled = true; // Nonaktifkan input
+        } else {
+            endDateInput.disabled = false; // Aktifkan kembali input
+        }
     }
 </script>

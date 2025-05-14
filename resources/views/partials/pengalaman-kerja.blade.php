@@ -21,8 +21,14 @@
         </div>
         <div>
             <label class="block text-gray-700">Tanggal Selesai</label>
-            <input type="date" id="endDate" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+            <input type="date" id="endDate" class="mt-1 block w-full border border-gray-300 rounded-md p-2" disabled>
         </div>
+    </div>
+    <div class="mb-4">
+        <label class="inline-flex items-center">
+            <input type="checkbox" id="isPresent" class="form-checkbox h-5 w-5 text-orange-500" onclick="toggleEndDate()">
+            <span class="ml-2 text-gray-700">Saat ini saya bekerja di sini</span>
+        </label>
     </div>
     <div class="mb-4">
         <label class="block text-gray-700">Deskripsi</label>

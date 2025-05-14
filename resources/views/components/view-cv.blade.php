@@ -22,13 +22,13 @@
 <section class="mb-6">
     <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-2">Pengalaman Kerja</h2>
     <div id="previewPengalamankerja" class="text-sm text-gray-600">
-        <!-- Data pengalaman kerja akan ditampilkan di sini -->
         <div class="mb-4">
             <div class="flex justify-between items-center">
-                <p><strong>Instrument Tech, Marcelle Program</strong></p>
-                <p class="text-gray-500">Jan 2024 - Present</p>
+                <p><strong id="companyName">Instrument Tech</strong> - <span id="jobCity">Sleman</span></p>
+                <p class="text-gray-500" id="jobDuration">Jan 2024 - Jan 2025</p>
             </div>
-            <ul class="list-disc pl-5 text-gray-600">
+            <p id="jobPosition">Marcelle Program</p>
+            <ul id="jobDescription" class="list-disc pl-5 text-gray-600">
                 <li>Led development of an advanced automation system, achieving a 15% increase in operational efficiency.</li>
                 <li>Streamlined manufacturing processes, reducing production costs by 10%.</li>
                 <li>Implemented preventive maintenance strategies, resulting in a 20% decrease in equipment downtime.</li>
@@ -69,18 +69,19 @@
     </div>
 </section>
 
-<section class="mb-4">
+<section class="mb-6">
     <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-2">Pendidikan</h2>
     <div id="previewEducation" class="text-sm text-gray-600">
-        <!-- Data pendidikan akan ditampilkan di sini -->
         <div class="mb-4">
             <div class="flex justify-between items-center">
-                <p><strong>Bachelor of Design in Process Engineering</strong></p>
-                <p class="text-gray-500">Sep 2019 - Sep 2023</p>
+                <p><strong id="educationInstitution">Engineering University</strong></p>
+                <p class="text-gray-500" id="educationDuration">Jan 2024 - Jan 2025</p>
             </div>
-            <p class="italic text-gray-600">Engineering University</p>
-            <ul class="list-disc pl-5 text-gray-600">
+            <p id="educationDegree" class="italic text-gray-600">Bachelor of Design in Process Engineering</p>
+            <ul id="educationDescription" class="list-disc pl-5 text-gray-600">
                 <li>Relevant coursework in Process Design and Project Management.</li>
+                <li>Streamlined manufacturing processes, reducing production costs by 10%.</li>
+                <li>Implemented preventive maintenance strategies, resulting in a 20% decrease in equipment downtime.</li>
             </ul>
         </div>
     </div>
