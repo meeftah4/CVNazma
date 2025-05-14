@@ -282,9 +282,9 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 1rem; /* Kurangi margin bottom pada mobile */
-    border: 1px solid #EEECEC;
+    border: 0.5px solid #EEECEC;
     background-color: #EEECEC;
-    padding: 0.75rem; /* Kurangi padding pada mobile */
+    padding: 0.3rem; /* Kurangi padding pada mobile */
     margin-left: auto;
     margin-right: auto;
     width: 100%; /* Lebar penuh pada mobile */
@@ -297,12 +297,12 @@
 /* Gaya untuk tombol "Daftar" / "Masuk" (switch) */
 .login-modal-switch-button,
 .register-modal-switch-button {
-    font-size: 1rem; /* Kurangi ukuran font pada mobile */
+    font-size: 20px; /* Kurangi ukuran font pada mobile */
     font-weight: bold;
     color: #01287E;
     background-color: #EEECEC;
     transition: background-color 0.3s ease;
-    padding: 0.5rem; /* Kurangi padding pada mobile */
+    padding: 0.3rem; /* Kurangi padding pada mobile */
     border-radius: 20px;
     width: 50%; /* Bagi dua lebar tombol */
     height: auto; /* Biarkan tinggi menyesuaikan */
@@ -319,12 +319,12 @@
 /* Gaya untuk tombol "Masuk" / "Daftar" yang aktif */
 .login-modal-active-button,
 .register-modal-active-button {
-    font-size: 1rem; /* Kurangi ukuran font pada mobile */
+    font-size: 20px; /* Kurangi ukuran font pada mobile */
     font-weight: bold;
     color: #01287E;
     background-color: #FFBC5D;
     transition: background-color 0.3s ease;
-    padding: 0.5rem; /* Kurangi padding pada mobile */
+    padding: 0.3rem; /* Kurangi padding pada mobile */
     border-radius: 20px;
     width: 50%; /* Bagi dua lebar tombol */
     height: auto; /* Biarkan tinggi menyesuaikan */
@@ -367,7 +367,7 @@
 .login-modal-input,
 .register-modal-input {
     width: 100%;
-    background-color: #EEECEC;
+    color: #01287E;
     border-radius: 0.5rem;
     padding: 0.6rem; /* Kurangi padding pada mobile */
     border: none;
@@ -376,7 +376,14 @@
 
 .login-modal-input::placeholder,
 .register-modal-input::placeholder {
-    color: #9CA3AF;
+    color: #01287E;
+}
+
+.login-modal-container .login-modal-input,
+.register-modal-container .register-modal-input {
+    border-radius: 10px !important; /* Sudut lebih melengkung */
+    background-color: #EEECEC;
+
 }
 
 /* Gaya untuk tombol submit "Masuk" / "Daftar" di form */
@@ -386,8 +393,8 @@
     background-color: #FFBC5D;
     color: #01287E;
     font-weight: bold;
-    font-size: 1rem; /* Kurangi ukuran font pada mobile */
-    padding: 0.5rem 2rem; /* Kurangi padding pada mobile */
+    font-size: 18px; /* Kurangi ukuran font pada mobile */
+    padding: 0.5rem 2.5rem; /* Kurangi padding pada mobile */
     border-radius: 20px;
     transition: background-color 0.3s ease;
     margin-left: auto;
@@ -445,28 +452,46 @@
 /* Gaya untuk tombol close (X) */
 .login-modal-close-button,
 .register-modal-close-button {
+    all: unset; /* Reset semua gaya */
     position: absolute;
     top: 0.5rem; /* Kurangi jarak dari atas pada mobile */
     right: 0.5rem; /* Kurangi jarak dari kanan pada mobile */
     color: #01287E;
-    font-size: 1.2rem; /* Kurangi ukuran font pada mobile */
-    width: 1.2rem; /* Kurangi lebar pada mobile */
-    height: 1.2rem; /* Kurangi tinggi pada mobile */
+    font-size: 1.5rem; /* Kurangi ukuran font pada mobile */
+    font-weight: bold; /* Tambahkan ketebalan font */
+    width: 1.8rem; /* Kurangi lebar pada mobile */
+    height: 1.8rem; /* Kurangi tinggi pada mobile */
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    border: 1px solid #01287E;
+    border: 2px solid #01287E;
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     background: none;
     cursor: pointer;
+    line-height: 1; /* Pastikan ikon X berada di tengah */
 }
 
-.login-modal-close-button:hover,
-.register-modal-close-button:hover {
-    background-color: #EF4444;
-    color: white;
-    border-color: white;
+/* Tambahkan konteks modal untuk spesifisitas */
+.login-modal-container .login-modal-close-button,
+.register-modal-container .register-modal-close-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    color: #01287E;
+    font-size: 1.5rem;
+    font-weight: bold;
+    width: 1.8rem;
+    height: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 2px solid #01287E;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    background: none;
+    cursor: pointer;
+    line-height: 1;
 }
 
 /* Gaya untuk tombol Admin di desktop */
