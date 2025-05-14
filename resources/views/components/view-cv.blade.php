@@ -60,18 +60,6 @@
 <section class="mb-6">
     <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-2">Pendidikan</h2>
     <div id="previewEducation" class="text-sm text-gray-600">
-        <div class="mb-4">
-            <div class="flex justify-between items-center">
-                <p><strong id="educationInstitution">Engineering University</strong></p>
-                <p class="text-gray-500" id="educationDuration">Jan 2024 - Jan 2025</p>
-            </div>
-            <p id="educationDegree" class="italic text-gray-600">Bachelor of Design in Process Engineering</p>
-            <ul id="educationDescription" class="list-disc pl-5 text-gray-600">
-                <li>Relevant coursework in Process Design and Project Management.</li>
-                <li>Streamlined manufacturing processes, reducing production costs by 10%.</li>
-                <li>Implemented preventive maintenance strategies, resulting in a 20% decrease in equipment downtime.</li>
-            </ul>
-        </div>
     </div>
 </section>
 

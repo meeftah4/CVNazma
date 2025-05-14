@@ -96,8 +96,8 @@ window.renderPengalamanKerja = function () {
                 ` : ''}
             </div>
             <div class="flex space-x-2">
-                <button class="text-blue-500" onclick="editPengalamanKerja(${index})">Edit</button>
                 <button class="text-red-500" onclick="deletePengalamanKerja(${index})">X</button>
+                <button class="text-blue-500" onclick="editPengalamanKerja(${index})">✎</button>
             </div>
         `;
 
