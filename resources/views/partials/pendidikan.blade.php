@@ -1,5 +1,8 @@
-{{-- filepath: d:\Magang\CVNazma\resources\views\partials\pendidikan.blade.php --}}
-<div id="pendidikanForm" class="bg-gray-100 p-4 rounded-md hidden">
+<div id="pendidikanList" class="mb-4">
+    <!-- Baris data akan ditampilkan di sini -->
+</div>
+
+<div id="pendidikanForm" class="bg-gray-100 p-4 rounded-md">
     <div class="mb-4">
         <label class="block text-gray-700">Sekolah</label>
         <input type="text" id="educationInstitution" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
@@ -38,9 +41,8 @@
         <button type="button" class="bg-red-500 text-white px-4 py-2 rounded-md flex items-center" onclick="resetForm('pendidikan')">
             Hapus
         </button>
-        <button type="button" class="bg-orange-500 text-white px-4 py-2 rounded-md flex items-center" onclick="saveData('pendidikan')">
+        <button type="button" class="bg-orange-500 text-white px-4 py-2 rounded-md flex items-center" onclick="saveDataPendidikan()">
             Simpan
         </button>
     </div>
 </div>
-

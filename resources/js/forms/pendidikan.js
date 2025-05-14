@@ -1,56 +1,104 @@
-// resources/js/forms/step2/pendidikan.js
 import './base';
 
+// Inisialisasi tempData jika belum ada
+window.tempData = window.tempData || {};
+window.tempData.pendidikan = window.tempData.pendidikan || [];
+
+// Fungsi untuk mengaktifkan live preview secara real-time
 window.enableLivePreviewPendidikan = function () {
-    const inputs = document.querySelectorAll('#pendidikanForm input, #pendidikanForm textarea');
+    const form = document.getElementById('pendidikanForm');
+    if (!form) return; // Cegah error jika form belum ada di DOM
+
+    const inputs = form.querySelectorAll('input, textarea');
     const previewContainer = document.getElementById('previewEducation');
-    const isPresent = false; // Default value
 
-    inputs.forEach(input => {
-        input.addEventListener('input', () => {
-            const data = {};
-            inputs.forEach(input => {
-                if (input.type === 'checkbox') {
-                    data[input.id] = input.checked;
-                } else {
-                    data[input.id] = input.value || '';
-                }
-            });
-
-            // Hapus placeholder jika ada data pertama yang dimasukkan
-            if (window.tempData.pendidikan.length === 0 && previewContainer.children.length > 0) {
-                previewContainer.innerHTML = '';
+    const updatePreview = () => {
+        const data = {};
+        inputs.forEach(input => {
+            if (input.type === 'checkbox') {
+                data[input.id] = input.checked;
+            } else {
+                data[input.id] = input.value || '';
             }
-
-            // Tentukan indeks data baru
-            const newIndex = window.tempData.pendidikan.length;
-
-            // Cari atau buat elemen preview untuk data baru
-            let previewRow = document.getElementById(`previewEducation-${newIndex}`);
-            if (!previewRow) {
-                previewRow = document.createElement('div');
-                previewRow.id = `previewEducation-${newIndex}`;
-                previewRow.className = 'mb-4';
-                previewContainer.appendChild(previewRow);
-            }
-
-            // Perbarui konten elemen preview
-            previewRow.innerHTML = `
-                <div class="flex justify-between items-center">
-                    <p><strong>${data.educationInstitution || ''}</strong></p>
-                    ${data.educationStartDate || data.isPresent ? `<p class="text-gray-500">${formatDate(data.educationStartDate)} - ${data.isPresent ? 'Present' : formatDate(data.educationEndDate)}</p>` : ''}
-                </div>
-                    ${data.educationDegree ? `<p>${data.educationDegree}</p>` : ''}
-                    ${data.educationDescription ? `
-                    <ul class="list-disc pl-5 text-gray-600">
-                        ${data.educationDescription.split('\n').map(desc => `<li>${desc}</li>`).join('')}
-                    </ul>
-                ` : ''}
-            `;
         });
+
+        // Hapus placeholder jika ada data pertama yang dimasukkan
+        if (window.tempData.pendidikan.length === 0 && previewContainer.children.length > 0) {
+            previewContainer.innerHTML = '';
+        }
+
+        // Tentukan indeks data baru
+        const newIndex = window.tempData.pendidikan.length;
+
+        // Cari atau buat elemen preview untuk data baru
+        let previewRow = document.getElementById(`previewEducation-${newIndex}`);
+        if (!previewRow) {
+            previewRow = document.createElement('div');
+            previewRow.id = `previewEducation-${newIndex}`;
+            previewRow.className = 'mb-4';
+            previewContainer.appendChild(previewRow);
+        }
+
+        // Perbarui konten elemen preview
+        previewRow.innerHTML = `
+            <div class="flex justify-between items-center">
+                <p><strong>${data.educationInstitution || ''}</strong>${data.educationCity ? ` - ${data.educationCity}` : ''}</p>
+                ${data.educationStartDate || data.isPresent ? `<p class="text-gray-500">${formatDate(data.educationStartDate)} - ${data.isPresent ? 'Present' : formatDate(data.educationEndDate)}</p>` : ''}
+            </div>
+            ${data.educationDegree ? `<p>${data.educationDegree}</p>` : ''}
+            ${data.educationDescription ? `
+                <ul class="list-disc pl-5 text-gray-600">
+                    ${data.educationDescription.split('\n').map(desc => `<li>${desc}</li>`).join('')}
+                </ul>
+            ` : ''}
+        `;
+    };
+
+    // Pasang event listener untuk setiap input
+    inputs.forEach(input => {
+        input.removeEventListener('input', input._livePreviewHandler);
+        input._livePreviewHandler = updatePreview;
+        input.addEventListener('input', input._livePreviewHandler);
     });
 };
 
+// Fungsi untuk memperbarui live preview pendidikan di CV setelah data disimpan
+function updateLivePreviewEducation() {
+    const previewContainer = document.getElementById('previewEducation');
+    previewContainer.innerHTML = ''; // Kosongkan kontainer sebelum menambahkan data baru
+
+    if (!window.tempData.pendidikan || window.tempData.pendidikan.length === 0) {
+        // Template kosong jika tidak ada data
+        previewContainer.innerHTML = '<p class="text-gray-500">Belum ada data pendidikan yang ditambahkan.</p>';
+        return;
+    }
+
+    // Tambahkan setiap data pendidikan ke live preview
+    window.tempData.pendidikan.forEach((data, index) => {
+        let previewRow = document.getElementById(`previewEducation-${index}`);
+        if (!previewRow) {
+            previewRow = document.createElement('div');
+            previewRow.id = `previewEducation-${index}`;
+            previewRow.className = 'mb-4';
+            previewContainer.appendChild(previewRow);
+        }
+
+        previewRow.innerHTML = `
+            <div class="flex justify-between items-center">
+                <p><strong>${data.educationInstitution || ''}</strong>${data.educationCity ? ` - ${data.educationCity}` : ''}</p>
+                ${data.educationStartDate || data.isPresent ? `<p class="text-gray-500">${formatDate(data.educationStartDate)} - ${data.isPresent ? 'Present' : formatDate(data.educationEndDate)}</p>` : ''}
+            </div>
+            ${data.educationDegree ? `<p>${data.educationDegree}</p>` : ''}
+            ${data.educationDescription ? `
+                <ul class="list-disc pl-5 text-gray-600">
+                    ${data.educationDescription.split('\n').map(desc => `<li>${desc}</li>`).join('')}
+                </ul>
+            ` : ''}
+        `;
+    });
+}
+
+// Fungsi untuk menyimpan data pendidikan
 window.saveDataPendidikan = function () {
     const form = document.getElementById('pendidikanForm');
     const inputs = form.querySelectorAll('input, textarea');
@@ -65,22 +113,28 @@ window.saveDataPendidikan = function () {
         }
     });
 
-    // Debugging: Periksa nilai deskripsi
-    console.log('Deskripsi:', data.educationDescription);
-
     // Tambahkan data ke tempData
     window.tempData.pendidikan.push(data);
 
     // Render ulang daftar data
     renderPendidikan();
 
+    // Perbarui live preview di CV
+    updateLivePreviewEducation();
+
     // Reset form setelah menyimpan
     resetForm('pendidikan');
 };
 
+// Fungsi untuk merender daftar pendidikan
 window.renderPendidikan = function () {
     const listElement = document.getElementById('pendidikanList');
     listElement.innerHTML = ''; // Kosongkan elemen sebelum menambahkan data baru
+
+    if (!window.tempData.pendidikan || window.tempData.pendidikan.length === 0) {
+        listElement.innerHTML = '<p class="text-gray-500">Belum ada data pendidikan.</p>';
+        return;
+    }
 
     window.tempData.pendidikan.forEach((data, index) => {
         const row = document.createElement('div');
@@ -88,13 +142,13 @@ window.renderPendidikan = function () {
 
         row.innerHTML = `
             <div>
-                <p><strong>${data.educationInstitution || ''}</strong></p>
+                <p><strong>${data.educationInstitution || ''}</strong>${data.educationCity ? ` - ${data.educationCity}` : ''}</p>
                 ${data.educationStartDate || data.isPresent ? `<p class="text-gray-500">${formatDate(data.educationStartDate)} - ${data.isPresent ? 'Present' : formatDate(data.educationEndDate)}</p>` : ''}
                 ${data.educationDegree ? `<p>${data.educationDegree}</p>` : ''}
                 ${data.educationDescription ? `
-                <ul class="list-disc pl-5 text-gray-600">
-                    ${data.educationDescription.split('\n').map(desc => `<li>${desc}</li>`).join('')}
-                </ul>
+                    <ul class="list-disc pl-5 text-gray-600">
+                        ${data.educationDescription.split('\n').map(desc => `<li>${desc}</li>`).join('')}
+                    </ul>
                 ` : ''}
             </div>
             <div class="flex space-x-2">
@@ -105,11 +159,9 @@ window.renderPendidikan = function () {
 
         listElement.appendChild(row);
     });
-
-    // Update live preview
-    updateLivePreviewEducation();
 };
 
+// Fungsi untuk mengedit data pendidikan
 window.editPendidikan = function (index) {
     const data = window.tempData.pendidikan[index];
     const form = document.getElementById('pendidikanForm');
@@ -129,67 +181,46 @@ window.editPendidikan = function (index) {
 
     // Render ulang daftar data
     renderPendidikan();
+
+    // Perbarui live preview setelah load ulang form
+    enableLivePreviewPendidikan();
 };
 
+// Fungsi untuk menghapus data pendidikan
 window.deletePendidikan = function (index) {
     // Hapus data dari tempData
     window.tempData.pendidikan.splice(index, 1);
 
     // Render ulang daftar data
     renderPendidikan();
+
+    // Perbarui live preview di CV
+    updateLivePreviewEducation();
 };
 
-window.updateLivePreviewEducation = function () {
-    const previewContainer = document.getElementById('previewEducation');
-    previewContainer.innerHTML = ''; 
+// Fungsi untuk mereset form
+function resetForm(formId) {
+    const form = document.getElementById(`${formId}Form`);
+    const inputs = form.querySelectorAll('input, textarea');
 
-    if (window.tempData.pendidikan.length === 0) {
-        // Tampilkan placeholder jika tidak ada data
-        previewContainer.innerHTML = `
-            <div class="mb-4">
-                <div class="flex justify-between items-center">
-                    <p><strong id="educationInstitution">Engineering University</strong></p>
-                    <p class="text-gray-500" id="educationDuration">Jan 2024 - Jan 2025</p>
-                </div>
-                <p id="educationDegree" class="italic text-gray-600">Bachelor of Design in Process Engineering</p>
-                <ul id="educationDescription" class="list-disc pl-5 text-gray-600">
-                    <li>Relevant coursework in Process Design and Project Management.</li>
-                    <li>Streamlined manufacturing processes, reducing production costs by 10%.</li>
-                    <li>Implemented preventive maintenance strategies, resulting in a 20% decrease in equipment downtime.</li>
-                </ul>
-            </div>
-        `;
-        return;
-    }
-
-    // Iterasi melalui data pendidikan
-    window.tempData.pendidikan.forEach((data, index) => {
-        let previewRow = document.getElementById(`previewEducation-${index}`);
-        if (!previewRow) {
-            previewRow = document.createElement('div');
-            previewRow.id = `previewEducation-${index}`;
-            previewRow.className = 'mb-4';
-            previewContainer.appendChild(previewRow);
+    inputs.forEach(input => {
+        if (input.type === 'checkbox') {
+            input.checked = false;
+        } else {
+            input.value = '';
         }
-
-        // Perbarui konten elemen preview
-        previewRow.innerHTML = `
-           <div class="flex justify-between items-center">
-                <p><strong>${data.educationInstitution || ''}</strong></p>
-                ${data.educationStartDate || data.isPresent ? `<p class="text-gray-500">${formatDate(data.educationStartDate)} - ${data.isPresent ? 'Present' : formatDate(data.educationEndDate)}</p>` : ''}
-            </div>
-            ${data.educationDegree ? `<p>${data.educationDegree}</p>` : ''}
-            ${data.educationDescription ? `
-                <ul class="list-disc pl-5 text-gray-600">
-                    ${data.educationDescription.split('\n').map(desc => `<li>${desc}</li>`).join('')}
-                </ul>
-            ` : ''}
-        `;
     });
-};
+}
 
+// Fungsi untuk memformat tanggal
+function formatDate(dateString) {
+    if (!dateString) return '';
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('id-ID', options);
+}
+
+// Panggil fungsi saat halaman dimuat
 document.addEventListener('DOMContentLoaded', function () {
-    renderPendidikan(); // Render data saat halaman dimuat
-    enableLivePreviewPendidikan(); // Enable live preview saat halaman dimuat
+    renderPendidikan();
+    enableLivePreviewPendidikan();
 });
-
