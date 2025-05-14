@@ -4,7 +4,7 @@
         <!-- Baris data akan ditampilkan di sini -->
     </div>
     <div class="mb-4">
-        <label for="descriptionInput" class="block text-gray-700">Deskripsi</label>
+        <label class="block text-gray-700">Deskripsi</label>
         <textarea id="descriptionInput" placeholder="Masukkan deskripsi profil Anda" class="mt-1 block w-full border border-gray-300 rounded-md p-2"></textarea>
     </div>
     <div class="flex justify-end mt-4 space-x-2">

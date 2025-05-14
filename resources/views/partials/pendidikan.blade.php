@@ -27,7 +27,7 @@
     <div class="mb-4">
         <label class="inline-flex items-center">
             <input type="checkbox" id="isPresent" class="form-checkbox h-5 w-5 text-orange-500" onclick="toggleEndDate()">
-            <span class="ml-2 text-gray-700">Saat ini saya pendidikan di sini</span>
+            <span class="ml-2 text-gray-700">Saat ini saya belajar di sini</span>
         </label>
     </div>
     <div class="mb-4">
@@ -43,3 +43,4 @@
         </button>
     </div>
 </div>
+

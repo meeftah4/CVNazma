@@ -1,11 +1,6 @@
 window.saveData = function (id) {
     const descriptionInput = document.getElementById('descriptionInput').value;
 
-    if (!descriptionInput.trim()) {
-        alert('Deskripsi tidak boleh kosong.');
-        return;
-    }
-
     // Cek apakah data sudah ada
     if (window.tempData[id].length > 0) {
         // Update data yang sudah ada

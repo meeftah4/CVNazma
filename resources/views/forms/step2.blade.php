@@ -18,6 +18,12 @@
 @vite('resources/js/forms/base.js')
 @vite('resources/js/forms/profil.js')
 @vite('resources/js/forms/pengalamankerja.js')
+@vite('resources/js/forms/proyek.js')
+@vite('resources/js/forms/keahlian.js')
+@vite('resources/js/forms/pendidikan.js')
+@vite('resources/js/forms/bahasa.js')
+@vite('resources/js/forms/sertifikat.js')
+@vite('resources/js/forms/hobi.js')
 
 {{-- resources/views/forms/step2.blade.php --}}
 <div id="step-2" class="step hidden">
