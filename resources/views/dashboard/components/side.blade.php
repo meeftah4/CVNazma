@@ -18,6 +18,11 @@
                 <i class="fas fa-cogs mr-3"></i> Transactions
             </a>
         </li>
+        <li>
+            <a href="/dashboard/faqs" class="flex items-center p-4 hover:bg-blue-700">
+                <i class="fas fa-cogs mr-3"></i> Faqs
+            </a>
+        </li>
         {{-- Tombol Switch ke Halaman Utama --}}
         <li>
             <a href="/" class="flex items-center p-4 hover:bg-blue-700">

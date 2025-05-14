@@ -4,11 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\FaqsController;
+use App\Http\Controllers\HomeController;
 
 // Page Routes
-Route::get('/', function () {
-    return view('pages.home');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/cvats', function () {
     return view('pages.cv', [
     ]);
@@ -63,4 +63,10 @@ Route::middleware(['auth'])->group(function () {
 
         return view('dashboard.transactions');
     })->name('dashboard.transactions');
+    Route::get('/dashboard/faqs', [FaqsController::class, 'index'])->name('dashboard.faqs');
+    Route::get('/dashboard/faqs/{id}/edit', [FaqsController::class, 'edit'])->name('faq.edit');
+    Route::put('/dashboard/faqs/{id}', [FaqsController::class, 'update'])->name('faq.update');
+    Route::delete('/dashboard/faqs/{id}', [FaqsController::class, 'destroy'])->name('faq.destroy');
+    Route::get('/dashboard/faqs/create', [FaqsController::class, 'create'])->name('faq.create');
+    Route::post('/dashboard/faqs', [FaqsController::class, 'store'])->name('faq.store');
 });
