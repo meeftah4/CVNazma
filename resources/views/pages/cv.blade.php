@@ -92,7 +92,6 @@
 
         // Step 2: Keahlian
         const skillName = document.getElementById('skillName')?.value || 'Keahlian tidak tersedia';
-        const skillLevel = document.getElementById('skillLevel')?.value || 'Tingkat Keahlian tidak tersedia';
 
         document.getElementById('previewSkill').innerHTML = `
             <p>${skillName} - ${skillLevel}</p>
@@ -115,10 +114,9 @@
 
         // Step 2: Bahasa
         const languageName = document.getElementById('languageName')?.value || 'Bahasa tidak tersedia';
-        const languageLevel = document.getElementById('languageLevel')?.value || 'Tingkat Kemampuan tidak tersedia';
 
-        document.getElementById('previewLanguage').innerHTML = `
-            <p>${languageName} - ${languageLevel}</p>
+        document.getElementById('previewBahasa').innerHTML = `
+            <p>${languageName}</p>
         `;
 
         // Step 2: Sertifikat
