@@ -1,5 +1,5 @@
 <div id="step-1" class="step">
-    <h2 class="text-xl mb-4">Langkah 1: Informasi Pribadi</h2>
+    <h2 class="text-xl mb-4">Masukkan detail pribadi</h2>
 
     <div class="mb-4">
         <label class="block text-gray-700">Nama Lengkap</label>

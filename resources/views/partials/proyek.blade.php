@@ -21,13 +21,16 @@
         </div>
     </div>
     <div class="mb-4">
+        <label class="inline-flex items-center">
+            <input type="checkbox" id="isPresent" class="form-checkbox h-5 w-5 text-orange-500" onclick="toggleEndDate()">
+            <span class="ml-2 text-gray-700">Saat ini saya belajar di sini</span>
+        </label>
+    </div>
+    <div class="mb-4">
         <label class="block text-gray-700">Deskripsi</label>
         <textarea id="projectDescription" class="mt-1 block w-full border border-gray-300 rounded-md p-2"></textarea>
     </div>
     <div class="flex justify-end mt-4 space-x-2">
-        <button type="button" class="bg-red-500 text-white px-4 py-2 rounded-md flex items-center" onclick="resetForm('proyek')">
-            Hapus
-        </button>
         <button type="button" class="bg-orange-500 text-white px-4 py-2 rounded-md flex items-center" onclick="saveData('proyek')">
             Simpan
         </button>
