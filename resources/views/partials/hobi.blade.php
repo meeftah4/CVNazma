@@ -5,10 +5,8 @@
         <input type="text" id="hobbyName" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
     </div>
     <div class="flex justify-end mt-4 space-x-2">
-        <button type="button" class="bg-red-500 text-white px-4 py-2 rounded-md flex items-center" onclick="resetForm('hobi')">
-            Hapus
-        </button>
-        <button type="button" class="bg-orange-500 text-white px-4 py-2 rounded-md flex items-center" onclick="saveData('hobi')">
+
+        <button type="button" class="bg-orange-500 text-white px-4 py-2 rounded-md flex items-center" onclick="saveDataHobi()">
             Simpan
         </button>
     </div>

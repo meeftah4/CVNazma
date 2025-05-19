@@ -90,11 +90,15 @@
 <section class="mb-6">
     <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-2">Informasi Tambahan</h2>
     <div class="text-sm text-gray-600">
-    <div id="previewBahasa" class="mt-4">
+    <div id="previewBahasa">
         <p class="text-gray-500"><strong>Bahasa:</strong> English, French, Mandarin</p>
     </div>
-        <p><strong>Sertifikat:</strong> Professional Design Engineer (PDE) License, Project Management Tech (PMT), Structural Process Design (SPD)</p>
-        <p><strong>Hobi:</strong> Tenis Lapangan</p>
+    <div id="previewCertificate">
+        <p class="text-gray-500"><strong>Sertifikat:</strong> Professional Design Engineer (PDE) License, Project Management Tech (PMT), Structural Process Design (SPD)</p>
+    </div>
+    <div id="previewHobby">
+        <p class="text-gray-500"><strong>Hobi:</strong> Tenis Lapangan</p>
+    </div>
     </div>
 </section>
 

@@ -121,13 +121,9 @@
 
         // Step 2: Sertifikat
         const certificateName = document.getElementById('certificateName')?.value || 'Nama Sertifikat tidak tersedia';
-        const certificateIssuer = document.getElementById('certificateIssuer')?.value || 'Penerbit tidak tersedia';
-        const certificateDate = document.getElementById('certificateDate')?.value || 'Tanggal tidak tersedia';
 
         document.getElementById('previewCertificate').innerHTML = `
             <p><strong>${certificateName}</strong></p>
-            <p>${certificateIssuer}</p>
-            <p>${certificateDate}</p>
         `;
 
         // Step 2: Hobi
