@@ -221,7 +221,7 @@ function resetForm(formId) {
 // Fungsi untuk memformat tanggal
 function formatDate(dateString) {
     if (!dateString) return '';
-    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    const options = { year: 'numeric', month: 'long'};
     return new Date(dateString).toLocaleDateString('id-ID', options);
 }
 

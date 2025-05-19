@@ -1,3 +1,7 @@
+<div id="proyekList" class="mb-4">
+    <!-- Baris data akan ditampilkan di sini -->
+</div>
+
 {{-- filepath: d:\Magang\CVNazma\resources\views\partials\pengalaman-kerja.blade.php --}}
 <div id="proyekForm" class="bg-gray-100 p-4 rounded-md hidden">
     <div class="mb-4">
@@ -31,7 +35,7 @@
         <textarea id="projectDescription" class="mt-1 block w-full border border-gray-300 rounded-md p-2"></textarea>
     </div>
     <div class="flex justify-end mt-4 space-x-2">
-        <button type="button" class="bg-orange-500 text-white px-4 py-2 rounded-md flex items-center" onclick="saveData('proyek')">
+        <button type="button" class="bg-orange-500 text-white px-4 py-2 rounded-md flex items-center" onclick="saveDataProyek()">
             Simpan
         </button>
     </div>

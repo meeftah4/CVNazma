@@ -12,10 +12,6 @@
             <label class="block text-gray-700">Gelar</label>
             <input type="text" id="educationDegree" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
         </div>
-        <div>
-            <label class="block text-gray-700">Kota</label>
-            <input type="text" id="educationCity" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
-        </div>
     </div>
     <div class="grid grid-cols-2 gap-4 mb-4">
         <div>
@@ -38,9 +34,6 @@
         <textarea id="educationDescription" class="mt-1 block w-full border border-gray-300 rounded-md p-2"></textarea>
     </div>
     <div class="flex justify-end mt-4 space-x-2">
-        <button type="button" class="bg-red-500 text-white px-4 py-2 rounded-md flex items-center" onclick="resetForm('pendidikan')">
-            Hapus
-        </button>
         <button type="button" class="bg-orange-500 text-white px-4 py-2 rounded-md flex items-center" onclick="saveDataPendidikan()">
             Simpan
         </button>
