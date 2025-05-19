@@ -5,7 +5,7 @@
         <input type="text" id="languageName" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
     </div>
     <div class="flex justify-end mt-4 space-x-2">
-        <button type="button" class="bg-orange-500 text-white px-4 py-2 rounded-md flex items-center" onclick="saveData('bahasa')">
+        <button type="button" class="bg-orange-500 text-white px-4 py-2 rounded-md flex items-center" onclick="saveDataBahasa()">
             Simpan
         </button>
     </div>
