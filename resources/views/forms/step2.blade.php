@@ -26,16 +26,17 @@
 @vite('resources/js/forms/hobi.js')
 
 {{-- resources/views/forms/step2.blade.php --}}
-<div id="step-2" class="step hidden">
-    <h2 class="text-xl mb-4">Langkah 2: Informasi Tambahan</h2>
+<div id="step-2" class="step hidden" style="background-color: #F4F8FF; min-height: 100vh;">
 
     @foreach (['Profil', 'Pengalaman Kerja', 'Proyek', 'Keahlian', 'Pendidikan', 'Bahasa', 'Sertifikat', 'Hobi'] as $field)
         <div class="mb-4">
+            <!-- Button dropdown tetap putih -->
             <button type="button" class="w-full flex justify-between items-center py-2 px-4 bg-white border rounded-md shadow" onclick="toggleDropdown('{{ strtolower(str_replace(' ', '', $field)) }}')">
                 <span>{{ $field }}</span>
                 <span class="text-blue-500 font-bold">+</span>
             </button>
             <div id="{{ strtolower(str_replace(' ', '', $field)) }}Dropdown" class="hidden mt-2">
+                <!-- Jika ingin isi dropdown juga putih, pastikan partial-nya pakai bg-white -->
                 <div id="{{ strtolower(str_replace(' ', '', $field)) }}List" class="p-4 rounded-md">
                     <!-- Data sementara akan ditampilkan di sini -->
                 </div>

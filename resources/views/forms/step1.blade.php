@@ -1,4 +1,4 @@
-<div id="step-1" class="step">
+<div id="step-1" class="bg-white p-6 rounded-lg shadow-lg step hidden">
     <h2 class="text-xl mb-4">Masukkan detail pribadi</h2>
 
     <div class="mb-4">
