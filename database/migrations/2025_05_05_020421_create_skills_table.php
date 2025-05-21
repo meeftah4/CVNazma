@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('cvsy_id')->constrained('cvs_users')->onDelete('cascade');
             $table->string('skill_name');
-            $table->integer('level')->default(1);
             $table->timestamps();
         });
     }

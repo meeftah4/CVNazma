@@ -15,9 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('name');
-            $table->json('job_title');
+            $table->string('email');
             $table->string('phone')->nullable();
             $table->text('address')->nullable();
+            $table->string('linkedin')->nullable();
+            $table->string('website')->nullable();
+            $table->string('description')->nullable();
             $table->timestamps();
         });        
     }
