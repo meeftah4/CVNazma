@@ -41,9 +41,9 @@ window.updateLivePreview = function (id) {
     if (descriptionInput && previewElement) {
         const value = descriptionInput.value.trim();
         if (value) {
-            previewElement.innerHTML = `<p>${value}</p>`;
+            previewElement.innerHTML = `<p class="text-gray-600">${value}</p>`;
         } else {
-            previewElement.innerHTML = '<p class="text-gray-500 italic">Belum ada data yang dimasukkan.</p>';
+            previewElement.innerHTML = ''; // Tidak tampilkan apapun jika kosong
         }
     }
 };
@@ -70,8 +70,8 @@ window.renderDataRow = function (id) {
         row.innerHTML = `
             <p class="text-gray-700">${data.description}</p>
             <div class="flex space-x-2">
-                <button class="text-blue-500" onclick="deleteData('${id}')">X</button>
-                <button class="text-red-500" onclick="editData('${id}')">✎</button>
+                <button class="text-red-500" onclick="deleteData('${id}')">X</button>
+                <button class="text-blue-500" onclick="editData('${id}')">✎</button>
             </div>
         `;
 
@@ -80,15 +80,25 @@ window.renderDataRow = function (id) {
 };
 
 window.deleteData = function (id) {
-    window.tempData[id] = []; // Hapus data
-    renderDataRow(id); // Perbarui tampilan
+    window.tempData[id] = [];
+    renderDataRow(id);
 
-    // Kosongkan preview
-    updateLivePreview(id);
+    // Tampilkan contoh/default pada preview profil
+    const previewElement = document.getElementById(`preview${capitalizeFirstLetter(id)}`);
+    if (previewElement) {
+        previewElement.innerHTML = `<p class="text-gray-600 mt-4 break-words">
+            Lulusan [Nama Jurusan] dari [Nama Universitas] dengan ketertarikan tinggi pada bidang [bidang yang dilamar, 
+            misal: UI/UX Design, Data Analysis, Digital Marketing]. Memiliki pengalaman organisasi dan proyek yang mengasah 
+            kemampuan [contoh: desain visual, riset pengguna, dan analisis data]. Terbiasa menggunakan [sebutkan tools] dan siap 
+            berkontribusi secara profesional dalam tim.
+        </p>`;
+    }
 
-    // Tampilkan form kembali
+    // Kosongkan input form
     const form = document.getElementById(`${id}Form`);
     if (form) {
+        const input = form.querySelector('#descriptionInput');
+        if (input) input.value = '';
         form.classList.remove('hidden');
     }
 };

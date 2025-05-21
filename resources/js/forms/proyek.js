@@ -71,8 +71,20 @@ function updateLivePreviewProyek() {
     previewContainer.innerHTML = ''; // Kosongkan kontainer sebelum menambahkan data baru
 
     if (!window.tempData.proyek || window.tempData.proyek.length === 0) {
-        // Template kosong jika tidak ada data
-        previewContainer.innerHTML = '<p class="text-gray-500">Belum ada data proyek yang ditambahkan.</p>';
+        previewContainer.innerHTML = `
+            <div class="mb-4">
+                <div class="flex justify-between items-center">
+                    <p><strong>Industrial Basics and General Application</strong></p>
+                    <p class="text-gray-500">Jan 2023 - Jun 2023</p>
+                </div>
+                <p class="italic text-gray-600">University of Engineering Process Cohort</p>
+                <ul class="list-disc pl-5 text-gray-600">
+                    <li>Automotive Technology.</li>
+                    <li>Technological Advancements within the current Chemical & Process Industry.</li>
+                    <li>Other relevant information.</li>
+                </ul>
+            </div>
+        `;
         return;
     }
 
