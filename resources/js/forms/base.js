@@ -10,6 +10,18 @@ window.tempData = {
     hobi: []
 };
 
+// Pemetaan fungsi render untuk setiap dropdown
+window.renderFunctions = {
+    profil: window.renderProfil,
+    pengalamankerja: window.renderPengalamanKerja,
+    proyek: window.renderProyek,
+    keahlian: window.renderKeahlian,
+    pendidikan: window.renderPendidikan,
+    bahasa: window.renderBahasa,
+    sertifikat: window.renderSertifikat,
+    hobi: window.renderHobi
+};
+
 window.toggleDropdown = function(id) {
     const dropdown = document.getElementById(id + 'Dropdown');
     const button = document.querySelector(`[onclick="toggleDropdown('${id}')"] span:last-child`);
@@ -17,7 +29,9 @@ window.toggleDropdown = function(id) {
     button.textContent = dropdown.classList.contains('hidden') ? "+" : "-";
 
     // Render data row saat dropdown dibuka
-    renderDataRow(id);
+    if (!dropdown.classList.contains('hidden') && window.renderFunctions[id]) {
+        window.renderFunctions[id]();
+    }
 
     // Tampilkan form hanya jika tidak ada data
     const form = document.getElementById(`${id}Form`);
