@@ -30,17 +30,18 @@
 
     @foreach (['Profil', 'Pengalaman Kerja', 'Proyek', 'Keahlian', 'Pendidikan', 'Bahasa', 'Sertifikat', 'Hobi'] as $field)
         <div class="mb-4">
-            <!-- Button dropdown tetap putih -->
-            <button type="button" class="w-full flex justify-between items-center py-2 px-4 bg-white border rounded-md shadow" onclick="toggleDropdown('{{ strtolower(str_replace(' ', '', $field)) }}')">
-                <span>{{ $field }}</span>
-                <span class="text-blue-500 font-bold">+</span>
-            </button>
-            <div id="{{ strtolower(str_replace(' ', '', $field)) }}Dropdown" class="hidden mt-2">
-                <!-- Jika ingin isi dropdown juga putih, pastikan partial-nya pakai bg-white -->
-                <div id="{{ strtolower(str_replace(' ', '', $field)) }}List" class="p-4 rounded-md">
-                    <!-- Data sementara akan ditampilkan di sini -->
+            <div class="bg-white rounded-md shadow p-0">
+                <button type="button"
+                    class="w-full flex justify-between items-center py-2 px-4 border-b font-bold text-blue-900 rounded-t-md focus:outline-none"
+                    onclick="toggleDropdown('{{ strtolower(str_replace(' ', '', $field)) }}')">
+                    <span>{{ $field }}</span>
+                    <span class="text-blue-900 font-bold">
+                        <span id="{{ strtolower(str_replace(' ', '', $field)) }}Icon">+</span>
+                    </span>
+                </button>
+                <div id="{{ strtolower(str_replace(' ', '', $field)) }}Dropdown" class="hidden">
+                    @include('partials.' . strtolower(str_replace(' ', '-', $field)))
                 </div>
-                @include('partials.' . strtolower(str_replace(' ', '-', $field)))
             </div>
         </div>
     @endforeach
@@ -54,9 +55,9 @@
                 <span class="text-sm" style="color: #888888; font-size: 6px;">Tambahkan foto</span>
             </button>
         </div>
-</div>
+    </div>
 
-    <button type="button" onclick="goToStep(3)" class="bg-orange-500 text-white px-4 py-2 rounded-md">
-        Langkah Selanjutnya
-    </button>
+<button type="button" onclick="showTemplateCV()" class="bg-orange-500 text-white px-4 py-2 rounded-md">
+    Langkah Selanjutnya
+</button>
 </div>
