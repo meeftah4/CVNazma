@@ -153,7 +153,7 @@ window.renderProyek = function () {
     listElement.innerHTML = ''; // Kosongkan elemen sebelum menambahkan data baru
 
     if (!window.tempData.proyek || window.tempData.proyek.length === 0) {
-        listElement.innerHTML = '<p class="text-gray-500">Belum ada data proyek.</p>';
+        listElement.innerHTML = ``;
         return;
     }
 

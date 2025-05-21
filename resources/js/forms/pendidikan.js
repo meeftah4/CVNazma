@@ -45,7 +45,7 @@ window.enableLivePreviewPendidikan = function () {
                 <p><strong>${data.educationInstitution || ''}</strong>${data.educationCity ? ` - ${data.educationCity}` : ''}</p>
                 ${data.educationStartDate || data.isPresent ? `<p class="text-gray-500">${formatDate(data.educationStartDate)} - ${data.isPresent ? 'Present' : formatDate(data.educationEndDate)}</p>` : ''}
             </div>
-            ${data.educationDegree ? `<p>${data.educationDegree}</p>` : ''}
+            ${data.educationDegree ? `<p class="italic text-gray-600">${data.educationDegree}</p>` : ''}
             ${data.educationDescription ? `
                 <ul class="list-disc pl-5 text-gray-600">
                     ${data.educationDescription.split('\n').map(desc => `<li>${desc}</li>`).join('')}
@@ -68,8 +68,20 @@ function updateLivePreviewEducation() {
     previewContainer.innerHTML = ''; // Kosongkan kontainer sebelum menambahkan data baru
 
     if (!window.tempData.pendidikan || window.tempData.pendidikan.length === 0) {
-        // Template kosong jika tidak ada data
-        previewContainer.innerHTML = '<p class="text-gray-500">Belum ada data pendidikan yang ditambahkan.</p>';
+        previewContainer.innerHTML = `
+            <div class="mb-4">
+                <div class="flex justify-between items-center">
+                    <p><strong id="educationInstitution">Engineering University</strong></p>
+                    <p class="text-gray-500" id="educationDuration">Jan 2024 - Jan 2025</p>
+                </div>
+                <p id="educationDegree" class="italic text-gray-600">Bachelor of Design in Process Engineering</p>
+                <ul id="educationDescription" class="list-disc pl-5 text-gray-600">
+                    <li>Relevant coursework in Process Design and Project Management.</li>
+                    <li>Streamlined manufacturing processes, reducing production costs by 10%.</li>
+                    <li>Implemented preventive maintenance strategies, resulting in a 20% decrease in equipment downtime.</li>
+                </ul>
+            </div>
+        `;
         return;
     }
 
@@ -88,7 +100,7 @@ function updateLivePreviewEducation() {
                 <p><strong>${data.educationInstitution || ''}</strong>${data.educationCity ? ` - ${data.educationCity}` : ''}</p>
                 ${data.educationStartDate || data.isPresent ? `<p class="text-gray-500">${formatDate(data.educationStartDate)} - ${data.isPresent ? 'Present' : formatDate(data.educationEndDate)}</p>` : ''}
             </div>
-            ${data.educationDegree ? `<p>${data.educationDegree}</p>` : ''}
+            ${data.educationDegree ? `<p class="italic text-gray-600">${data.educationDegree}</p>` : ''}
             ${data.educationDescription ? `
                 <ul class="list-disc pl-5 text-gray-600">
                     ${data.educationDescription.split('\n').map(desc => `<li>${desc}</li>`).join('')}
@@ -132,7 +144,7 @@ window.renderPendidikan = function () {
     listElement.innerHTML = ''; // Kosongkan elemen sebelum menambahkan data baru
 
     if (!window.tempData.pendidikan || window.tempData.pendidikan.length === 0) {
-        listElement.innerHTML = '<p class="text-gray-500">Belum ada data pendidikan.</p>';
+        listElement.innerHTML = ``;
         return;
     }
 
@@ -144,7 +156,7 @@ window.renderPendidikan = function () {
             <div>
                 <p><strong>${data.educationInstitution || ''}</strong>${data.educationCity ? ` - ${data.educationCity}` : ''}</p>
                 ${data.educationStartDate || data.isPresent ? `<p class="text-gray-500">${formatDate(data.educationStartDate)} - ${data.isPresent ? 'Present' : formatDate(data.educationEndDate)}</p>` : ''}
-                ${data.educationDegree ? `<p>${data.educationDegree}</p>` : ''}
+                ${data.educationDegree ? `<p class="italic text-gray-600">${data.educationDegree}</p>` : ''}
                 ${data.educationDescription ? `
                     <ul class="list-disc pl-5 text-gray-600">
                         ${data.educationDescription.split('\n').map(desc => `<li>${desc}</li>`).join('')}

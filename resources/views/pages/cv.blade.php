@@ -3,7 +3,7 @@
 @section('title', 'CV Nazma')
 
 @section('content')
-<div class="bg-blue-50 min-h-screen py-10">
+<div style="background-color: #F4F8FF; min-height: 100vh;" class="py-10">
     <div class="container mx-auto px-4">
         <h1 class="text-2xl font-bold mb-6">Buat CV Anda</h1>
 

@@ -1,5 +1,5 @@
 {{-- filepath: d:\Magang\CVNazma\resources\views\partials\profil.blade.php --}}
-<div id="profilForm" class="bg-gray-100 p-4 rounded-md">
+<div id="profilForm" class="bg-white p-4 rounded-md">
     <div id="profilList" class="mb-4">
         <!-- Baris data akan ditampilkan di sini -->
     </div>
@@ -17,3 +17,4 @@
         attachLivePreview('profil'); // Aktifkan live preview untuk profil
     });
 </script>
+
