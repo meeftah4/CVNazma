@@ -21,7 +21,7 @@
 
 <section class="mb-6">
     <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-2">Pengalaman Kerja</h2>
-    <div id="previewPengalamankerja" class="text-sm text-gray-600">
+    <div id="previewPengalamanKerja" class="text-sm text-gray-600">
         <div class="mb-4">
             <div class="flex justify-between items-center">
                 <p><strong id="companyName">Instrument Tech</strong> - <span id="jobCity">Sleman</span></p>

@@ -1,56 +1,99 @@
 import './base';
 
+// Inisialisasi tempData jika belum ada
+window.tempData = window.tempData || {};
+window.tempData.pengalamankerja = window.tempData.pengalamankerja || [];
+
+// Fungsi untuk mengaktifkan live preview secara real-time
 window.enableLivePreviewPengalamanKerja = function () {
     const form = document.getElementById('pengalamankerjaForm');
+    if (!form) return;
+
     const inputs = form.querySelectorAll('input, textarea');
-    const previewContainer = document.getElementById('previewPengalamankerja');
 
-    inputs.forEach(input => {
-        input.addEventListener('input', () => {
-            const data = {};
-            inputs.forEach(input => {
-                if (input.type === 'checkbox') {
-                    data[input.id] = input.checked;
-                } else {
-                    data[input.id] = input.value || '';
-                }
-            });
-
-            if (window.tempData.pengalamankerja.length === 0 && previewContainer.children.length > 0) {
-                previewContainer.innerHTML = '';
+    const updatePreview = () => {
+        // Ambil data yang sedang diketik
+        const currentInput = {};
+        inputs.forEach(input => {
+            if (input.type === 'checkbox') {
+                currentInput[input.id] = input.checked;
+            } else {
+                currentInput[input.id] = input.value || '';
             }
-
-            const newIndex = window.tempData.pengalamankerja.length;
-
-            let previewRow = document.getElementById(`previewPengalamankerja-${newIndex}`);
-            if (!previewRow) {
-                previewRow = document.createElement('div');
-                previewRow.id = `previewPengalamankerja-${newIndex}`;
-                previewRow.className = 'mb-4';
-                previewContainer.appendChild(previewRow);
-            }
-
-            previewRow.innerHTML = `
-                <div class="flex justify-between items-center">
-                    <p><strong>${data.companyName || ''}</strong>${data.jobCity ? ` - ${data.jobCity}` : ''}</p>
-                    ${data.startDate || data.isPresent ? `<p class="text-gray-500">${formatDate(data.startDate)} - ${data.isPresent ? 'Present' : formatDate(data.endDate)}</p>` : ''}
-                </div>
-                ${data.jobPosition ? `<p>${data.jobPosition}</p>` : ''}
-                ${data.jobDescription ? `
-                    <ul class="list-disc pl-5 text-gray-600">
-                        ${data.jobDescription.split('\n').map(desc => `<li>${desc}</li>`).join('')}
-                    </ul>
-                ` : ''}
-            `;
         });
+
+        // Gabungkan data yang sudah disimpan + data yang sedang diketik (belum disimpan)
+        let dataList = window.tempData.pengalamankerja ? [...window.tempData.pengalamankerja] : [];
+        // Jika form tidak kosong (ada input), tambahkan ke preview
+        const isFormFilled = Object.values(currentInput).some(val => val && val !== false);
+        if (isFormFilled) {
+            dataList.push(currentInput);
+        }
+
+        // Render ke preview CV
+        updateLivePreviewPengalamanKerja(dataList);
+    };
+
+    // Pasang event listener untuk setiap input
+    inputs.forEach(input => {
+        input.removeEventListener('input', input._livePreviewHandler);
+        input._livePreviewHandler = updatePreview;
+        input.addEventListener('input', input._livePreviewHandler);
     });
 };
 
+// Fungsi untuk memperbarui live preview pengalaman kerja di CV
+function updateLivePreviewPengalamanKerja(dataList = null) {
+    const previewContainer = document.getElementById('previewPengalamanKerja');
+    // Hapus seluruh isi container
+    previewContainer.innerHTML = '';
+
+    // Gunakan dataList jika ada (dari live preview), jika tidak pakai data tersimpan
+    const pengalamanList = dataList || window.tempData.pengalamankerja || [];
+
+    if (pengalamanList.length === 0) {
+        // Tampilkan pesan kosong, hapus semua sisa template
+        previewContainer.innerHTML = `<div class="mb-4">
+            <div class="flex justify-between items-center">
+                <p><strong id="companyName">Instrument Tech</strong> - <span id="jobCity">Sleman</span></p>
+                <p class="text-gray-500" id="jobDuration">Jan 2024 - Jan 2025</p>
+            </div>
+            <p id="jobPosition">Marcelle Program</p>
+            <ul id="jobDescription" class="list-disc pl-5 text-gray-600">
+                <li>Led development of an advanced automation system, achieving a 15% increase in operational efficiency.</li>
+                <li>Streamlined manufacturing processes, reducing production costs by 10%.</li>
+                <li>Implemented preventive maintenance strategies, resulting in a 20% decrease in equipment downtime.</li>
+            </ul>
+        </div>`;
+        return;
+    }
+
+    pengalamanList.forEach((data, index) => {
+        const row = document.createElement('div');
+        row.className = 'mb-4';
+        row.innerHTML = `
+            <div class="flex justify-between items-center">
+                <p><strong>${data.companyName || ''}</strong>${data.jobCity ? ` - ${data.jobCity}` : ''}</p>
+                ${(data.jobStartDate || data.jobIsPresent) ? `<p class="text-gray-500">${formatDate(data.jobStartDate)} - ${data.jobIsPresent ? 'Present' : formatDate(data.jobEndDate)}</p>` : ''}
+            </div>
+            ${data.jobPosition ? `<p>${data.jobPosition}</p>` : ''}
+            ${data.jobDescription ? `
+                <ul class="list-disc pl-5 text-gray-600">
+                    ${data.jobDescription.split('\n').map(desc => `<li>${desc}</li>`).join('')}
+                </ul>
+            ` : ''}
+        `;
+        previewContainer.appendChild(row);
+    });
+}
+
+// Fungsi untuk menyimpan data pengalaman kerja
 window.saveDataPengalamanKerja = function () {
     const form = document.getElementById('pengalamankerjaForm');
     const inputs = form.querySelectorAll('input, textarea');
     const data = {};
 
+    // Ambil data dari form
     inputs.forEach(input => {
         if (input.type === 'checkbox') {
             data[input.id] = input.checked;
@@ -59,14 +102,28 @@ window.saveDataPengalamanKerja = function () {
         }
     });
 
+    // Tambahkan data ke tempData
     window.tempData.pengalamankerja.push(data);
+
+    // Render ulang daftar data
     renderPengalamanKerja();
+
+    // Perbarui live preview di CV
+    updateLivePreviewPengalamanKerja();
+
+    // Reset form setelah menyimpan
     resetForm('pengalamankerja');
 };
 
+// Fungsi untuk merender daftar pengalaman kerja
 window.renderPengalamanKerja = function () {
     const listElement = document.getElementById('pengalamankerjaList');
-    listElement.innerHTML = '';
+    listElement.innerHTML = ''; // Kosongkan elemen sebelum menambahkan data baru
+
+    if (!window.tempData.pengalamankerja || window.tempData.pengalamankerja.length === 0) {
+        listElement.innerHTML = ``;
+        return;
+    }
 
     window.tempData.pengalamankerja.forEach((data, index) => {
         const row = document.createElement('div');
@@ -74,8 +131,8 @@ window.renderPengalamanKerja = function () {
 
         row.innerHTML = `
             <div>
-                <p><strong>${data.companyName || ''}</strong>${data.jobCity ? ` - ${data.jobCity}` : ''}</p>
-                ${data.startDate || data.isPresent ? `<p class="text-gray-500">${formatDate(data.startDate)} - ${data.isPresent ? 'Present' : formatDate(data.endDate)}</p>` : ''}
+                <p><strong>${data.companyName || ''}</strong>${data.JobCity ? ` - ${data.jobCity}` : ''}</p>
+                ${data.jobStartDate || data.jobIsPresent ? `<p class="text-gray-500">${formatDate(data.jobStartDate)} - ${data.jobIsPresent ? 'Present' : formatDate(data.jobEndDate)}</p>` : ''}
                 ${data.jobPosition ? `<p>${data.jobPosition}</p>` : ''}
                 ${data.jobDescription ? `
                     <ul class="list-disc pl-5 text-gray-600">
@@ -91,15 +148,15 @@ window.renderPengalamanKerja = function () {
 
         listElement.appendChild(row);
     });
-
-    updateLivePreviewPengalamanKerja();
 };
 
+// Fungsi untuk mengedit data pengalaman kerja
 window.editPengalamanKerja = function (index) {
     const data = window.tempData.pengalamankerja[index];
     const form = document.getElementById('pengalamankerjaForm');
     const inputs = form.querySelectorAll('input, textarea');
 
+    // Isi form dengan data yang ada
     inputs.forEach(input => {
         if (input.type === 'checkbox') {
             input.checked = data[input.id];
@@ -108,73 +165,32 @@ window.editPengalamanKerja = function (index) {
         }
     });
 
-    const endDateInput = document.getElementById('endDate');
-    if (data.isPresent) {
-        endDateInput.disabled = true;
-    } else {
-        endDateInput.disabled = false;
-    }
-
+    // Hapus data lama
     window.tempData.pengalamankerja.splice(index, 1);
+
+    // Render ulang daftar data
     renderPengalamanKerja();
+
+    // Perbarui live preview setelah load ulang form
+    enableLivePreviewPengalamanKerja();
 };
 
+// Fungsi untuk menghapus data pengalaman kerja
 window.deletePengalamanKerja = function (index) {
+    // Hapus data dari tempData
     window.tempData.pengalamankerja.splice(index, 1);
+
+    // Render ulang daftar data
     renderPengalamanKerja();
+
+    // Perbarui live preview di CV
+    updateLivePreviewPengalamanKerja();
 };
 
-window.updateLivePreviewPengalamanKerja = function () {
-    const previewContainer = document.getElementById('previewPengalamankerja');
-    previewContainer.innerHTML = '';
-
-    if (window.tempData.pengalamankerja.length === 0) {
-        previewContainer.innerHTML = `
-            <div class="mb-4">
-                <div class="flex justify-between items-center">
-                    <p><strong id="companyName">Instrument Tech</strong> - <span id="jobCity">Sleman</span></p>
-                    <p class="text-gray-500" id="jobDuration">Jan 2024 - Jan 2025</p>
-                </div>
-                <p id="jobPosition">Marcelle Program</p>
-                <ul id="jobDescription" class="list-disc pl-5 text-gray-600">
-                    <li>Led development of an advanced automation system, achieving a 15% increase in operational efficiency.</li>
-                    <li>Streamlined manufacturing processes, reducing production costs by 10%.</li>
-                    <li>Implemented preventive maintenance strategies, resulting in a 20% decrease in equipment downtime.</li>
-                </ul>
-            </div>
-        `;
-        return;
-    }
-
-    window.tempData.pengalamankerja.forEach((data, index) => {
-        let previewRow = document.getElementById(`previewPengalamankerja-${index}`);
-        if (!previewRow) {
-            previewRow = document.createElement('div');
-            previewRow.id = `previewPengalamankerja-${index}`;
-            previewRow.className = 'mb-4';
-            previewContainer.appendChild(previewRow);
-        }
-
-        previewRow.innerHTML = `
-            <div class="flex justify-between items-center">
-                <p><strong>${data.companyName || ''}</strong>${data.jobCity ? ` - ${data.jobCity}` : ''}</p>
-                ${data.startDate || data.isPresent ? `<p class="text-gray-500">${formatDate(data.startDate)} - ${data.isPresent ? 'Present' : formatDate(data.endDate)}</p>` : ''}
-            </div>
-            ${data.jobPosition ? `<p>${data.jobPosition}</p>` : ''}
-            ${data.jobDescription ? `
-                <ul class="list-disc pl-5 text-gray-600">
-                    ${data.jobDescription.split('\n').map(desc => `<li>${desc}</li>`).join('')}
-                </ul>
-            ` : ''}
-        `;
-    });
-};
-
-// Fungsi reset form
-window.resetForm = function (formId) {
-    const form = document.getElementById(formId + 'Form');
+// Fungsi untuk mereset form
+function resetForm(formId) {
+    const form = document.getElementById(`${formId}Form`);
     const inputs = form.querySelectorAll('input, textarea');
-
     inputs.forEach(input => {
         if (input.type === 'checkbox') {
             input.checked = false;
@@ -182,29 +198,18 @@ window.resetForm = function (formId) {
             input.value = '';
         }
     });
+    // Update preview agar baris input kosong tidak muncul
+    updateLivePreviewPengalamanKerja();
+}
 
-    // Aktifkan kembali endDate jika sebelumnya disabled
-    const endDateInput = document.getElementById('endDate');
-    if (endDateInput) {
-        endDateInput.disabled = false;
-    }
-};
-
-// Fungsi toggle untuk checkbox "Saat ini bekerja"
-window.toggleEndDate = function () {
-    const checkbox = document.getElementById('isPresent');
-    const endDateInput = document.getElementById('endDate');
-    endDateInput.disabled = checkbox.checked;
-};
-
-// Format tanggal (misal: 2024-01-01 → Jan 2024)
-window.formatDate = function (dateString) {
+// Fungsi untuk memformat tanggal
+function formatDate(dateString) {
     if (!dateString) return '';
-    const date = new Date(dateString);
     const options = { year: 'numeric', month: 'long' };
-    return date.toLocaleDateString('en-US', options);
-};
+    return new Date(dateString).toLocaleDateString('id-ID', options);
+}
 
+// Panggil fungsi saat halaman dimuat
 document.addEventListener('DOMContentLoaded', function () {
     renderPengalamanKerja();
     enableLivePreviewPengalamanKerja();

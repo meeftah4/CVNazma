@@ -13,24 +13,20 @@
             <label class="block text-gray-700">Posisi Kerja</label>
             <input type="text" id="jobPosition" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
         </div>
-        <div>
-            <label class="block text-gray-700">Kota</label>
-            <input type="text" id="jobCity" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
-        </div>
     </div>
     <div class="grid grid-cols-2 gap-4 mb-4">
         <div>
             <label class="block text-gray-700">Tanggal Mulai</label>
-            <input type="date" id="startDate" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+            <input type="date" id="jobStartDate" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
         </div>
         <div>
             <label class="block text-gray-700">Tanggal Selesai</label>
-            <input type="date" id="endDate" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+            <input type="date" id="jobEndDate" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
         </div>
     </div>
     <div class="mb-4">
         <label class="inline-flex items-center">
-            <input type="checkbox" id="isPresent" class="form-checkbox h-5 w-5 text-orange-500" onclick="toggleEndDate()">
+            <input type="checkbox" id="jobIsPresent" class="form-checkbox h-5 w-5 text-orange-500" onclick="toggleEndDate()">
             <span class="ml-2 text-gray-700">Saat ini saya bekerja di sini</span>
         </label>
     </div>
