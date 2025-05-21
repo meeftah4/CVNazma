@@ -13,9 +13,61 @@ Route::get('/cvats', function () {
     return view('pages.cv', [
     ]);
 });
+Route::get('/indonesia/template1', function () {
+    return view('templates.indonesia.template1', [
+    ]);
+});
+Route::get('/indonesia/template2', function () {
+    return view('templates.indonesia.template2', [
+    ]);
+});
+Route::get('/indonesia/template3', function () {
+    return view('templates.indonesia.template3', [
+    ]);
+});
+Route::get('/indonesia/template4', function () {
+    return view('templates.indonesia.template4', [
+    ]);
+});
+Route::get('/indonesia/template5', function () {
+    return view('templates.indonesia.template5', [
+    ]);
+});
+Route::get('/indonesia/template6', function () {
+    return view('templates.indonesia.template6', [
+    ]);
+});
+Route::get('/english/template1', function () {
+    return view('templates.english.template1', [
+    ]);
+});
+Route::get('/english/template2', function () {
+    return view('templates.english.template2', [
+    ]);
+});
+Route::get('/english/template3', function () {
+    return view('templates.english.template3', [
+    ]);
+});
+Route::get('/english/template4', function () {
+    return view('templates.english.template4', [
+    ]);
+});
+Route::get('/english/template5', function () {
+    return view('templates.english.template5', [
+    ]);
+});
+Route::get('/english/template6', function () {
+    return view('templates.english.template6', [
+    ]);
+});
 Route::get('/template', function () {
     return view('pages.template', [
     ]);
+}); // <-- Tambahkan penutup kurung kurawal di sini
+
+Route::get('/template-cv-html', function () {
+    return view('components.templates-cv');
 });
 
 // Profile Routes
