@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('languages', function (Blueprint $table) {
+        Schema::create('certificates', function (Blueprint $table) {
             $table->id();
             $table->foreignId('cvsy_id')->constrained('cvs_users')->onDelete('cascade');
-            $table->string('language_name');
+            $table->string('certificate_name');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('languages');
+        Schema::dropIfExists('certificates');
     }
 };

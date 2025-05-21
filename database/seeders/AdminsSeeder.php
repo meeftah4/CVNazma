@@ -13,7 +13,7 @@ class AdminsSeeder extends Seeder
         Users::create([
             'name' => 'Admin CV Nazma',
             'email' => 'admin@cvnazma.com',
-            'password' => Hash::make('admin12345'), // Ganti dengan password yang aman
+            'password' => Hash::make('adminnazma'), // Ganti dengan password yang aman
             'role' => 'admin',
         ]);
     }

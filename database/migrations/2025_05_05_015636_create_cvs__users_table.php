@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('linkedin')->nullable();
             $table->string('website')->nullable();
             $table->string('description')->nullable();
+            $table->string('cv_picture')->nullable();
             $table->timestamps();
         });        
     }
