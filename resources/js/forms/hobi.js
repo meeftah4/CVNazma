@@ -45,7 +45,7 @@ window.enableLivePreviewHobi = function () {
             if (previewList.length > 0) {
                 previewContainer.innerHTML = `<p><strong>Hobi:</strong> ${previewList.join(', ')}</p>`;
             } else {
-                previewContainer.innerHTML = `<p class="text-gray-500"><strong>Hobi:</strong> Tenis Lapangan</p>`;
+                previewContainer.innerHTML = `<p><strong>Hobi:</strong> Tenis Lapangan</p>`;
             }
         });
     });
@@ -144,7 +144,7 @@ window.updateLivePreviewHobi = function () {
     if (hobiList.length > 0) {
         previewContainer.innerHTML = `<p><strong>Hobi:</strong> ${hobiList.join(', ')}</p>`;
     } else {
-        previewContainer.innerHTML = `<p class="text-gray-500"><strong>Hobi:</strong> Tenis Lapangan</p>`;
+        previewContainer.innerHTML = `<p><strong>Hobi:</strong> Tenis Lapangan</p>`;
     }
 };
 

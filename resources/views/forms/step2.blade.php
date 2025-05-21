@@ -32,10 +32,11 @@
         <div class="mb-4">
             <div class="bg-white rounded-md shadow p-0">
                 <button type="button"
-                    class="w-full flex justify-between items-center py-2 px-4 border-b font-bold text-blue-900 rounded-t-md focus:outline-none"
+                    class="w-full flex justify-between items-center px-6 border-b font-bold text-blue-900 rounded-t-md focus:outline-none text-base"
+                    style="min-height: 50px; padding-top: 0.75rem; padding-bottom: 0.75rem;" {{-- py-3 --}}
                     onclick="toggleDropdown('{{ strtolower(str_replace(' ', '', $field)) }}')">
-                    <span>{{ $field }}</span>
-                    <span class="text-blue-900 font-bold">
+                    <span class="text-[18px]">{{ $field }}</span>
+                    <span class="text-blue-900 font-bold text-xl">
                         <span id="{{ strtolower(str_replace(' ', '', $field)) }}Icon">+</span>
                     </span>
                 </button>
@@ -55,9 +56,11 @@
                 <span class="text-sm" style="color: #888888; font-size: 6px;">Tambahkan foto</span>
             </button>
         </div>
-    </div>
+</div>
 
-<button type="button" onclick="showTemplateCV()" class="bg-orange-500 text-white px-4 py-2 rounded-md">
+<button type="button" onclick="showTemplateCV()" 
+    style="background:#FFBC5D; color:#01287E;" 
+    class="font-bold px-6 py-2 rounded-md shadow transition hover:brightness-95">
     Langkah Selanjutnya
 </button>
 </div>

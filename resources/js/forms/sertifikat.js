@@ -45,7 +45,7 @@ window.enableLivePreviewSertifikat = function () {
             if (previewList.length > 0) {
                 previewContainer.innerHTML = `<p><strong>Sertifikat:</strong> ${previewList.join(', ')}</p>`;
             } else {
-                previewContainer.innerHTML = `<p class="text-gray-500"><strong>Sertifikat:</strong> Professional Design Engineer (PDE) License, Project Management Tech (PMT), Structural Process Design (SPD)</p>`;
+                previewContainer.innerHTML = `<p><strong>Sertifikat:</strong> Professional Design Engineer (PDE) License, Project Management Tech (PMT), Structural Process Design (SPD)</p>`;
             }
         });
     });
@@ -144,7 +144,7 @@ window.updateLivePreviewSertifikat = function () {
     if (sertifikatList.length > 0) {
         previewContainer.innerHTML = `<p><strong>Sertifikat:</strong> ${sertifikatList.join(', ')}</p>`;
     } else {
-        previewContainer.innerHTML = `<p class="text-gray-500"><strong>Sertifikat:</strong> Professional Design Engineer (PDE) License, Project Management Tech (PMT), Structural Process Design (SPD)</p>`;
+        previewContainer.innerHTML = `<p><strong>Sertifikat:</strong> Professional Design Engineer (PDE) License, Project Management Tech (PMT), Structural Process Design (SPD)</p>`;
     }
 };
 

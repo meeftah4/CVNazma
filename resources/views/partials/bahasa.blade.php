@@ -1,5 +1,8 @@
 {{-- filepath: d:\Magang\CVNazma\resources\views\partials\bahasa.blade.php --}}
-<div id="bahasaForm" class="bg-gray-100 p-4 rounded-md hidden">
+<div id="bahasaList" class="mb-4">
+    <!-- Baris data akan ditampilkan di sini -->
+</div>
+<div id="bahasaForm" class="bg-white p-4 rounded-b-md rounded-t-none border-t-0">
     <div class="mb-4">
         <label class="block text-gray-700">Bahasa</label>
         <input type="text" id="languageName" class="mt-1 block w-full border border-gray-300 rounded-md p-2">

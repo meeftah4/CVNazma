@@ -2,17 +2,15 @@
     <!-- Baris data akan ditampilkan di sini -->
 </div>
 
-<div id="pendidikanForm" class="bg-gray-100 p-4 rounded-md">
+<div id="pendidikanForm" class="bg-white p-4 rounded-b-md rounded-t-none border-t-0">
     <div class="mb-4">
         <label class="block text-gray-700">Sekolah</label>
         <input type="text" id="educationInstitution" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
     </div>
-    <div class="grid grid-cols-2 gap-4 mb-4">
-        <div>
+        <div class="mb-4">
             <label class="block text-gray-700">Gelar</label>
             <input type="text" id="educationDegree" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
         </div>
-    </div>
     <div class="grid grid-cols-2 gap-4 mb-4">
         <div>
             <label class="block text-gray-700">Tanggal Mulai</label>

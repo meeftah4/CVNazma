@@ -45,7 +45,7 @@ window.enableLivePreviewBahasa = function () {
             if (previewList.length > 0) {
                 previewContainer.innerHTML = `<p><strong>Bahasa:</strong> ${previewList.join(', ')}</p>`;
             } else {
-                previewContainer.innerHTML = `<p class="text-gray-500"><strong>Bahasa:</strong> English, French, Mandarin</p>`;
+                previewContainer.innerHTML = `<p><strong>Bahasa:</strong> English, French, Mandarin</p>`;
             }
         });
     });
@@ -144,7 +144,7 @@ window.updateLivePreviewBahasa = function () {
     if (bahasaList.length > 0) {
         previewContainer.innerHTML = `<p><strong>Bahasa:</strong> ${bahasaList.join(', ')}</p>`;
     } else {
-        previewContainer.innerHTML = `<p class="text-gray-500"><strong>Bahasa:</strong> English, French, Mandarin</p>`;
+        previewContainer.innerHTML = `<p><strong>Bahasa:</strong> English, French, Mandarin</p>`;
     }
 };
 

@@ -1,19 +1,17 @@
+{{-- filepath: d:\Magang\CVNazma\resources\views\partials\pengalaman-kerja.blade.php --}}
 <div id="proyekList" class="mb-4">
     <!-- Baris data akan ditampilkan di sini -->
 </div>
 
-{{-- filepath: d:\Magang\CVNazma\resources\views\partials\pengalaman-kerja.blade.php --}}
-<div id="proyekForm" class="bg-gray-100 p-4 rounded-md hidden">
+<div id="proyekForm" class="bg-white p-4 rounded-b-md rounded-t-none border-t-0">
     <div class="mb-4">
         <label class="block text-gray-700">Proyek</label>
         <input type="text" id="projectName" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
     </div>
-    <div class="grid grid-cols-2 gap-4 mb-4">
     <div class="mb-4">
             <label class="block text-gray-700">Posisi</label>
             <input type="text" id="projectPosition" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
         </div>
-    </div>
     <div class="grid grid-cols-2 gap-4 mb-4">
         <div>
             <label class="block text-gray-700">Tanggal Mulai</label>

@@ -3,7 +3,7 @@
     <!-- Baris data akan ditampilkan di sini -->
 </div>
 
-<div id="pengalamankerjaForm" class="bg-gray-100 p-4 rounded-md">
+<div id="pengalamankerjaForm" class="bg-white p-4 rounded-b-md rounded-t-none border-t-0">
     <div class="mb-4">
         <label class="block text-gray-700">Nama Perusahaan</label>
         <input type="text" id="companyName" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
@@ -12,6 +12,10 @@
         <div>
             <label class="block text-gray-700">Posisi Kerja</label>
             <input type="text" id="jobPosition" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+        </div>
+        <div>
+            <label class="block text-gray-700">Kota</label>
+            <input type="text" id="jobCity" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
         </div>
     </div>
     <div class="grid grid-cols-2 gap-4 mb-4">

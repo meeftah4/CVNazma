@@ -1,5 +1,8 @@
 {{-- filepath: d:\Magang\CVNazma\resources\views\partials\hobi.blade.php --}}
-<div id="sertifikatForm" class="bg-gray-100 p-4 rounded-md hidden">
+<div id="sertifikatList" class="mb-4">
+    <!-- Baris data akan ditampilkan di sini -->
+</div>
+<div id="sertifikatForm" class="bg-white p-4 rounded-b-md rounded-t-none border-t-0">
     <div class="mb-4">
         <label class="block text-gray-700">Nama Sertifikat</label>
         <input type="text" id="certificateName" class="mt-1 block w-full border border-gray-300 rounded-md p-2">

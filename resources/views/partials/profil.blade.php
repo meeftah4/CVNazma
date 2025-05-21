@@ -1,4 +1,7 @@
 {{-- filepath: d:\Magang\CVNazma\resources\views\partials\profil.blade.php --}}
+<div id="profilList" class="mb-4">
+    <!-- Baris data akan ditampilkan di sini -->
+</div>
 <div id="profilForm" class="bg-white p-4 rounded-b-md rounded-t-none border-t-0">
     <div class="mb-4">
         <label class="block text-gray-700">Deskripsi</label>
