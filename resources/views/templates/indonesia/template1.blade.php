@@ -77,10 +77,13 @@
 <body>
 
     <header>
-        <div>
-            <div class="name">Nama Lengkap</div>
-            <div class="email">email@example.com</div>
-            <div class="telephone">+62 812 3456 7890</div>
+        <div style="display: flex; gap: 20px; align-items: center;">
+            <img src="foto.jpg" alt="Foto Profil" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid #005bbb;">
+            <div>
+                <div class="name">Nama Lengkap</div>
+                <div class="email">email@example.com</div>
+                <div class="telephone">+62 812 3456 7890</div>
+            </div>
         </div>
         <div class="contact">
             LinkedIn: linkedin.com/in/username<br>

@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CV Template 4</title>
   <style>
     body {
@@ -14,20 +14,34 @@
       color: #222;
     }
 
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .profile-header img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .profile-text {
+      flex-grow: 1;
+    }
+
     .name {
       font-size: 26px;
       font-weight: bold;
       margin-bottom: 5px;
     }
 
-    .title {
-      font-size: 16px;
-      margin-bottom: 15px;
-    }
-
     .contact {
       font-size: 13px;
-      margin-bottom: 30px;
+      margin-bottom: 0;
     }
 
     section {
@@ -61,15 +75,20 @@
 </head>
 <body>
 
-  <div class="name">Nama Lengkap</div>
-  <div class="contact">
-    Email: email@example.com | Telepon: +62 812 3456 7890<br/>
-    LinkedIn: linkedin.com/in/username | Website: website.com/username
+  <div class="profile-header">
+    <img src="foto.jpg" alt="Foto Profil">
+    <div class="profile-text">
+      <div class="name">Nama Lengkap</div>
+      <div class="contact">
+        Email: email@example.com | Telepon: +62 812 3456 7890<br />
+        LinkedIn: linkedin.com/in/username | Website: website.com/username
+      </div>
+    </div>
   </div>
 
   <section>
     <div class="section-label">Profil Singkat</div>
-    <p>Seorang profesional di bidang [bidang] dengan pengalaman lebih dari X tahun dalam mengelola proyek, menyusun strategi, dan memberikan hasil yang terukur.</p>
+    <p>Seorang profesional di bidang [bidang] dengan pengalaman lebih dari X tahun dalam mengelola proyek, menyusun strategi, dan memberikan hasil yang terukur. Memiliki kemampuan analisis yang kuat dan pengalaman kepemimpinan yang solid.</p>
   </section>
 
   <section>
@@ -80,14 +99,29 @@
       <li>Mengelola tim proyek dengan 5 anggota untuk mengembangkan sistem informasi internal.</li>
       <li>Meningkatkan efisiensi proses sebesar 20% melalui otomasi.</li>
     </ul>
+
+    <div class="item-title">Perusahaan Sebelumnya – Posisi</div>
+    <div class="item-sub">Jan 2018 – Des 2019 | Bandung</div>
+    <ul>
+      <li>Bertanggung jawab atas perancangan UI/UX untuk produk SaaS.</li>
+      <li>Bekerja sama dengan tim pengembang lintas fungsi.</li>
+    </ul>
   </section>
 
   <section>
     <div class="section-label">Proyek</div>
-    <div class="item-title">Nama Proyek – Posisi</div>
+    <div class="item-title">Nama Proyek – Peran</div>
     <div class="item-sub">Jan 2020 – Sekarang | Jakarta</div>
     <ul>
       <li>Mengelola tim proyek dengan 5 anggota untuk mengembangkan sistem informasi internal.</li>
+      <li>Meningkatkan efisiensi proses sebesar 20% melalui otomasi.</li>
+    </ul>
+
+    <div class="item-title">Proyek Lain – Peran</div>
+    <div class="item-sub">Jan 2018 – Des 2019 | Bandung</div>
+    <ul>
+      <li>Bertanggung jawab atas perancangan UI/UX untuk produk SaaS.</li>
+      <li>Bekerja sama dengan tim pengembang lintas fungsi.</li>
     </ul>
   </section>
 
@@ -108,7 +142,7 @@
 
   <section>
     <div class="section-label">Bahasa</div>
-    <ul><li>Indonesia</li></ul>
+    <ul><li>Bahasa Indonesia</li></ul>
   </section>
 
   <section>

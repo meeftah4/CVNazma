@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+\<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
@@ -16,16 +16,25 @@
       font-size: 14px;
     }
 
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 10px;
+    }
+
+    .header img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid #ccc;
+    }
+
     h1 {
       font-size: 26px;
       font-weight: bold;
       margin-bottom: 2px;
-    }
-
-    .subtitle {
-      font-size: 16px;
-      margin-bottom: 15px;
-      color: #555;
     }
 
     .contact {
@@ -72,10 +81,15 @@
 </head>
 <body>
 
-  <h1>Nama Lengkap</h1>
-  <div class="contact">
-    Email: email@example.com | Telepon: +62 812 3456 7890<br>
-    LinkedIn: linkedin.com/in/username | Website: website.com/username
+  <div class="header">
+    <img src="foto.jpg" alt="Foto Profil">
+    <div>
+      <h1>Nama Lengkap</h1>
+      <div class="contact">
+        Email: email@example.com | Telepon: +62 812 3456 7890<br>
+        LinkedIn: linkedin.com/in/username | Website: website.com/username
+      </div>
+    </div>
   </div>
 
   <section>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CV Template ATS Layout 3</title>
   <style>
     body {
@@ -16,16 +16,25 @@
       font-size: 14px;
     }
 
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 10px;
+    }
+
+    .header img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid #ccc;
+    }
+
     h1 {
       font-size: 26px;
       font-weight: bold;
       margin-bottom: 2px;
-    }
-
-    .subtitle {
-      font-size: 16px;
-      margin-bottom: 15px;
-      color: #555;
     }
 
     .contact {
@@ -72,19 +81,20 @@
 </head>
 <body>
 
-  <h1>Full Name</h1>
-  <div class="contact">
-    Email: email@example.com | Phone: +62 812 3456 7890<br />
-    LinkedIn: linkedin.com/in/username | Website: website.com/username
+  <div class="header">
+    <img src="photo.jpg" alt="Profile Photo">
+    <div>
+      <h1>Full Name</h1>
+      <div class="contact">
+        Email: email@example.com | Phone: +62 812 3456 7890<br>
+        LinkedIn: linkedin.com/in/username | Website: website.com/username
+      </div>
+    </div>
   </div>
 
   <section>
-    <h2>Summary</h2>
-    <p>
-      A professional in the field of [field] with over X years of experience managing projects, 
-      developing strategies, and delivering measurable results. Possesses strong analytical skills 
-      and solid leadership abilities.
-    </p>
+    <h2>Professional Summary</h2>
+    <p>A professional in the field of [industry] with over X years of experience in project management, strategic planning, and delivering measurable results. Strong analytical skills and solid leadership capabilities.</p>
   </section>
 
   <section>
@@ -95,7 +105,7 @@
       <div class="item-desc">
         <ul>
           <li>Managed a project team of 5 members to develop an internal information system.</li>
-          <li>Increased process efficiency by 20% through automation.</li>
+          <li>Improved process efficiency by 20% through automation.</li>
         </ul>
       </div>
     </div>
@@ -104,7 +114,7 @@
       <div class="item-sub">Jan 2018 – Dec 2019 | Bandung</div>
       <div class="item-desc">
         <ul>
-          <li>Responsible for UI/UX design for SaaS products.</li>
+          <li>Responsible for UI/UX design for a SaaS product.</li>
           <li>Collaborated with cross-functional development teams.</li>
         </ul>
       </div>
@@ -118,8 +128,8 @@
       <div class="item-sub">Jan 2020 – Present | Jakarta</div>
       <div class="item-desc">
         <ul>
-          <li>Managed a project team of 5 members to develop an internal information system.</li>
-          <li>Increased process efficiency by 20% through automation.</li>
+          <li>Managed a team of 5 members to develop an internal information system.</li>
+          <li>Improved process efficiency by 20% through automation.</li>
         </ul>
       </div>
     </div>
@@ -128,7 +138,7 @@
       <div class="item-sub">Jan 2018 – Dec 2019 | Bandung</div>
       <div class="item-desc">
         <ul>
-          <li>Responsible for UI/UX design for SaaS products.</li>
+          <li>Designed UI/UX for a SaaS product.</li>
           <li>Collaborated with cross-functional development teams.</li>
         </ul>
       </div>
@@ -138,7 +148,7 @@
   <section>
     <h2>Education</h2>
     <div class="item">
-      <div class="item-title">ABC University – B.Sc. in Computer Science</div>
+      <div class="item-title">ABC University – BSc in Computer Science</div>
       <div class="item-sub">2014 – 2018</div>
     </div>
   </section>

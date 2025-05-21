@@ -33,10 +33,6 @@ Route::get('/indonesia/template5', function () {
     return view('templates.indonesia.template5', [
     ]);
 });
-Route::get('/indonesia/template6', function () {
-    return view('templates.indonesia.template6', [
-    ]);
-});
 Route::get('/english/template1', function () {
     return view('templates.english.template1', [
     ]);
@@ -55,10 +51,6 @@ Route::get('/english/template4', function () {
 });
 Route::get('/english/template5', function () {
     return view('templates.english.template5', [
-    ]);
-});
-Route::get('/english/template6', function () {
-    return view('templates.english.template6', [
     ]);
 });
 Route::get('/template', function () {

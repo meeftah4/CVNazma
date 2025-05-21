@@ -14,6 +14,19 @@
       color: #000;
     }
 
+    /* Container atas untuk foto dan info */
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    /* Nama dan kontak di sebelah kiri */
+    .info-left {
+      flex: 1;
+    }
+
     h1 {
       font-size: 22px;
       font-weight: bold;
@@ -22,7 +35,18 @@
 
     .contact {
       font-size: 12px;
-      margin-bottom: 20px;
+      margin-bottom: 0;
+    }
+
+    /* Foto profil di kanan */
+    .profile-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-left: 20px;
+      border: 2px solid #000;
+      flex-shrink: 0;
     }
 
     h2 {
@@ -49,9 +73,14 @@
 </head>
 <body>
 
-  <h1>Nama Lengkap</h1>
-  <div class="contact">
-    Email: email@example.com | +62 812 3456 7890 | linkedin.com/in/username | website.com/username
+  <div class="header-top">
+    <div class="info-left">
+      <h1>Nama Lengkap</h1>
+      <div class="contact">
+        Email: email@example.com | +62 812 3456 7890 | linkedin.com/in/username | website.com/username
+      </div>
+    </div>
+    <img src="https://via.placeholder.com/120" alt="Foto Profil" class="profile-photo" />
   </div>
 
   <h2>Profil Singkat</h2>

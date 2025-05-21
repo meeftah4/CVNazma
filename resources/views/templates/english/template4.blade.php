@@ -14,6 +14,25 @@
       color: #222;
     }
 
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .profile-header img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .profile-text {
+      flex-grow: 1;
+    }
+
     .name {
       font-size: 26px;
       font-weight: bold;
@@ -27,7 +46,7 @@
 
     .contact {
       font-size: 13px;
-      margin-bottom: 30px;
+      margin-bottom: 0;
     }
 
     section {
@@ -61,15 +80,20 @@
 </head>
 <body>
 
-  <div class="name">Full Name</div>
-  <div class="contact">
-    Email: email@example.com | Phone: +62 812 3456 7890<br />
-    LinkedIn: linkedin.com/in/username | Website: website.com/username
+  <div class="profile-header">
+    <img src="foto.jpg" alt="Profile Photo">
+    <div class="profile-text">
+      <div class="name">Full Name</div>
+      <div class="contact">
+        Email: email@example.com | Phone: +62 812 3456 7890<br />
+        LinkedIn: linkedin.com/in/username | Website: website.com/username
+      </div>
+    </div>
   </div>
 
   <section>
     <div class="section-label">Summary</div>
-    <p>A professional in the field of [field] with over X years of experience managing projects, developing strategies, and delivering measurable results.</p>
+    <p>A professional in the field of [field] with over X years of experience managing projects, developing strategies, and delivering measurable results. Strong analytical skills and solid leadership experience.</p>
   </section>
 
   <section>
@@ -80,6 +104,13 @@
       <li>Managed a project team of 5 members to develop an internal information system.</li>
       <li>Increased process efficiency by 20% through automation.</li>
     </ul>
+
+    <div class="item-title">Previous Company – Position</div>
+    <div class="item-sub">Jan 2018 – Dec 2019 | Bandung</div>
+    <ul>
+      <li>Responsible for UI/UX design of SaaS products.</li>
+      <li>Collaborated with cross-functional development teams.</li>
+    </ul>
   </section>
 
   <section>
@@ -88,6 +119,14 @@
     <div class="item-sub">Jan 2020 – Present | Jakarta</div>
     <ul>
       <li>Managed a project team of 5 members to develop an internal information system.</li>
+      <li>Increased process efficiency by 20% through automation.</li>
+    </ul>
+
+    <div class="item-title">Another Project – Role</div>
+    <div class="item-sub">Jan 2018 – Dec 2019 | Bandung</div>
+    <ul>
+      <li>Responsible for UI/UX design of SaaS products.</li>
+      <li>Collaborated with cross-functional development teams.</li>
     </ul>
   </section>
 
