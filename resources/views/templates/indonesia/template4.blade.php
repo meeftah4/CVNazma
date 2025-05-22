@@ -76,7 +76,7 @@
 <body>
 
   <div class="profile-header">
-    <img src="foto.jpg" alt="Foto Profil">
+    <img src="{{ asset('images/CV Profil.jpg') }}" alt="Foto Profil">
     <div class="profile-text">
       <div class="name">Nama Lengkap</div>
       <div class="contact">

@@ -1,4 +1,4 @@
-<div id="step-1" class="bg-white p-6 rounded-lg shadow-lg step hidden">
+<div id="step-1" class="bg-white p-6 rounded-lg shadow-lg step">
     <h2 class="text-xl font-bold mb-4" style="color:#01287E; border-bottom:1px solid #E5E7EB; padding-bottom:0.5rem;">
         Masukkan detail pribadi
     </h2>

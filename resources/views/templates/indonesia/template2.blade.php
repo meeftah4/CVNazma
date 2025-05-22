@@ -58,7 +58,7 @@
 <body>
 
   <div class="profile-header">
-    <img src="foto.jpg" alt="Foto Profil">
+    <img src="{{ asset('images/CV Profil.jpg') }}" alt="Foto Profil">
     <h1>Nama Lengkap</h1>
     <div class="contact-info">
       email@example.com | +62 812 3456 7890<br>

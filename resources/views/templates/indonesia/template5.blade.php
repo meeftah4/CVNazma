@@ -80,7 +80,7 @@
         Email: email@example.com | +62 812 3456 7890 | linkedin.com/in/username | website.com/username
       </div>
     </div>
-    <img src="https://via.placeholder.com/120" alt="Foto Profil" class="profile-photo" />
+    <img src="{{ asset('images/CV Profil.jpg') }}" alt="Foto Profil" class="profile-photo" />
   </div>
 
   <h2>Profil Singkat</h2>

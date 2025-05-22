@@ -78,7 +78,7 @@
 
     <header>
         <div style="display: flex; gap: 20px; align-items: center;">
-            <img src="foto.jpg" alt="Foto Profil" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid #005bbb;">
+            <img src="{{ asset('images/CV Profil.jpg') }}" alt="Foto Profil" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid #005bbb;">
             <div>
                 <div class="name">Nama Lengkap</div>
                 <div class="email">email@example.com</div>

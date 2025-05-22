@@ -46,24 +46,13 @@
         </div>
         <!-- END Stepper & Judul -->
 
-        <div class="flex flex-col md:flex-row gap-4">
-            <!-- Form Section -->
-            <div class="w-full md:w-1/2">
-                <form id="cvForm" method="POST" action="#">
-                    @csrf
-
-                    @include('forms.step1')
-                    @include('forms.step2')
-
-                </form>
-            </div>
-
-            <!-- Live Preview Section -->
-            <div class="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-lg flex flex-col h-full">
-
-                <!-- Konten preview scrollable -->
-                <div class="flex-1 overflow-y-auto" style="max-height: 670px;">
-                    @include('components.view-cv')
+        <div style="background-color: #F4F8FF; min-height: 100vh;" class="pt-4 pb-10">
+            <div class="container mx-auto px-4" id="main-content">
+                <div id="form-section">
+                    @include('components.cv-form-preview')
+                </div>
+                <div id="template-section" class="hidden">
+                    @include('components.templates-cv')
                 </div>
             </div>
         </div>
@@ -72,20 +61,6 @@
 
 <!-- Script Section -->
 <script>
-    function goToStep(step) {
-        document.querySelectorAll('.step').forEach(el => el.classList.add('hidden'));
-        const targetStep = document.getElementById('step-' + step);
-        if (targetStep) targetStep.classList.remove('hidden');
-    }
-
-    function updateContactPreview() {
-        const email = document.getElementById('emailInput')?.value || 'nama@email.com';
-        const phone = document.getElementById('phoneInput')?.value || '0812-3456-7890';
-        const linkedin = document.getElementById('linkedinInput')?.value || 'LinkedIn Profile URL';
-        const portfolio = document.getElementById('portfolioInput')?.value || 'Portfolio/Website URL';
-        document.getElementById('previewContact').textContent = `${email} | ${phone} | ${linkedin} | ${portfolio}`;
-    }
-
     // Fungsi untuk mengatur step aktif
     function setActiveStep(step) {
         // Judul per step
@@ -123,46 +98,39 @@
             else if (step === 2) bar.style.width = '50%';
             else if (step === 3) bar.style.width = '100%';
         }
+
+        // Tampilkan/hide section sesuai step
+        if (step === 3) {
+            document.getElementById('form-section').classList.add('hidden');
+            document.getElementById('template-section').classList.remove('hidden');
+        } else {
+            document.getElementById('form-section').classList.remove('hidden');
+            document.getElementById('template-section').classList.add('hidden');
+        }
     }
 
-    // Integrasi dengan goToStep
+    // Stepper click handler
     function goToStep(step) {
-        document.querySelectorAll('.step').forEach(el => el.classList.add('hidden'));
-        const targetStep = document.getElementById('step-' + step);
-        if (targetStep) targetStep.classList.remove('hidden');
         setActiveStep(step);
+        // Panggil showFormStep di form hanya untuk step 1/2
+        if (step === 1 || step === 2) {
+            if (typeof window.showFormStep === 'function') {
+                window.showFormStep(step);
+            }
+        }
     }
 
+    // Untuk tombol "Langkah Selanjutnya" di step 2
+    function showTemplateCV() {
+        setActiveStep(3);
+    }
+
+    // Inisialisasi ke step 1 saat load
     document.addEventListener('DOMContentLoaded', function () {
-        goToStep(1);
-    });
-
-
-    //lanjutan dari script di atas
-    document.addEventListener('DOMContentLoaded', function () {
-        goToStep(1);
-
-        // Live preview update for contact (1 baris)
-        ['emailInput', 'phoneInput', 'linkedinInput', 'portfolioInput'].forEach(function(id) {
-            const el = document.getElementById(id);
-            if (el) {
-                el.addEventListener('input', updateContactPreview);
-            }
-        });
-
-        // Inisialisasi pertama kali
-        updateContactPreview();
-
-        // Jika ingin tetap update nama, bisa tambahkan:
-        document.getElementById('nameInput')?.addEventListener('input', function(e) {
-            document.getElementById('previewName').textContent = e.target.value || 'Nama Lengkap';
-
-        });
-
-        document.getElementById('addressInput')?.addEventListener('input', function(e) {
-           document.getElementById('previewAddress').textContent = e.target.value || 'Jakarta, Indonesia';
-
-        });
+        setActiveStep(1);
+        if (typeof window.showFormStep === 'function') {
+            window.showFormStep(1);
+        }
     });
 </script>
 @endsection
