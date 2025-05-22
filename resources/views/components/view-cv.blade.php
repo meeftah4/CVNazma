@@ -7,17 +7,27 @@
 }
 </style>
 
-<header class="mb-6">
-    <h1 id="previewName" class="text-3xl font-bold text-gray-900">Nama Lengkap</h1>
-    <p id="previewContact" class="text-sm text-gray-600">nama@email.com | 0812-3456-7890 | LinkedIn Profile URL | Portfolio/Website URL</p>
-    <p id="previewAddress" class="text-sm text-gray-600">Jakarta, Indonesia</p>
-    <h2 class="border-b border-gray-300 pb-1 mb-2"></h2>
-    <div id="previewProfil" class="mt-4 break-words">
-        <p class="text-gray-600">Lulusan [Nama Jurusan] dari [Nama Universitas] dengan ketertarikan tinggi pada bidang [bidang yang dilamar, 
-        misal: UI/UX Design, Data Analysis, Digital Marketing]. Memiliki pengalaman organisasi dan proyek yang mengasah kemampuan [contoh: desain visual, riset pengguna, 
-        dan analisis data]. Terbiasa menggunakan [sebutkan tools] dan siap berkontribusi secara profesional dalam tim.</p>
+<header class="mb-2 flex flex-col sm:flex-row items-start gap-4" id="headerPreview">
+    {{-- Foto akan ditampilkan di sini secara dinamis --}}
+    <img id="cvPhotoPreview" src="" alt="Foto Profil" class="w-24 h-24 object-cover hidden" />
+    
+    <div>
+        <h1 id="previewName" class="text-3xl font-bold text-gray-900">Nama Lengkap</h1>
+        <p id="previewContact" class="text-sm text-gray-600">nama@email.com | 0812-3456-7890 | LinkedIn Profile URL | Portfolio/Website URL</p>
+        <p id="previewAddress" class="text-sm text-gray-600">Jakarta, Indonesia</p>
     </div>
 </header>
+
+<section class="mb-6">
+    <h2 class="border-b border-gray-300 pb-1 mb-2"></h2>
+    <div id="previewProfil" class="mt-4 break-words">
+        <p class="text-gray-600">
+            Lulusan [Nama Jurusan] dari [Nama Universitas] dengan ketertarikan tinggi pada bidang [bidang yang dilamar, 
+            misal: UI/UX Design, Data Analysis, Digital Marketing]. Memiliki pengalaman organisasi dan proyek yang mengasah kemampuan [contoh: desain visual, riset pengguna, 
+            dan analisis data]. Terbiasa menggunakan [sebutkan tools] dan siap berkontribusi secara profesional dalam tim.
+        </p>
+    </div>
+</section>
 
 <section class="mb-6">
     <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-2">Pengalaman Kerja</h2>
