@@ -26,7 +26,7 @@
 @vite('resources/js/forms/hobi.js')
 
 {{-- resources/views/forms/step2.blade.php --}}
-<div id="step-2" class="step hidden" style="background-color: #F4F8FF; min-height: 100vh;">
+<div id="step-2" class="step hidden" style="background-color: #F4F8FF;">
 
     @foreach (['Profil', 'Pengalaman Kerja', 'Proyek', 'Keahlian', 'Pendidikan', 'Bahasa', 'Sertifikat', 'Hobi'] as $field)
         <div class="mb-4">
@@ -47,7 +47,7 @@
         </div>
     @endforeach
 
-<div class="mb-4">
+    <div class="mb-4">
         <div class="flex items-center">
             <button class="flex flex-col items-center justify-center w-24 h-24 bg-gray-100 border rounded-[10px] shadow">
                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24">
@@ -56,11 +56,13 @@
                 <span class="text-sm" style="color: #888888; font-size: 6px;">Tambahkan foto</span>
             </button>
         </div>
-</div>
+    </div>
 
-<button type="button" onclick="showTemplateCV()" 
-    style="background:#FFBC5D; color:#01287E;" 
-    class="font-bold px-6 py-2 rounded-md shadow transition hover:brightness-95">
-    Langkah Selanjutnya
-</button>
+    <div class="flex justify-center pb-10">
+        <button type="button" onclick="showTemplateCV()" 
+            style="background:#FFBC5D; color:#01287E;" 
+            class="font-bold px-6 py-2 rounded-md shadow transition hover:brightness-95">
+            Langkah Selanjutnya
+        </button>
+    </div>
 </div>
