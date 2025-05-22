@@ -1,3 +1,4 @@
+<!-- filepath: d:\Magang\CVNazma\resources\views\templates\indonesia\template1.blade.php -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -6,10 +7,6 @@
     <title>CV Template 1</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        @page {
-            size: A4;
-            margin: 20mm;
-        }
         * {
             margin: 0;
             padding: 0;
@@ -82,108 +79,53 @@
 
     <header>
         <div style="display: flex; gap: 20px; align-items: center;">
-            <img src="{{ asset('images/CV Profil.jpg') }}" alt="Foto Profil" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid #005bbb;">
+            <img id="cvPhotoPreview" src="{{ asset('images/CV Profil.jpg') }}" alt="Foto Profil" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid #005bbb;">
             <div>
-                <div class="name">Nama Lengkap</div>
-                <div class="email">email@example.com</div>
-                <div class="telephone">+62 812 3456 7890</div>
+                <div id="previewName" class="name"></div>
+                <div id="previewContact" class="email"></div>
             </div>
         </div>
-        <div class="contact">
-            LinkedIn: linkedin.com/in/username<br>
-            Website: website.com/username
-        </div>
+        <div id="previewAddress" class="contact"></div>
     </header>
 
     <section>
         <h2>Profil Singkat</h2>
-        <p>Seorang profesional di bidang [bidang] dengan pengalaman lebih dari X tahun dalam mengelola proyek, menyusun strategi, dan memberikan hasil yang terukur. Memiliki kemampuan analisis yang kuat dan kepemimpinan yang solid.</p>
+        <div id="previewProfil"></div>
     </section>
 
     <section>
         <h2>Pengalaman Kerja</h2>
-        <div class="item">
-            <div class="item-title">Nama Perusahaan – Posisi</div>
-            <div class="item-sub">Jan 2020 – Sekarang | Jakarta</div>
-            <div class="item-desc">
-                <ul>
-                    <li>Mengelola tim proyek dengan 5 anggota untuk mengembangkan sistem informasi internal.</li>
-                    <li>Meningkatkan efisiensi proses sebesar 20% melalui otomasi.</li>
-                </ul>
-            </div>
-        </div>
-        <div class="item">
-            <div class="item-title">Perusahaan Sebelumnya – Posisi</div>
-            <div class="item-sub">Jan 2018 – Des 2019 | Bandung</div>
-            <div class="item-desc">
-                <ul>
-                    <li>Bertanggung jawab atas perancangan UI/UX untuk produk SaaS.</li>
-                    <li>Bekerja sama dengan tim pengembang lintas fungsi.</li>
-                </ul>
-            </div>
-        </div>
+        <div id="previewPengalamanKerja"></div>
     </section>
 
     <section>
         <h2>Proyek</h2>
-        <div class="item">
-            <div class="item-title">Nama Proyek – Posisi</div>
-            <div class="item-sub">Jan 2020 – Sekarang | Jakarta</div>
-            <div class="item-desc">
-                <ul>
-                    <li>Mengelola tim proyek dengan 5 anggota untuk mengembangkan sistem informasi internal.</li>
-                    <li>Meningkatkan efisiensi proses sebesar 20% melalui otomasi.</li>
-                </ul>
-            </div>
-        </div>
-        <div class="item">
-            <div class="item-title">Perusahaan Sebelumnya – Posisi</div>
-            <div class="item-sub">Jan 2018 – Des 2019 | Bandung</div>
-            <div class="item-desc">
-                <ul>
-                    <li>Bertanggung jawab atas perancangan UI/UX untuk produk SaaS.</li>
-                    <li>Bekerja sama dengan tim pengembang lintas fungsi.</li>
-                </ul>
-            </div>
-        </div>
+        <div id="previewProject"></div>
     </section>
 
     <section>
         <h2>Pendidikan</h2>
-        <div class="item">
-            <div class="item-title">Universitas ABC – S1 Teknik Informatika</div>
-            <div class="item-sub">2014 – 2018</div>
-        </div>
+        <div id="previewEducation"></div>
     </section>
 
     <section>
         <h2>Keahlian</h2>
-        <ul>
-            <li>PHP, Laravel, JavaScript</li>
-            <li>Analisis Data, Python (Pandas, NumPy)</li>
-            <li>Git, REST API, Docker</li>
-        </ul>
+        <div id="previewSkill"></div>
     </section>
 
     <section>
         <h2>Bahasa</h2>
-        <ul>
-            <li>Indonesia</li>
-        </ul>
+        <div id="previewBahasa"></div>
     </section>
 
     <section>
         <h2>Sertifikat</h2>
-        <ul>
-            <li>Dicoding (2022)</li>
-        </ul>
+        <div id="previewCertificate"></div>
     </section>
 
     <section>
         <h2>Hobi</h2>
-        <ul>
-            <li>Sepakbola</li>
-        </ul>
+        <div id="previewHobby"></div>
     </section>
 
 </body>

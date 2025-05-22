@@ -1,3 +1,4 @@
+<!-- filepath: d:\Magang\CVNazma\resources\views\templates\indonesia\template2.blade.php -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -5,10 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CV ATS Friendly</title>
   <style>
-    @page {
-            size: A4;
-            margin: 20mm;
-        }
     body {
       font-family: Arial, sans-serif;
       font-size: 14px;
@@ -62,86 +59,49 @@
 <body>
 
   <div class="profile-header">
-    <img src="{{ asset('images/CV Profil.jpg') }}" alt="Foto Profil">
-    <h1>Nama Lengkap</h1>
-    <div class="contact-info">
-      email@example.com | +62 812 3456 7890<br>
-      linkedin.com/in/username | website.com/username
-    </div>
+    <img id="cvPhotoPreview" src="{{ asset('images/CV Profil.jpg') }}" alt="Foto Profil">
+    <h1 id="previewName"></h1>
+    <div id="previewContact" class="contact-info"></div>
   </div>
 
   <div class="section">
     <h2>Profil Singkat</h2>
-    <p>Seorang profesional di bidang [bidang] dengan pengalaman lebih dari X tahun dalam mengelola proyek, menyusun strategi, dan memberikan hasil yang terukur. Memiliki kemampuan analisis yang kuat dan kepemimpinan yang solid.</p>
+    <div id="previewProfil"></div>
   </div>
 
   <div class="section">
     <h2>Pengalaman Kerja</h2>
-    <p><strong>Nama Perusahaan – Posisi</strong><br>
-    Jan 2020 – Sekarang | Jakarta</p>
-    <ul>
-      <li>Mengelola tim proyek dengan 5 anggota untuk mengembangkan sistem informasi internal.</li>
-      <li>Meningkatkan efisiensi proses sebesar 20% melalui otomasi.</li>
-    </ul>
-
-    <p><strong>Perusahaan Sebelumnya – Posisi</strong><br>
-    Jan 2018 – Des 2019 | Bandung</p>
-    <ul>
-      <li>Bertanggung jawab atas perancangan UI/UX untuk produk SaaS.</li>
-      <li>Bekerja sama dengan tim pengembang lintas fungsi.</li>
-    </ul>
+    <div id="previewPengalamanKerja"></div>
   </div>
 
   <div class="section">
     <h2>Proyek</h2>
-    <p><strong>Nama Proyek – Posisi</strong><br>
-    Jan 2020 – Sekarang | Jakarta</p>
-    <ul>
-      <li>Mengelola tim proyek dengan 5 anggota untuk mengembangkan sistem informasi internal.</li>
-      <li>Meningkatkan efisiensi proses sebesar 20% melalui otomasi.</li>
-    </ul>
-
-    <p><strong>Proyek Lain – Posisi</strong><br>
-    Jan 2018 – Des 2019 | Bandung</p>
-    <ul>
-      <li>Bertanggung jawab atas perancangan UI/UX untuk produk SaaS.</li>
-      <li>Bekerja sama dengan tim pengembang lintas fungsi.</li>
-    </ul>
+    <div id="previewProject"></div>
   </div>
 
   <div class="section">
     <h2>Pendidikan</h2>
-    <p><strong>Universitas ABC</strong> – S1 Teknik Informatika<br>2014 – 2018</p>
+    <div id="previewEducation"></div>
   </div>
 
   <div class="section">
     <h2>Keahlian</h2>
-    <ul>
-      <li>PHP, Laravel, JavaScript</li>
-      <li>Analisis Data, Python (Pandas, NumPy)</li>
-      <li>Git, REST API, Docker</li>
-    </ul>
+    <div id="previewSkill"></div>
   </div>
 
   <div class="section">
     <h2>Bahasa</h2>
-    <ul>
-      <li>Indonesia</li>
-    </ul>
+    <div id="previewBahasa"></div>
   </div>
 
   <div class="section">
     <h2>Sertifikat</h2>
-    <ul>
-      <li>Dicoding (2022)</li>
-    </ul>
+    <div id="previewCertificate"></div>
   </div>
 
   <div class="section">
     <h2>Hobi</h2>
-    <ul>
-      <li>Sepakbola</li>
-    </ul>
+    <div id="previewHobby"></div>
   </div>
 
 </body>

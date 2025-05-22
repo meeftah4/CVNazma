@@ -37,26 +37,6 @@ Route::get('/indonesia/template5', function () {
     return view('templates.indonesia.template5', [
     ]);
 });
-Route::get('/english/template1', function () {
-    return view('templates.english.template1', [
-    ]);
-});
-Route::get('/english/template2', function () {
-    return view('templates.english.template2', [
-    ]);
-});
-Route::get('/english/template3', function () {
-    return view('templates.english.template3', [
-    ]);
-});
-Route::get('/english/template4', function () {
-    return view('templates.english.template4', [
-    ]);
-});
-Route::get('/english/template5', function () {
-    return view('templates.english.template5', [
-    ]);
-});
 Route::get('/template', function () {
     return view('pages.template', [
     ]);

@@ -63,3 +63,67 @@
         });
     });
 </script>
+
+<script>
+// Helper untuk update window.tempData.profil dari input step 1
+function updateProfilTempData() {
+    window.tempData = window.tempData || {};
+    window.tempData.profil = window.tempData.profil || [{}];
+    window.tempData.profil[0] = {
+        name: document.getElementById('nameInput')?.value || '',
+        email: document.getElementById('emailInput')?.value || '',
+        phone: document.getElementById('phoneInput')?.value || '',
+        address: document.getElementById('addressInput')?.value || '',
+        linkedin: document.getElementById('linkedinInput')?.value || '',
+        portfolio: document.getElementById('portfolioInput')?.value || '',
+        description: window.tempData.profil?.[0]?.description || '', // dari step2/profil.js
+        photoUrl: window.tempData.profil?.[0]?.photoUrl || ''
+    };
+}
+
+// Update photoUrl di tempData.profil[0] saat upload foto
+function updatePhotoTempData(url) {
+    window.tempData = window.tempData || {};
+    window.tempData.profil = window.tempData.profil || [{}];
+    window.tempData.profil[0].photoUrl = url;
+}
+
+// Pasang event listener ke semua input step 1
+['nameInput','emailInput','phoneInput','addressInput','linkedinInput','portfolioInput'].forEach(function(id){
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', updateProfilTempData);
+});
+
+// Saat upload foto, update juga ke tempData
+const photoInput = document.getElementById('photoInput');
+if (photoInput) {
+    photoInput.addEventListener('change', function(e){
+        const file = e.target.files[0];
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                updatePhotoTempData(ev.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+}
+
+// Jika ada live edit profil (deskripsi) di step2, update juga tempData.profil[0].description
+if (window.attachLivePreview) {
+    window.attachLivePreview('profil');
+    // Patch saveData untuk update tempData.profil[0].description
+    const origSaveData = window.saveData;
+    window.saveData = function(id) {
+        origSaveData(id);
+        // Sinkronkan description ke tempData.profil[0]
+        if (id === 'profil') {
+            window.tempData.profil = window.tempData.profil || [{}];
+            window.tempData.profil[0].description = document.getElementById('descriptionInput')?.value || '';
+        }
+    };
+}
+
+// Inisialisasi pertama kali
+updateProfilTempData();
+</script>

@@ -1,14 +1,11 @@
-\<!DOCTYPE html>
+<!-- filepath: d:\Magang\CVNazma\resources\views\templates\indonesia\template3.blade.php -->
+<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CV Template ATS Layout 3</title>
   <style>
-    @page {
-            size: A4;
-            margin: 20mm;
-        }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #ffffff;
@@ -86,105 +83,51 @@
 <body>
 
   <div class="header">
-    <img src="{{ asset('images/CV Profil.jpg') }}" alt="Foto Profil">
+    <img id="cvPhotoPreview" src="{{ asset('images/CV Profil.jpg') }}" alt="Foto Profil">
     <div>
-      <h1>Nama Lengkap</h1>
-      <div class="contact">
-        Email: email@example.com | Telepon: +62 812 3456 7890<br>
-        LinkedIn: linkedin.com/in/username | Website: website.com/username
-      </div>
+      <h1 id="previewName"></h1>
+      <div id="previewContact" class="contact"></div>
     </div>
   </div>
 
   <section>
     <h2>Profil Singkat</h2>
-    <p>Seorang profesional di bidang [bidang] dengan pengalaman lebih dari X tahun dalam mengelola proyek, menyusun strategi, dan memberikan hasil yang terukur. Memiliki kemampuan analisis yang kuat dan kepemimpinan yang solid.</p>
+    <div id="previewProfil"></div>
   </section>
 
   <section>
     <h2>Pengalaman Kerja</h2>
-    <div class="item">
-      <div class="item-title">Nama Perusahaan – Posisi</div>
-      <div class="item-sub">Jan 2020 – Sekarang | Jakarta</div>
-      <div class="item-desc">
-        <ul>
-          <li>Mengelola tim proyek dengan 5 anggota untuk mengembangkan sistem informasi internal.</li>
-          <li>Meningkatkan efisiensi proses sebesar 20% melalui otomasi.</li>
-        </ul>
-      </div>
-    </div>
-    <div class="item">
-      <div class="item-title">Perusahaan Sebelumnya – Posisi</div>
-      <div class="item-sub">Jan 2018 – Des 2019 | Bandung</div>
-      <div class="item-desc">
-        <ul>
-          <li>Bertanggung jawab atas perancangan UI/UX untuk produk SaaS.</li>
-          <li>Bekerja sama dengan tim pengembang lintas fungsi.</li>
-        </ul>
-      </div>
-    </div>
+    <div id="previewPengalamanKerja"></div>
   </section>
 
   <section>
     <h2>Proyek</h2>
-    <div class="item">
-      <div class="item-title">Nama Proyek – Posisi</div>
-      <div class="item-sub">Jan 2020 – Sekarang | Jakarta</div>
-      <div class="item-desc">
-        <ul>
-          <li>Mengelola tim proyek dengan 5 anggota untuk mengembangkan sistem informasi internal.</li>
-          <li>Meningkatkan efisiensi proses sebesar 20% melalui otomasi.</li>
-        </ul>
-      </div>
-    </div>
-    <div class="item">
-      <div class="item-title">Proyek Sebelumnya – Posisi</div>
-      <div class="item-sub">Jan 2018 – Des 2019 | Bandung</div>
-      <div class="item-desc">
-        <ul>
-          <li>Bertanggung jawab atas perancangan UI/UX untuk produk SaaS.</li>
-          <li>Bekerja sama dengan tim pengembang lintas fungsi.</li>
-        </ul>
-      </div>
-    </div>
+    <div id="previewProject"></div>
   </section>
 
   <section>
     <h2>Pendidikan</h2>
-    <div class="item">
-      <div class="item-title">Universitas ABC – S1 Teknik Informatika</div>
-      <div class="item-sub">2014 – 2018</div>
-    </div>
+    <div id="previewEducation"></div>
   </section>
 
   <section>
     <h2>Keahlian</h2>
-    <ul>
-      <li>PHP, Laravel, JavaScript</li>
-      <li>Analisis Data, Python (Pandas, NumPy)</li>
-      <li>Git, REST API, Docker</li>
-    </ul>
+    <div id="previewSkill"></div>
   </section>
 
   <section>
     <h2>Bahasa</h2>
-    <ul>
-      <li>Indonesia</li>
-    </ul>
+    <div id="previewBahasa"></div>
   </section>
 
   <section>
     <h2>Sertifikat</h2>
-    <ul>
-      <li>Dicoding (2022)</li>
-    </ul>
+    <div id="previewCertificate"></div>
   </section>
 
   <section>
     <h2>Hobi</h2>
-    <ul>
-      <li>Sepakbola</li>
-    </ul>
+    <div id="previewHobby"></div>
   </section>
 
 </body>

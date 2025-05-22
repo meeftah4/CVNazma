@@ -1,3 +1,4 @@
+<!-- filepath: d:\Magang\CVNazma\resources\views\templates\Indonesia\template5.blade.php -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -5,10 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CV Template 5</title>
   <style>
-    @page {
-            size: A4;
-            margin: 20mm;
-        }
     body {
       font-family: 'Courier New', Courier, monospace;
       margin: 40px auto;
@@ -79,51 +76,35 @@
 
   <div class="header-top">
     <div class="info-left">
-      <h1>Nama Lengkap</h1>
-      <div class="contact">
-        Email: email@example.com | +62 812 3456 7890 | linkedin.com/in/username | website.com/username
-      </div>
+      <h1 id="previewName"></h1>
+      <div id="previewContact" class="contact"></div>
     </div>
-    <img src="{{ asset('images/CV Profil.jpg') }}" alt="Foto Profil" class="profile-photo" />
+    <img id="cvPhotoPreview" src="{{ asset('images/CV Profil.jpg') }}" alt="Foto Profil" class="profile-photo" />
   </div>
 
   <h2>Profil Singkat</h2>
-  <p>Profesional di bidang .... dengan lebih dari X tahun pengalaman dalam pengembangan sistem dan manajemen proyek.</p>
+  <div id="previewProfil"></div>
 
   <h2>Pengalaman Kerja</h2>
-  <div class="item-title">Nama Perusahaan – Posisi</div>
-  <div class="item-sub">Jan 2020 – Sekarang | Jakarta</div>
-  <ul>
-    <li>Mengelola tim proyek dengan 5 anggota.</li>
-    <li>Meningkatkan efisiensi proses sebesar 20%.</li>
-  </ul>
+  <div id="previewPengalamanKerja"></div>
 
   <h2>Proyek</h2>
-  <div class="item-title">Nama Proyek – Posisi</div>
-  <div class="item-sub">Jan 2020 – Sekarang</div>
-  <ul>
-    <li>Mengembangkan sistem informasi internal.</li>
-  </ul>
+  <div id="previewProject"></div>
 
   <h2>Pendidikan</h2>
-  <div class="item-title">Universitas ABC – S1 Teknik Informatika</div>
-  <div class="item-sub">2014 – 2018</div>
+  <div id="previewEducation"></div>
 
   <h2>Keahlian</h2>
-  <ul>
-    <li>PHP, Laravel, JavaScript</li>
-    <li>Python, Data Analysis</li>
-    <li>Git, Docker</li>
-  </ul>
+  <div id="previewSkill"></div>
 
   <h2>Bahasa</h2>
-  <ul><li>Indonesia</li></ul>
+  <div id="previewBahasa"></div>
 
   <h2>Sertifikat</h2>
-  <ul><li>Dicoding (2022)</li></ul>
+  <div id="previewCertificate"></div>
 
   <h2>Hobi</h2>
-  <ul><li>Sepakbola</li></ul>
+  <div id="previewHobby"></div>
 
 </body>
 </html>
