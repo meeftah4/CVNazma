@@ -13,6 +13,10 @@ Route::get('/cvats', function () {
     return view('pages.cv', [
     ]);
 });
+Route::get('/indonesia/basic', function () {
+    return view('templates.indonesia.basic', [
+    ]);
+});
 Route::get('/indonesia/template1', function () {
     return view('templates.indonesia.template1', [
     ]);

@@ -6,6 +6,10 @@
     <title>CV Template 1</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        @page {
+            size: A4;
+            margin: 20mm;
+        }
         * {
             margin: 0;
             padding: 0;

@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CV Template 4</title>
   <style>
+    @page {
+            size: A4;
+            margin: 20mm;
+        }
     body {
       font-family: Arial, sans-serif;
       margin: 40px auto;

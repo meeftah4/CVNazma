@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CV Template ATS Layout 3</title>
   <style>
+    @page {
+            size: A4;
+            margin: 20mm;
+        }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #ffffff;
