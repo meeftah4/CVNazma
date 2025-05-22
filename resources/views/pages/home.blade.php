@@ -14,7 +14,7 @@
             <div class="md:w-1/2 text-center md:text-left">
                 <h1>Buat CV ATS secara profesional dengan mudah!</h1>
                 <p>Lengkapi data diri, pilih template dan unduh CV ATS dalam hitungan menit</p>
-                <button class="cta-button">Buat Sekarang!</button>
+                <button class="cta-button" onclick="window.location.href='/cvats'">Buat Sekarang!</button>
             </div>
 
             <!-- Image -->
