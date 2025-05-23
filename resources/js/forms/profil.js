@@ -16,6 +16,9 @@ window.saveData = function (id) {
     // Update live preview
     updateLivePreview(id);
 
+    // Setelah window.tempData diubah:
+    window.updateSessionCV();
+
     // Sembunyikan form setelah menyimpan
     const form = document.getElementById(`${id}Form`);
     if (form) {

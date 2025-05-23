@@ -69,6 +69,8 @@ window.saveDataBahasa = function () {
     } else {
         window.tempData.bahasa.push(data);
     }
+    // Setelah window.tempData diubah:
+    window.updateSessionCV();
 
     console.log('Data disimpan:', data);
 

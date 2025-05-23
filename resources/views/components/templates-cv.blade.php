@@ -1,4 +1,19 @@
-<div class="min-h-screen bg-[#f5f8ff] flex flex-col items-center justify-center py-12 px-4">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pilih Template CV</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    {{-- Tambahkan link CSS dan JS yang diperlukan --}}
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/app.js') }}" defer></script>
+</head>
+<body class="font-roboto bg-[#f5f8ff]">
+
+<div class="min-h-screen flex flex-col items-center justify-center py-12 px-4">
     <h2 class="text-2xl font-bold mb-8">Pilih Template CV</h2>
 
     {{-- Daftar Template --}}
@@ -88,106 +103,10 @@ const templateFiles = {
 };
 
 function showCVTemplate(template) {
+    // Hanya load iframe, data sudah otomatis update via AJAX setiap perubahan form
     const iframe = document.getElementById('cvTemplatePreview');
     iframe.classList.remove('hidden');
-
-    fetch(templateFiles[template])
-        .then(res => res.text())
-        .then(html => {
-            const doc = iframe.contentDocument || iframe.contentWindow.document;
-            doc.open();
-            doc.write(html);
-            doc.close();
-
-            setTimeout(() => {
-                const data = window.tempData || {};
-                fillTemplateData(doc, data);
-            }, 100);
-        })
-        .catch(err => {
-            const doc = iframe.contentDocument || iframe.contentWindow.document;
-            doc.body.innerHTML = '<div class="text-red-500 p-4 text-center">Template tidak ditemukan.</div>';
-        });
-}
-
-function fillTemplateData(doc, data) {
-    if (doc.getElementById('previewName')) {
-        doc.getElementById('previewName').innerText = data.profil?.[0]?.name || 'Nama Lengkap';
-    }
-    if (doc.getElementById('previewContact')) {
-        doc.getElementById('previewContact').innerText = 
-            [data.profil?.[0]?.email, data.profil?.[0]?.phone, data.profil?.[0]?.linkedin, data.profil?.[0]?.portfolio]
-            .filter(Boolean).join(' | ');
-    }
-    if (doc.getElementById('previewAddress')) {
-        doc.getElementById('previewAddress').innerText = data.profil?.[0]?.address || '';
-    }
-    if (doc.getElementById('previewProfil')) {
-        doc.getElementById('previewProfil').innerText = data.profil?.[0]?.description || '';
-    }
-
-    if (doc.getElementById('previewPengalamanKerja')) {
-        doc.getElementById('previewPengalamanKerja').innerHTML =
-            (data.pengalamankerja || []).map(item => `
-                <div class="item">
-                    <div class="item-title"><strong>${item.companyName || item.company || ''}</strong> – ${item.jobPosition || item.position || ''}</div>
-                    <div class="item-sub">${item.jobStartDate || item.startDate || ''} – ${item.jobEndDate || item.endDate || ''} ${item.jobCity || item.location ? '| ' + (item.jobCity || item.location) : ''}</div>
-                    <div class="item-desc">${(item.jobDescription || item.description || '').split('\n').map(line => `<div>${line}</div>`).join('')}</div>
-                </div>
-            `).join('');
-    }
-
-    if (doc.getElementById('previewProject')) {
-        doc.getElementById('previewProject').innerHTML =
-            (data.proyek || []).map(item => `
-                <div class="item">
-                    <div class="item-title">${item.projectName || ''} – ${item.projectPosition || item.role || ''}</div>
-                    <div class="item-sub">${item.projectStartDate || item.startDate || ''} – ${item.projectEndDate || item.endDate || ''}</div>
-                    <div class="item-desc">${(item.projectDescription || item.description || '').split('\n').map(line => `<div>${line}</div>`).join('')}</div>
-                </div>
-            `).join('');
-    }
-
-    if (doc.getElementById('previewEducation')) {
-        doc.getElementById('previewEducation').innerHTML =
-            (data.pendidikan || []).map(item => `
-                <div class="item">
-                    <div class="item-title">${item.educationInstitution || ''}${item.educationCity ? ' - ' + item.educationCity : ''}</div>
-                    <div class="item-sub">${item.educationStartDate ? item.educationStartDate : ''}${item.educationEndDate ? ' - ' + item.educationEndDate : ''}</div>
-                    ${item.educationDegree ? `<div class="item-degree">${item.educationDegree}</div>` : ''}
-                    ${item.educationDescription ? `<div class="item-desc">${item.educationDescription.split('\n').map(line => `<div>${line}</div>`).join('')}</div>` : ''}
-                </div>
-            `).join('');
-    }
-
-    if (doc.getElementById('previewSkill')) {
-        doc.getElementById('previewSkill').innerHTML =
-            '<ul>' + (data.keahlian || []).map(item => `<li>${item.skillName || ''}</li>`).join('') + '</ul>';
-    }
-
-    if (doc.getElementById('previewBahasa')) {
-        doc.getElementById('previewBahasa').innerHTML =
-            '<ul>' + (data.bahasa || []).map(item => `<li>${item.languageName || ''}</li>`).join('') + '</ul>';
-    }
-
-    if (doc.getElementById('previewCertificate')) {
-        doc.getElementById('previewCertificate').innerHTML =
-            '<ul>' + (data.sertifikat || []).map(item => `<li>${item.certificateName || ''}</li>`).join('') + '</ul>';
-    }
-
-    if (doc.getElementById('previewHobby')) {
-        doc.getElementById('previewHobby').innerHTML =
-            '<ul>' + (data.hobi || []).map(item => `<li>${item.hobbyName || ''}</li>`).join('') + '</ul>';
-    }
-
-    if (doc.getElementById('cvPhotoPreview')) {
-        if (data.profil?.[0]?.photoUrl) {
-            doc.getElementById('cvPhotoPreview').src = data.profil[0].photoUrl;
-            doc.getElementById('cvPhotoPreview').classList.remove('hidden');
-        } else {
-            doc.getElementById('cvPhotoPreview').classList.add('hidden');
-        }
-    }
+    iframe.src = templateFiles[template];
 }
 
 // Tombol Unduh CV
@@ -197,4 +116,35 @@ document.getElementById('downloadCVBtn').onclick = function(e) {
     iframe.contentWindow.focus();
     iframe.contentWindow.print();
 };
+
+window.updateSessionCV = function() {
+    const data = {
+        profil: window.tempData?.profil || [],
+        pengalamankerja: window.tempData?.pengalamankerja || [],
+        proyek: window.tempData?.proyek || [],
+        pendidikan: window.tempData?.pendidikan || [],
+        keahlian: window.tempData?.keahlian || [],
+        bahasa: window.tempData?.bahasa || [],
+        sertifikat: window.tempData?.sertifikat || [],
+        hobi: window.tempData?.hobi || []
+    };
+    fetch('/cv/save-session', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify(data)
+    }).then(() => {
+        // Refresh iframe jika sudah ada src (template sudah dipilih)
+        const iframe = document.getElementById('cvTemplatePreview');
+        if (iframe && iframe.src && !iframe.classList.contains('hidden')) {
+            // Pakai trik force reload tanpa reload halaman utama
+            iframe.src = iframe.src.split('?')[0] + '?t=' + Date.now();
+        }
+    });
+};
 </script>
+
+</body>
+</html>

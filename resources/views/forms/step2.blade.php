@@ -95,6 +95,8 @@
             document.getElementById('removePhotoBtn').classList.remove('hidden');
         }
     });
+    // Setelah window.tempData diubah:
+    window.updateSessionCV();
 
     document.getElementById('removePhotoBtn').addEventListener('click', function() {
         // Reset input file

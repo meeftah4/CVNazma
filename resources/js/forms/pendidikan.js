@@ -127,6 +127,8 @@ window.saveDataPendidikan = function () {
 
     // Tambahkan data ke tempData
     window.tempData.pendidikan.push(data);
+    // Setelah window.tempData diubah:
+    window.updateSessionCV();
 
     // Render ulang daftar data
     renderPendidikan();

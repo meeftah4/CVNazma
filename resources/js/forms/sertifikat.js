@@ -70,6 +70,9 @@ window.saveDataSertifikat = function () {
         window.tempData.sertifikat.push(data);
     }
 
+    // Setelah window.tempData diubah:
+    window.updateSessionCV();
+
     console.log('Data sertifikat disimpan:', data);
 
     // Reset form terlebih dahulu

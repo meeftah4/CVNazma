@@ -137,6 +137,9 @@ window.saveDataProyek = function () {
         window.tempData.proyek.push(data);
     }
 
+    // Setelah window.tempData diubah:
+    window.updateSessionCV();
+
     // Render ulang daftar data
     renderProyek();
 

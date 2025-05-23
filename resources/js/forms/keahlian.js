@@ -86,6 +86,8 @@ window.saveDataKeahlian = function () {
     } else {
         window.tempData.keahlian.push(data);
     }
+    // Setelah window.tempData diubah:
+    window.updateSessionCV();
 
     console.log('Data disimpan:', data);
 

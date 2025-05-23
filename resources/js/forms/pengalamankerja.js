@@ -105,6 +105,9 @@ window.saveDataPengalamanKerja = function () {
     // Tambahkan data ke tempData
     window.tempData.pengalamankerja.push(data);
 
+    // Setelah window.tempData diubah:
+    window.updateSessionCV();
+
     // Render ulang daftar data
     renderPengalamanKerja();
 

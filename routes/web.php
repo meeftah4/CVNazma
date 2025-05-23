@@ -13,14 +13,9 @@ Route::get('/cvats', function () {
     return view('pages.cv', [
     ]);
 });
-Route::get('/indonesia/basic', function () {
-    return view('templates.indonesia.basic', [
-    ]);
-});
-Route::get('/indonesia/template1', function () {
-    return view('templates.indonesia.template1', [
-    ]);
-});
+Route::post('/cv/save-session', [\App\Http\Controllers\CvsUserTemplateController::class, 'saveSession']);
+Route::get('/indonesia/basic', [\App\Http\Controllers\CvsUserTemplateController::class, 'showBasic']);
+Route::get('/indonesia/template1', [\App\Http\Controllers\CvsUserTemplateController::class, 'showTemplate1']);
 Route::get('/indonesia/template2', function () {
     return view('templates.indonesia.template2', [
     ]);

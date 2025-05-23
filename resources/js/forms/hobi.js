@@ -69,6 +69,8 @@ window.saveDataHobi = function () {
     } else {
         window.tempData.hobi.push(data);
     }
+    // Setelah window.tempData diubah:
+    window.updateSessionCV();
 
     console.log('Data hobi disimpan:', data);
 
