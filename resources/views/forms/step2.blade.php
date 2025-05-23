@@ -95,8 +95,6 @@
             document.getElementById('removePhotoBtn').classList.remove('hidden');
         }
     });
-    // Setelah window.tempData diubah:
-    window.updateSessionCV();
 
     document.getElementById('removePhotoBtn').addEventListener('click', function() {
         // Reset input file
@@ -185,5 +183,29 @@ document.getElementById('cropBtn').onclick = function() {
 
     document.getElementById('cropperModal').classList.add('hidden');
     cropper.destroy();
+
+    // --- Tambahan: Kirim foto ke session via AJAX ---
+    // Kumpulkan data lain dari window.tempData jika ada
+    const data = {
+        ...window.tempData,
+        foto: dataUrl
+    };
+    fetch('/cv/save-session', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content
+        },
+        body: JSON.stringify(data)
+    }).then(res => res.json()).then(res => {
+        // Jika sukses, reload iframe/preview CV
+        const cvFrame = document.getElementById('cvPreviewIframe');
+        if (cvFrame) {
+            cvFrame.contentWindow.location.reload();
+        }
+    });
 };
+
+window.tempData = window.tempData || {};
+window.tempData.foto = document.getElementById('photoPreview').src || '';
 </script>

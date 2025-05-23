@@ -67,7 +67,7 @@
 
 <header>
     <div class="profile-info">
-        <img src="{{ $profil[0]['photoUrl'] ?? asset('images/CV Profil.jpg') }}" alt="Foto Profil" class="photo">
+        <img src="{{ session('foto') ?? asset('images/CV Profil.jpg') }}" alt="Foto Profil" class="photo">
         <div>
             <div class="name">{{ $profil[0]['name'] ?? 'Nama Lengkap' }}</div>
             <div class="email">

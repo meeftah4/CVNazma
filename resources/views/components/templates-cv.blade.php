@@ -19,26 +19,33 @@
     {{-- Daftar Template --}}
     @php
         $templateList = [
-            ['key' => 'basic', 'img' => 'template1.png', 'label' => 'Gratis'],
-            ['key' => 'template1', 'img' => 'template2.png', 'label' => 'Pro'],
-            ['key' => 'template2', 'img' => 'template3.png', 'label' => 'Pro'],
-            ['key' => 'template3', 'img' => 'template4.png', 'label' => 'Pro'],
-            ['key' => 'template4', 'img' => 'template5.png', 'label' => 'Pro'],
-            ['key' => 'template5', 'img' => 'template6.png', 'label' => 'Pro'],
+            ['key' => 'basic', 'img' => 'template-basic.png', 'label' => 'Gratis', 'name' => 'Template Basic'],
+            ['key' => 'template1', 'img' => 'template-1.png', 'label' => 'Pro', 'name' => 'Template 1'],
+            ['key' => 'template2', 'img' => 'template-2.png', 'label' => 'Pro', 'name' => 'Template 2'],
+            ['key' => 'template3', 'img' => 'template-3.png', 'label' => 'Pro', 'name' => 'Template 3'],
+            ['key' => 'template4', 'img' => 'template-4.png', 'label' => 'Pro', 'name' => 'Template 4'],
+            ['key' => 'template5', 'img' => 'template-5.png', 'label' => 'Pro', 'name' => 'Template 5'],
         ];
     @endphp
 
-    <div class="grid grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 w-full max-w-4xl">
         @foreach ($templateList as $tpl)
             <a href="#"
-               class="border-2 border-blue-500 p-2 rounded-lg hover:shadow-lg transition relative"
+               class="group relative border-2 border-transparent hover:border-orange-500 bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-200 overflow-hidden flex flex-col items-center p-4"
                onclick="showCVTemplate('{{ $tpl['key'] }}'); return false;">
-                <img src="{{ asset('images/' . $tpl['img']) }}" alt="Template {{ $tpl['key'] }}">
-                @if($tpl['label'] === 'Pro')
-                    <div class="absolute inset-0 flex items-center justify-center bg-white/70">
-                        <span class="text-xl font-bold text-gray-700">Pro</span>
-                    </div>
-                @endif
+                <div class="w-full aspect-[3/4] flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg overflow-hidden mb-3 border border-gray-200 group-hover:scale-105 transition-transform duration-200">
+                    <img src="{{ asset('images/template/' . $tpl['img']) }}" alt="{{ $tpl['name'] }}" class="object-contain w-full h-full" loading="lazy">
+                    @if($tpl['label'] === 'Pro')
+                        <div class="absolute top-2 right-2 bg-orange-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">
+                            Pro
+                        </div>
+                    @elseif($tpl['label'] === 'Gratis')
+                        <div class="absolute top-2 right-2 bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">
+                            Gratis
+                        </div>
+                    @endif
+                </div>
+                <span class="mt-2 text-base font-medium text-gray-800 capitalize">{{ $tpl['name'] }}</span>
             </a>
         @endforeach
     </div>
@@ -126,7 +133,8 @@ window.updateSessionCV = function() {
         keahlian: window.tempData?.keahlian || [],
         bahasa: window.tempData?.bahasa || [],
         sertifikat: window.tempData?.sertifikat || [],
-        hobi: window.tempData?.hobi || []
+        hobi: window.tempData?.hobi || [],
+        foto: window.tempData?.foto || '' // <-- tambahkan ini
     };
     fetch('/cv/save-session', {
         method: 'POST',

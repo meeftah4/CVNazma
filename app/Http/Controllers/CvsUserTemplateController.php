@@ -18,11 +18,27 @@ class CvsUserTemplateController extends Controller
             'bahasa' => $request->input('bahasa', []),
             'sertifikat' => $request->input('sertifikat', []),
             'hobi' => $request->input('hobi', []),
+            'foto' => $request->input('foto', ''), // Tambahkan ini
         ]);
         return response()->json(['success' => true]);
     }
 
-    // Tampilkan template1 dengan data dari session
+    public function showBasic()
+    {
+        $profil = session('profil', []);
+        $pengalamankerja = session('pengalamankerja', []);
+        $proyek = session('proyek', []);
+        $pendidikan = session('pendidikan', []);
+        $keahlian = session('keahlian', []);
+        $bahasa = session('bahasa', []);
+        $sertifikat = session('sertifikat', []);
+        $hobi = session('hobi', []);
+
+        return view('templates.indonesia.basic', compact(
+            'profil', 'pengalamankerja', 'proyek', 'pendidikan', 'keahlian', 'bahasa', 'sertifikat', 'hobi'
+        ));
+    }
+
     public function showTemplate1()
     {
         $profil = session('profil', []);
@@ -38,9 +54,7 @@ class CvsUserTemplateController extends Controller
             'profil', 'pengalamankerja', 'proyek', 'pendidikan', 'keahlian', 'bahasa', 'sertifikat', 'hobi'
         ));
     }
-
-    // Contoh untuk basic (jika ada)
-    public function showBasic()
+    public function showTemplate2()
     {
         $profil = session('profil', []);
         $pengalamankerja = session('pengalamankerja', []);
@@ -51,7 +65,52 @@ class CvsUserTemplateController extends Controller
         $sertifikat = session('sertifikat', []);
         $hobi = session('hobi', []);
 
-        return view('templates.indonesia.basic', compact(
+        return view('templates.indonesia.template2', compact(
+            'profil', 'pengalamankerja', 'proyek', 'pendidikan', 'keahlian', 'bahasa', 'sertifikat', 'hobi'
+        ));
+    }
+    public function showTemplate3()
+    {
+        $profil = session('profil', []);
+        $pengalamankerja = session('pengalamankerja', []);
+        $proyek = session('proyek', []);
+        $pendidikan = session('pendidikan', []);
+        $keahlian = session('keahlian', []);
+        $bahasa = session('bahasa', []);
+        $sertifikat = session('sertifikat', []);
+        $hobi = session('hobi', []);
+
+        return view('templates.indonesia.template3', compact(
+            'profil', 'pengalamankerja', 'proyek', 'pendidikan', 'keahlian', 'bahasa', 'sertifikat', 'hobi'
+        ));
+    }
+    public function showTemplate4()
+    {
+        $profil = session('profil', []);
+        $pengalamankerja = session('pengalamankerja', []);
+        $proyek = session('proyek', []);
+        $pendidikan = session('pendidikan', []);
+        $keahlian = session('keahlian', []);
+        $bahasa = session('bahasa', []);
+        $sertifikat = session('sertifikat', []);
+        $hobi = session('hobi', []);
+
+        return view('templates.indonesia.template4', compact(
+            'profil', 'pengalamankerja', 'proyek', 'pendidikan', 'keahlian', 'bahasa', 'sertifikat', 'hobi'
+        ));
+    }
+    public function showTemplate5()
+    {
+        $profil = session('profil', []);
+        $pengalamankerja = session('pengalamankerja', []);
+        $proyek = session('proyek', []);
+        $pendidikan = session('pendidikan', []);
+        $keahlian = session('keahlian', []);
+        $bahasa = session('bahasa', []);
+        $sertifikat = session('sertifikat', []);
+        $hobi = session('hobi', []);
+
+        return view('templates.indonesia.template5', compact(
             'profil', 'pengalamankerja', 'proyek', 'pendidikan', 'keahlian', 'bahasa', 'sertifikat', 'hobi'
         ));
     }

@@ -13,25 +13,6 @@ Route::get('/cvats', function () {
     return view('pages.cv', [
     ]);
 });
-Route::post('/cv/save-session', [\App\Http\Controllers\CvsUserTemplateController::class, 'saveSession']);
-Route::get('/indonesia/basic', [\App\Http\Controllers\CvsUserTemplateController::class, 'showBasic']);
-Route::get('/indonesia/template1', [\App\Http\Controllers\CvsUserTemplateController::class, 'showTemplate1']);
-Route::get('/indonesia/template2', function () {
-    return view('templates.indonesia.template2', [
-    ]);
-});
-Route::get('/indonesia/template3', function () {
-    return view('templates.indonesia.template3', [
-    ]);
-});
-Route::get('/indonesia/template4', function () {
-    return view('templates.indonesia.template4', [
-    ]);
-});
-Route::get('/indonesia/template5', function () {
-    return view('templates.indonesia.template5', [
-    ]);
-});
 Route::get('/template', function () {
     return view('pages.template', [
     ]);
@@ -93,3 +74,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard/faqs/create', [FaqsController::class, 'create'])->name('faq.create');
     Route::post('/dashboard/faqs', [FaqsController::class, 'store'])->name('faq.store');
 });
+
+// Template Routes
+Route::post('/cv/save-session', [\App\Http\Controllers\CvsUserTemplateController::class, 'saveSession']);
+Route::get('/indonesia/basic', [\App\Http\Controllers\CvsUserTemplateController::class, 'showBasic']);
+Route::get('/indonesia/template1', [\App\Http\Controllers\CvsUserTemplateController::class, 'showTemplate1']);
+Route::get('/indonesia/template2', [\App\Http\Controllers\CvsUserTemplateController::class, 'showTemplate2']);
+Route::get('/indonesia/template3', [\App\Http\Controllers\CvsUserTemplateController::class, 'showTemplate3']);
+Route::get('/indonesia/template4', [\App\Http\Controllers\CvsUserTemplateController::class, 'showTemplate4']);
+Route::get('/indonesia/template5', [\App\Http\Controllers\CvsUserTemplateController::class, 'showTemplate5']);
