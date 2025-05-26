@@ -61,6 +61,34 @@
         document.getElementById('addressInput')?.addEventListener('input', function(e) {
             document.getElementById('previewAddress').textContent = e.target.value || 'Jakarta, Indonesia';
         });
+
+        // Ambil data session dari backend dan isi form
+        fetch('/cv/get-session')
+            .then(res => res.json())
+            .then(data => {
+                window.tempData = data || {};
+                // Isi Step 1
+                document.getElementById('nameInput').value = data.profil?.[0]?.name || '';
+                document.getElementById('emailInput').value = data.profil?.[0]?.email || '';
+                document.getElementById('phoneInput').value = data.profil?.[0]?.phone || '';
+                document.getElementById('addressInput').value = data.profil?.[0]?.address || '';
+                document.getElementById('linkedinInput').value = data.profil?.[0]?.linkedin || '';
+                document.getElementById('portfolioInput').value = data.profil?.[0]?.portfolio || '';
+                // Isi Step 2 (jika ada input lain, lakukan hal serupa)
+                // Isi foto
+                if (data.foto) {
+                    document.getElementById('photoPreview').src = data.foto;
+                    document.getElementById('photoPreview').classList.remove('hidden');
+                    document.getElementById('photoIcon').classList.add('hidden');
+                    document.getElementById('cvPhotoPreview').src = data.foto;
+                    document.getElementById('cvPhotoPreview').classList.remove('hidden');
+                    document.getElementById('removePhotoBtn').classList.remove('hidden');
+                }
+                // Update preview
+                updateContactPreview();
+                document.getElementById('previewName').textContent = data.profil?.[0]?.name || 'Nama Lengkap';
+                document.getElementById('previewAddress').textContent = data.profil?.[0]?.address || 'Jakarta, Indonesia';
+            });
     });
     
     // Helper untuk update window.tempData.profil dari input step 1
@@ -74,7 +102,7 @@
             address: document.getElementById('addressInput')?.value || '',
             linkedin: document.getElementById('linkedinInput')?.value || '',
             portfolio: document.getElementById('portfolioInput')?.value || '',
-            description: window.tempData.profil?.[0]?.description || '', // dari step2/profil.js
+            description: window.tempData.profil?.[0]?.description || '',
             photoUrl: window.tempData.profil?.[0]?.photoUrl || ''
         };
     }
@@ -132,4 +160,19 @@
     // Inisialisasi pertama kali
     updateProfilTempData();
     window.updateSessionCV();
+</script>
+
+<script>
+window.updateSessionCV = function() {
+    // Kumpulkan semua data dari window.tempData (pastikan sudah diisi dari semua input)
+    const data = window.tempData || {};
+    fetch('/cv/save-session', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content
+        },
+        body: JSON.stringify(data)
+    });
+};
 </script>

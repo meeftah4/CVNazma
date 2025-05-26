@@ -1,196 +1,183 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CV Template 1</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f9f9f9;
-            color: #333;
-            padding: 40px;
-            max-width: 850px;
-            margin: auto;
-        }
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #005bbb;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-        .profile-info {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-        .name {
-            font-size: 28px;
-            font-weight: 700;
-            color: #005bbb;
-        }
-        .contact {
-            text-align: right;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-        .photo {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #005bbb;
-        }
-        section { margin-bottom: 25px; }
-        h2 {
-            font-size: 18px;
-            color: #005bbb;
-            margin-bottom: 8px;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 4px;
-            font-weight: 600;
-        }
-        .item { margin-bottom: 15px; }
-        .item-title { font-weight: 600; font-size: 16px; }
-        .item-sub { font-size: 14px; color: #555; }
-        .item-desc { margin-top: 5px; font-size: 14px; }
-        ul { margin-top: 6px; margin-left: 20px; font-size: 14px; }
-        .section-columns { display: flex; gap: 40px; flex-wrap: wrap; }
-        .section-half { flex: 1; min-width: 350px; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CV Template 2 - ATS Friendly</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      max-width: 210mm;
+      min-height: 297mm;
+      margin: auto;
+      background: white;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #374151;
+      padding: 24px;
+    }
+  </style>
 </head>
-<body>
+<body class="leading-relaxed">
+  <div class="flex flex-col sm:flex-row gap-8 mb-8">
+    <!-- Kolom Kiri: Foto dan Info Kontak -->
+    <aside class="sm:w-1/3 flex flex-col items-center text-center sm:text-left">
+      <div class="w-32 h-32 mb-4 rounded-full overflow-hidden border-4 border-gray-300">
+        <img src="{{ session('foto') ?? asset('images/CV Profil.jpg') }}" alt="Foto Profil" class="photo" />
+      </div>
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">
+        {{ $profil[0]['name'] ?? 'Budi Santoso' }}
+      </h1>
+      <p class="text-sm text-gray-600 mb-1">
+        {{ $profil[0]['address'] ?? 'Jl. Merdeka No. 10, Jakarta' }}
+      </p>
+      <p class="text-sm text-gray-600 mb-1">
+        {{ $profil[0]['email'] ?? 'budi@example.com' }}
+      </p>
+      <p class="text-sm text-gray-600 mb-1">
+        {{ $profil[0]['phone'] ?? '0812-3456-7890' }}
+      </p>
+      <p class="text-sm text-gray-600 mb-1">
+        {{ $profil[0]['linkedin'] ?? 'linkedin.com/in/budisantoso' }}
+      </p>
+      <p class="text-sm text-gray-600">
+        {{ $profil[0]['portfolio'] ?? 'budisantoso.com' }}
+      </p>
+    </aside>
 
-<header>
-    <div class="profile-info">
-        <img src="{{ session('foto') ?? asset('images/CV Profil.jpg') }}" alt="Foto Profil" class="photo">
-        <div>
-            <div class="name">{{ $profil[0]['name'] ?? 'Nama Lengkap' }}</div>
-            <div class="email">
-                {{ $profil[0]['email'] ?? '' }}
-                @if(!empty($profil[0]['phone'])) {{ $profil[0]['phone'] }} @endif
-                @if(!empty($profil[0]['linkedin'])) {{ $profil[0]['linkedin'] }} @endif
-                @if(!empty($profil[0]['portfolio'])) {{ $profil[0]['portfolio'] }} @endif
+    <!-- Kolom Kanan: Isi Detail -->
+    <main class="sm:w-2/3">
+      <section class="mb-8">
+        <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-3">Profil Singkat</h2>
+        <p class="text-gray-600">
+          {{ $profil[0]['description'] ?? 'Saya adalah developer berpengalaman yang fokus pada pengembangan aplikasi web dan mobile.' }}
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-3">Pengalaman Kerja</h2>
+        @if(!empty($pengalamankerja))
+          @foreach ($pengalamankerja as $item)
+            <div class="mb-5 text-sm text-gray-700">
+              <div class="flex justify-between font-semibold">
+                <p>{{ $item['companyName'] ?? 'PT Contoh Perusahaan' }} - {{ $item['jobCity'] ?? 'Jakarta' }}</p>
+                <p class="text-gray-500">{{ $item['jobStartDate'] ?? 'Jan 2020' }} - {{ $item['isPresent'] ? 'Sekarang' : ($item['jobEndDate'] ?? 'Des 2022') }}</p>
+              </div>
+              <p class="italic">{{ $item['jobPosition'] ?? 'Software Engineer' }}</p>
+              <ul class="list-disc list-inside">
+                @foreach ($item['jobDescription'] ?? ['Mengembangkan aplikasi internal.', 'Berkoordinasi dengan tim QA.'] as $desc)
+                  <li>{{ $desc }}</li>
+                @endforeach
+              </ul>
             </div>
+          @endforeach
+        @else
+          <div class="mb-5 text-sm text-gray-700">
+            <div class="flex justify-between font-semibold">
+              <p>PT Contoh Perusahaan - Jakarta</p>
+              <p class="text-gray-500">Jan 2020 - Des 2022</p>
+            </div>
+            <p class="italic">Software Engineer</p>
+            <ul class="list-disc list-inside">
+              <li>Mengembangkan aplikasi internal menggunakan Laravel dan Vue.js.</li>
+              <li>Berkoordinasi dengan tim QA untuk memastikan kualitas produk.</li>
+            </ul>
+          </div>
+        @endif
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-3">Proyek</h2>
+        @if(!empty($proyek))
+          @foreach ($proyek as $item)
+            <div class="mb-5 text-sm text-gray-700">
+              <div class="flex justify-between font-semibold">
+                <p>{{ $item['title'] ?? 'Sistem Informasi Toko' }}</p>
+                <p class="text-gray-500">{{ $item['startDate'] ?? 'Feb 2021' }} - {{ $item['endDate'] ?? 'Jul 2021' }}</p>
+              </div>
+              <p class="italic">{{ $item['institution'] ?? 'PT Nazmalogy' }}</p>
+              <ul class="list-disc list-inside">
+                @foreach ($item['description'] ?? ['Membangun sistem inventory dan penjualan.','Integrasi dengan payment gateway Midtrans.'] as $desc)
+                  <li>{{ $desc }}</li>
+                @endforeach
+              </ul>
+            </div>
+          @endforeach
+        @else
+          <div class="mb-5 text-sm text-gray-700">
+            <div class="flex justify-between font-semibold">
+              <p>Sistem Informasi Toko</p>
+              <p class="text-gray-500">Feb 2021 - Jul 2021</p>
+            </div>
+            <p class="italic">PT Nazmalogy</p>
+            <ul class="list-disc list-inside">
+              <li>Membangun sistem inventory dan penjualan toko retail.</li>
+              <li>Integrasi dengan payment gateway Midtrans.</li>
+            </ul>
+          </div>
+        @endif
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-3">Keahlian</h2>
+        @if(!empty($keahlian))
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm text-gray-700">
+            @foreach ($keahlian as $skill)
+              <p>{{ $skill }}</p>
+            @endforeach
+          </div>
+        @else
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm text-gray-700">
+            <p>PHP</p>
+            <p>Laravel</p>
+            <p>JavaScript</p>
+            <p>Tailwind CSS</p>
+            <p>MySQL</p>
+          </div>
+        @endif
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-3">Pendidikan</h2>
+        @if(!empty($pendidikan))
+          @foreach ($pendidikan as $edu)
+            <div class="mb-5 text-sm text-gray-700">
+              <div class="flex justify-between font-semibold">
+                <p>{{ $edu['institution'] ?? 'Universitas Contoh' }}</p>
+                <p class="text-gray-500">{{ $edu['startDate'] ?? '2015' }} - {{ $edu['endDate'] ?? '2019' }}</p>
+              </div>
+              <p class="italic">{{ $edu['degree'] ?? 'Sarjana Teknik Informatika' }}</p>
+              <ul class="list-disc list-inside">
+                @foreach ($edu['description'] ?? ['Lulus dengan predikat Cum Laude.', 'Aktif di organisasi kemahasiswaan.'] as $desc)
+                  <li>{{ $desc }}</li>
+                @endforeach
+              </ul>
+            </div>
+          @endforeach
+        @else
+          <div class="mb-5 text-sm text-gray-700">
+            <div class="flex justify-between font-semibold">
+              <p>Universitas Contoh</p>
+              <p class="text-gray-500">2015 - 2019</p>
+            </div>
+            <p class="italic">Sarjana Teknik Informatika</p>
+            <ul class="list-disc list-inside">
+              <li>Lulus dengan predikat Cum Laude.</li>
+              <li>Aktif di organisasi kemahasiswaan.</li>
+            </ul>
+          </div>
+        @endif
+      </section>
+
+      <section>
+        <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-3">Informasi Tambahan</h2>
+        <div class="text-sm text-gray-700 space-y-2">
+          <p><strong>Bahasa:</strong> {{ !empty($bahasa) ? implode(', ', $bahasa) : 'Bahasa Indonesia, Bahasa Inggris' }}</p>
+          <p><strong>Sertifikat:</strong> {{ !empty($sertifikat) ? implode(', ', $sertifikat) : 'Certified Laravel Developer, TOEFL Score 600' }}</p>
+          <p><strong>Hobi:</strong> {{ !empty($hobi) ? implode(', ', $hobi) : 'Membaca, Bersepeda' }}</p>
         </div>
-    </div>
-    <div class="contact">{{ $profil[0]['address'] ?? '' }}</div>
-</header>
-
-<section>
-    <h2>Profil Singkat</h2>
-    <div>{{ $profil[0]['description'] ?? '' }}</div>
-</section>
-
-<section>
-    <h2>Pengalaman Kerja</h2>
-    <div>
-        @foreach($pengalamankerja ?? [] as $item)
-            <div class="item">
-                <div class="item-title"><strong>{{ $item['companyName'] ?? $item['company'] ?? '' }}</strong> – {{ $item['jobPosition'] ?? $item['position'] ?? '' }}</div>
-                <div class="item-sub">
-                    {{ $item['jobStartDate'] ?? $item['startDate'] ?? '' }} – 
-                    @if(!empty($item['isPresent']) && $item['isPresent'])
-                        Present
-                    @else
-                        {{ $item['jobEndDate'] ?? $item['endDate'] ?? '' }}
-                    @endif
-                    @if(!empty($item['jobCity']) || !empty($item['location']))
-                        | {{ $item['jobCity'] ?? $item['location'] }}
-                    @endif
-                </div>
-                <div class="item-desc">{!! nl2br(e($item['jobDescription'] ?? $item['description'] ?? '')) !!}</div>
-            </div>
-        @endforeach
-    </div>
-</section>
-
-<section>
-    <h2>Proyek</h2>
-    <div>
-        @foreach($proyek ?? [] as $item)
-            <div class="item">
-                <div class="item-title">{{ $item['projectName'] ?? '' }} – {{ $item['projectPosition'] ?? $item['role'] ?? '' }}</div>
-                <div class="item-sub">{{ $item['projectStartDate'] ?? $item['startDate'] ?? '' }} – {{ $item['projectEndDate'] ?? $item['endDate'] ?? '' }}</div>
-                <div class="item-desc">{!! nl2br(e($item['projectDescription'] ?? $item['description'] ?? '')) !!}</div>
-            </div>
-        @endforeach
-    </div>
-</section>
-
-<section>
-    <h2>Pendidikan</h2>
-    <div>
-        @foreach($pendidikan ?? [] as $item)
-            <div class="item">
-                <div class="item-title">{{ $item['educationInstitution'] ?? '' }}@if(!empty($item['educationCity'])) - {{ $item['educationCity'] }}@endif</div>
-                <div class="item-sub">
-                    {{ $item['educationStartDate'] ?? '' }}@if(!empty($item['educationEndDate'])) - {{ $item['educationEndDate'] }}@endif
-                </div>
-                @if(!empty($item['educationDegree']))
-                    <div class="item-degree">{{ $item['educationDegree'] }}</div>
-                @endif
-                @if(!empty($item['educationDescription']))
-                    <div class="item-desc">{!! nl2br(e($item['educationDescription'])) !!}</div>
-                @endif
-            </div>
-        @endforeach
-    </div>
-</section>
-
-<div class="section-columns">
-    <div class="section-half">
-        <section>
-            <h2>Keahlian</h2>
-            <div>
-                <ul>
-                    @foreach($keahlian ?? [] as $item)
-                        <li>{{ $item['skillName'] ?? '' }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        </section>
-
-        <section>
-            <h2>Bahasa</h2>
-            <div>
-                <ul>
-                    @foreach($bahasa ?? [] as $item)
-                        <li>{{ $item['languageName'] ?? '' }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        </section>
-    </div>
-
-    <div class="section-half">
-        <section>
-            <h2>Sertifikat</h2>
-            <div>
-                <ul>
-                    @foreach($sertifikat ?? [] as $item)
-                        <li>{{ $item['certificateName'] ?? '' }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        </section>
-
-        <section>
-            <h2>Hobi</h2>
-            <div>
-                <ul>
-                    @foreach($hobi ?? [] as $item)
-                        <li>{{ $item['hobbyName'] ?? '' }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        </section>
-    </div>
-</div>
-
+      </section>
+    </main>
+  </div>
 </body>
 </html>

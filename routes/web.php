@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\FaqsController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TemplatesController;
 
 // Page Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -13,14 +14,16 @@ Route::get('/cvats', function () {
     return view('pages.cv', [
     ]);
 });
+Route::get('/cvats/unduh', function () {
+    return view('pages.unduh-cv', [
+    ]);
+});
 Route::get('/template', function () {
     return view('pages.template', [
     ]);
 }); // <-- Tambahkan penutup kurung kurawal di sini
 
-Route::get('/template-cv-html', function () {
-    return view('components.templates-cv');
-});
+Route::get('/template-cv-html', [TemplatesController::class, 'showTemplates']);
 
 // Profile Routes
 Route::post('/daftar', [UsersController::class, 'register'])->name('register');
@@ -83,3 +86,16 @@ Route::get('/indonesia/template2', [\App\Http\Controllers\CvsUserTemplateControl
 Route::get('/indonesia/template3', [\App\Http\Controllers\CvsUserTemplateController::class, 'showTemplate3']);
 Route::get('/indonesia/template4', [\App\Http\Controllers\CvsUserTemplateController::class, 'showTemplate4']);
 Route::get('/indonesia/template5', [\App\Http\Controllers\CvsUserTemplateController::class, 'showTemplate5']);
+Route::get('/cv/get-session', function() {
+    return response()->json([
+        'profil' => session('profil', []),
+        'pengalamankerja' => session('pengalamankerja', []),
+        'proyek' => session('proyek', []),
+        'pendidikan' => session('pendidikan', []),
+        'keahlian' => session('keahlian', []),
+        'bahasa' => session('bahasa', []),
+        'sertifikat' => session('sertifikat', []),
+        'hobi' => session('hobi', []),
+        'foto' => session('foto', ''),
+    ]);
+});
