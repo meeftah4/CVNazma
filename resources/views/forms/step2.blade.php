@@ -40,6 +40,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 
 {{-- resources/views/forms/step2.blade.php --}}
+<!-- Default hidden -->
 <div id="step-2" class="step hidden" style="background-color: #F4F8FF;">
 
     @foreach (['Profil', 'Pengalaman Kerja', 'Proyek', 'Keahlian', 'Pendidikan', 'Bahasa', 'Sertifikat', 'Hobi'] as $field)
@@ -74,7 +75,7 @@
                     </span>
                     <img id="photoPreview" src="" alt="Preview" class="absolute inset-0 w-full h-full object-cover rounded-[10px] hidden" />  
                 </button>
-                <button id="removePhotoBtn" type="button" class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 p-0 m-0 bg-transparent shadow-none hover:bg-transparent transition-none hidden z-10 flex items-center justify-center">
+                <button id="removePhotoBtn" type="button" class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 p-0 m-0 bg-transparent shadow-none hover:bg-transparent transition-none hidden z-10 items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="#01287E" viewBox="0 0 24 24" stroke="#01287E">
                         <path fill="#01287E" d="M9 3a1 1 0 0 0-1 1v1H4a1 1 0 1 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7h1a1 1 0 1 0 0-2h-4V4a1 1 0 0 0-1-1H9zm0 2h6v1H9V5zm-2 3h10v12H7V8zm2 2a1 1 0 0 1 2 0v8a1 1 0 1 1-2 0v-8zm4 0a1 1 0 0 1 2 0v8a1 1 0 1 1-2 0v-8z"/>
                     </svg>
@@ -128,7 +129,7 @@
     </div>
 
     <!-- crop foto -->
-    <div id="cropperModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div id="cropperModal" class="fixed inset-0 bg-black bg-opacity-50 items-center justify-center z-50 hidden">
         <div class="bg-white p-4 rounded shadow">
             <div class="mb-2 font-bold text-center" style="color: #01287E;">Crop your photo</div>
             <img id="imageToCrop" style="max-width:300px; max-height:300px;">
