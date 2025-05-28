@@ -25,15 +25,6 @@
 </head>
 <body class="font-sans bg-slate-50 text-slate-800 min-h-screen">
     <div class="container mx-auto px-6 py-10 max-w-7xl">
-        <div class="text-center mb-12 max-w-3xl mx-auto">
-            <h1 class="font-bold text-4xl mb-2 bg-gradient-to-r from-indigo-500 to-indigo-800 text-transparent bg-clip-text">
-                Pilih Template CV Profesional
-            </h1>
-            <p class="text-gray-600 text-lg">
-                Temukan template yang sesuai dengan kepribadian dan kebutuhan karir Anda. Setiap template dirancang untuk membuat CV Anda menonjol.
-            </p>
-        </div>
-
         @php
             $templateList = [
                 ['key' => 'basic', 'img' => 'template-basic.png', 'label' => 'Gratis', 'name' => 'Klasik Minimalis'],
