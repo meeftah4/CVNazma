@@ -93,6 +93,26 @@
             </div>
             @endforeach
         </div>
+        <div class="max-w-3xl mt-16 text-left">
+            <div class="text-base md:text-lg font-semibold mb-2 text-[#1e3a8a]">
+            Lebih dari <span class="font-bold">112.872</span> pengguna sudah membuat CV mereka
+            </div>
+            <div class="text-gray-500 mb-2">
+            Dengan pembuat CV, Anda dapat dengan cepat dan mudah membuat CV yang profesional dan unik dalam 5 menit.
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="/cvats"
+                   class="inline-block px-6 py-3"
+                   style="background-color: #FFBC5D; color: #01287E; font-weight: 600; border-radius: 30px; transition: background-color 0.3s;"
+                   onmouseover="this.style.backgroundColor='#ffa726'"
+                   onmouseout="this.style.backgroundColor='#FFBC5D'">
+                    Buat sekarang
+                </a>
+                <div class="text-xs text-gray-400 mt-2 md:mt-0">
+                    Nikmati akses mudah dan pelajari peluang dan template ATS!
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
