@@ -36,10 +36,36 @@
     </div>
 
     <div class="flex justify-center">
-        <button type="button" onclick="goToStep(2)" 
+        <button type="button" onclick="saveStep1AndGoToStep2()" 
             style="background:#FFBC5D; color:#01287E;" 
             class="font-bold px-6 py-2 rounded-md shadow transition hover:brightness-95">
             Langkah Selanjutnya
         </button>
     </div>
 </div>
+
+<script>
+function saveStep1AndGoToStep2() {
+    // Pastikan window.tempData dan profil ada
+    window.tempData = window.tempData || {};
+    window.tempData.profil = window.tempData.profil || [{}];
+    window.tempData.profil[0] = {
+        name: document.getElementById('nameInput')?.value || '',
+        email: document.getElementById('emailInput')?.value || '',
+        phone: document.getElementById('phoneInput')?.value || '',
+        address: document.getElementById('addressInput')?.value || '',
+        linkedin: document.getElementById('linkedinInput')?.value || '',
+        portfolio: document.getElementById('portfolioInput')?.value || '',
+        description: window.tempData.profil?.[0]?.description || '',
+        photoUrl: window.tempData.profil?.[0]?.photoUrl || ''
+    };
+    // Simpan ke session
+    if (typeof window.updateSessionCV === 'function') {
+        window.updateSessionCV();
+    }
+    // Lanjut ke step 2
+    if (typeof goToStep === 'function') {
+        goToStep(2);
+    }
+}
+</script>

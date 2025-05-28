@@ -88,6 +88,16 @@
                 updateContactPreview();
                 document.getElementById('previewName').textContent = data.profil?.[0]?.name || 'Nama Lengkap';
                 document.getElementById('previewAddress').textContent = data.profil?.[0]?.address || 'Jakarta, Indonesia';
+
+                // Tambahan: Render ulang semua data step 2 dari session
+                if (window.renderPengalamanKerja) window.renderPengalamanKerja();
+                if (window.renderProyek) window.renderProyek();
+                if (window.renderKeahlian) window.renderKeahlian();
+                if (window.renderPendidikan) window.renderPendidikan();
+                if (window.renderBahasa) window.renderBahasa();
+                if (window.renderSertifikat) window.renderSertifikat();
+                if (window.renderHobi) window.renderHobi();
+                if (window.renderDataRow) window.renderDataRow('profil');
             });
     });
     

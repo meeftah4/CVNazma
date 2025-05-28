@@ -111,6 +111,21 @@
 
     // Stepper click handler
     function goToStep(step) {
+        // Simpan data step yang sedang aktif sebelum pindah step
+        const currentStep = document.querySelector('.step:not(.hidden)');
+        if (currentStep) {
+            if (currentStep.id === 'step-1') {
+                if (typeof window.saveStep1ToSession === 'function') {
+                    window.saveStep1ToSession();
+                }
+            } else if (currentStep.id === 'step-2') {
+                if (typeof window.saveStep2ToSession === 'function') {
+                    window.saveStep2ToSession();
+                } else if (typeof window.updateSessionCV === 'function') {
+                    window.updateSessionCV();
+                }
+            }
+        }
         setActiveStep(step);
         // Panggil showFormStep di form hanya untuk step 1/2
         if (step === 1 || step === 2) {

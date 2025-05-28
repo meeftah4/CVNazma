@@ -126,5 +126,24 @@
             });
         });
     </script>
+    <script>
+        // Polling session setiap saat untuk cek perubahan data
+        let lastSessionHash = null;
+        setInterval(() => {
+            fetch('/cv/get-session')
+                .then(res => res.json())
+                .then(data => {
+                    // Buat hash sederhana dari data session
+                    const hash = JSON.stringify(data);
+                    if (lastSessionHash !== null && lastSessionHash !== hash) {
+                        // Jika data berubah, reload semua iframe preview
+                        document.querySelectorAll('.template-card iframe').forEach(iframe => {
+                            iframe.contentWindow.location.reload();
+                        });
+                    }
+                    lastSessionHash = hash;
+                });
+        }, 2000);
+    </script>
 </body>
 </html>

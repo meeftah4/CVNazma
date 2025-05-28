@@ -129,10 +129,13 @@
     </div>
 
     <!-- crop foto -->
-    <div id="cropperModal" class="fixed inset-0 bg-black bg-opacity-50 items-center justify-center z-50 hidden">
-        <div class="bg-white p-4 rounded shadow">
+    <div id="cropperModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white p-4 rounded shadow max-w-[90vw] max-h-[90vh] flex flex-col items-center">
+            <!-- Tambahkan tombol close di modal -->
+            <button type="button" onclick="closeCropperModal()" style="position:absolute;top:10px;right:10px;background:none;border:none;font-size:24px;color:#01287E;cursor:pointer;">&times;</button>
+            
             <div class="mb-2 font-bold text-center" style="color: #01287E;">Crop your photo</div>
-            <img id="imageToCrop" style="max-width:300px; max-height:300px;">
+            <img id="imageToCrop" style="max-width:80vw; max-height:60vh; display:block; margin:auto;">
             <div class="flex justify-center mt-4">
                 <button id="cropBtn" style="background:#FFBC5D; color:#01287E;" class="px-8 py-2 rounded font-bold">Simpan</button>
             </div>
@@ -206,6 +209,21 @@ document.getElementById('cropBtn').onclick = function() {
         }
     });
 };
+
+function closeCropperModal() {
+    document.getElementById('cropperModal').classList.add('hidden');
+    if (window.cropper) {
+        window.cropper.destroy();
+        window.cropper = null;
+    }
+}
+
+// Klik di luar area modal untuk menutup
+document.getElementById('cropperModal').addEventListener('mousedown', function(e) {
+    if (e.target === this) {
+        closeCropperModal();
+    }
+});
 
 window.tempData = window.tempData || {};
 window.tempData.foto = document.getElementById('photoPreview').src || '';
