@@ -104,3 +104,6 @@ Route::get('/cv/get-session', function() {
         'foto' => session('foto', ''),
     ]);
 });
+Route::get('/view/{key}', function ($key) {
+    return view('templates.view.' . $key);
+});

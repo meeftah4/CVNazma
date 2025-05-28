@@ -1,3 +1,4 @@
+<!-- filepath: d:\Magang\CVNazma\resources\views\templates\indonesia\basic.blade.php -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -25,29 +26,24 @@
   <header class="flex flex-col sm:flex-row items-start gap-6 mb-8">
     <div>
       <h1 class="text-3xl font-bold text-gray-900">
-        {{ $profil0['name'] ?? 'Nama Lengkap' }}
+        {{ $profil0['name'] ?? 'Budi Santoso' }}
       </h1>
       <p class="text-sm text-gray-600">
-        {{ $profil0['email'] ?? 'nama@email.com' }} | 
+        {{ $profil0['email'] ?? 'budi@example.com' }} | 
         {{ $profil0['phone'] ?? '0812-3456-7890' }} | 
-        {{ $profil0['linkedin'] ?? 'LinkedIn Profile URL' }} | 
-        {{ $profil0['portfolio'] ?? 'Portfolio/Website URL' }}
+        {{ $profil0['linkedin'] ?? 'linkedin.com/in/budisantoso' }} | 
+        {{ $profil0['portfolio'] ?? 'budisantoso.com' }}
       </p>
       <p class="text-sm text-gray-600">
-        {{ $profil0['address'] ?? 'Jakarta, Indonesia' }}
+        {{ $profil0['address'] ?? 'Jl. Merdeka No. 10, Jakarta' }}
       </p>
     </div>
-    @if(!empty($profil0['photo']) || session('foto'))
-      <div style="width: 100px; height: 100px; overflow: hidden; flex-shrink: 0; margin-top:1rem;">
-        <img src="{{ session('foto') ?? ($profil[0]['photo'] ?? asset('images/CV Profil.jpg')) }}" alt="Foto Profil" style="width: 100%; height: 100%; object-fit: cover; border-radius: 0; border: none;">
-      </div>
-    @endif
   </header>
 
   <section class="mb-8">
-    <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-3">Profil</h2>
+    <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-3">Profil Singkat</h2>
     <p class="text-gray-600">
-      {{ $profil0['description'] ?? 'Lulusan [Nama Jurusan] dari [Nama Universitas] dengan ketertarikan tinggi pada bidang [bidang yang dilamar, misal: UI/UX Design, Data Analysis, Digital Marketing]. Memiliki pengalaman organisasi dan proyek yang mengasah kemampuan [contoh: desain visual, riset pengguna, dan analisis data]. Terbiasa menggunakan [sebutkan tools] dan siap berkontribusi secara profesional dalam tim.' }}
+      {{ $profil0['description'] ?? 'Saya adalah developer berpengalaman yang fokus pada pengembangan aplikasi web dan mobile.' }}
     </p>
   </section>
 
@@ -56,29 +52,19 @@
     @if(is_array($pengalamankerja) && count($pengalamankerja))
       @foreach ($pengalamankerja as $item)
         <div class="mb-5 text-sm text-gray-700">
-          <div class="flex justify-between items-center font-semibold">
-            <p>
-              <strong>{{ $item['companyName'] ?? 'Instrument Tech' }}</strong> - {{ $item['jobCity'] ?? 'Sleman' }}
-            </p>
+          <div class="flex justify-between font-semibold">
+            <p>{{ $item['companyName'] ?? 'PT Contoh Perusahaan' }} - {{ $item['jobCity'] ?? 'Jakarta' }}</p>
             <p class="text-gray-500">
-              {{ $item['jobStartDate'] ?? 'Jan 2024' }} - 
-              {{ ($item['isPresent'] ?? false) ? 'Sekarang' : ($item['jobEndDate'] ?? 'Jan 2025') }}
+              {{ $item['jobStartDate'] ?? 'Jan 2020' }} - 
+              {{ ($item['jobIsPresent'] ?? false) ? 'Sekarang' : ($item['jobEndDate'] ?? 'Des 2022') }}
             </p>
           </div>
-          <p class="italic">{{ $item['jobPosition'] ?? 'Marcelle Program' }}</p>
+          <p class="italic">{{ $item['jobPosition'] ?? 'Software Engineer' }}</p>
           <ul class="list-disc list-inside">
             @php
-              $jobDesc = $item['jobDescription'] ?? [
-                'Led development of an advanced automation system, achieving a 15% increase in operational efficiency.',
-                'Streamlined manufacturing processes, reducing production costs by 10%.',
-                'Implemented preventive maintenance strategies, resulting in a 20% decrease in equipment downtime.'
-              ];
+              $jobDesc = $item['jobDescription'] ?? ['Mengembangkan aplikasi internal.', 'Berkoordinasi dengan tim QA.'];
               if (!is_array($jobDesc)) $jobDesc = [$jobDesc];
-              if (empty($jobDesc) || (count($jobDesc) === 1 && $jobDesc[0] === '')) $jobDesc = [
-                'Led development of an advanced automation system, achieving a 15% increase in operational efficiency.',
-                'Streamlined manufacturing processes, reducing production costs by 10%.',
-                'Implemented preventive maintenance strategies, resulting in a 20% decrease in equipment downtime.'
-              ];
+              if (empty($jobDesc) || (count($jobDesc) === 1 && $jobDesc[0] === '')) $jobDesc = ['Mengembangkan aplikasi internal.', 'Berkoordinasi dengan tim QA.'];
             @endphp
             @foreach ($jobDesc as $desc)
               <li>{{ is_array($desc) ? implode(', ', $desc) : $desc }}</li>
@@ -88,15 +74,14 @@
       @endforeach
     @else
       <div class="mb-5 text-sm text-gray-700">
-        <div class="flex justify-between items-center font-semibold">
-          <p><strong>Instrument Tech</strong> - Sleman</p>
-          <p class="text-gray-500">Jan 2024 - Jan 2025</p>
+        <div class="flex justify-between font-semibold">
+          <p>PT Contoh Perusahaan - Jakarta</p>
+          <p class="text-gray-500">Jan 2020 - Des 2022</p>
         </div>
-        <p class="italic">Marcelle Program</p>
+        <p class="italic">Software Engineer</p>
         <ul class="list-disc list-inside">
-          <li>Led development of an advanced automation system, achieving a 15% increase in operational efficiency.</li>
-          <li>Streamlined manufacturing processes, reducing production costs by 10%.</li>
-          <li>Implemented preventive maintenance strategies, resulting in a 20% decrease in equipment downtime.</li>
+          <li>Mengembangkan aplikasi internal menggunakan Laravel dan Vue.js.</li>
+          <li>Berkoordinasi dengan tim QA untuk memastikan kualitas produk.</li>
         </ul>
       </div>
     @endif
@@ -107,26 +92,19 @@
     @if(is_array($proyek) && count($proyek))
       @foreach ($proyek as $item)
         <div class="mb-5 text-sm text-gray-700">
-          <div class="flex justify-between items-center font-semibold">
-            <p><strong>{{ $item['title'] ?? 'Industrial Basics and General Application' }}</strong></p>
+          <div class="flex justify-between font-semibold">
+            <p>{{ $item['projectName'] ?? 'Sistem Informasi Toko' }}</p>
             <p class="text-gray-500">
-              {{ $item['startDate'] ?? 'Jan 2023' }} - {{ $item['endDate'] ?? 'Jun 2023' }}
+              {{ $item['projectStartDate'] ?? 'Feb 2021' }} - 
+              {{ ($item['isPresent'] ?? false) ? 'Sekarang' : ($item['projectEndDate'] ?? 'Jul 2021') }}
             </p>
           </div>
-          <p class="italic">{{ $item['institution'] ?? 'University of Engineering Process Cohort' }}</p>
+          <p class="italic">{{ $item['projectPosition'] ?? 'PT Nazmalogy' }}</p>
           <ul class="list-disc list-inside">
             @php
-              $descArr = $item['description'] ?? [
-                'Automotive Technology.',
-                'Technological Advancements within the current Chemical & Process Industry.',
-                'Other relevant information.'
-              ];
+              $descArr = $item['projectDescription'] ?? [];
               if (!is_array($descArr)) $descArr = [$descArr];
-              if (empty($descArr) || (count($descArr) === 1 && $descArr[0] === '')) $descArr = [
-                'Automotive Technology.',
-                'Technological Advancements within the current Chemical & Process Industry.',
-                'Other relevant information.'
-              ];
+              if (empty($descArr) || (count($descArr) === 1 && $descArr[0] === '')) $descArr = ['Membangun sistem inventory dan penjualan.', 'Integrasi dengan payment gateway Midtrans.'];
             @endphp
             @foreach ($descArr as $desc)
               <li>{{ is_array($desc) ? implode(', ', $desc) : $desc }}</li>
@@ -136,15 +114,14 @@
       @endforeach
     @else
       <div class="mb-5 text-sm text-gray-700">
-        <div class="flex justify-between items-center font-semibold">
-          <p><strong>Industrial Basics and General Application</strong></p>
-          <p class="text-gray-500">Jan 2023 - Jun 2023</p>
+        <div class="flex justify-between font-semibold">
+          <p>Sistem Informasi Toko</p>
+          <p class="text-gray-500">Feb 2021 - Jul 2021</p>
         </div>
-        <p class="italic">University of Engineering Process Cohort</p>
+        <p class="italic">PT Nazmalogy</p>
         <ul class="list-disc list-inside">
-          <li>Automotive Technology.</li>
-          <li>Technological Advancements within the current Chemical & Process Industry.</li>
-          <li>Other relevant information.</li>
+          <li>Membangun sistem inventory dan penjualan toko retail.</li>
+          <li>Integrasi dengan payment gateway Midtrans.</li>
         </ul>
       </div>
     @endif
@@ -153,19 +130,18 @@
   <section class="mb-8">
     <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-3">Keahlian</h2>
     @if(is_array($keahlian) && count($keahlian))
-      <div class="grid grid-cols-3 gap-2 text-sm text-gray-700">
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm text-gray-700">
         @foreach ($keahlian as $skill)
           <p>{{ is_array($skill) ? implode(', ', $skill) : $skill }}</p>
         @endforeach
       </div>
     @else
-      <div class="grid grid-cols-3 gap-2 text-sm text-gray-700">
-        <p>Prototyping Tools</p>
-        <p>User Research</p>
-        <p>Interaction Design</p>
-        <p>Visual Design</p>
-        <p>Accessibility</p>
-        <p>Responsive Design</p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm text-gray-700">
+        <p>PHP</p>
+        <p>Laravel</p>
+        <p>JavaScript</p>
+        <p>Tailwind CSS</p>
+        <p>MySQL</p>
       </div>
     @endif
   </section>

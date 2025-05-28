@@ -93,7 +93,7 @@
       <div class="mb-4">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <p><strong>{{ $item['companyName'] ?? 'Instrument Tech' }}</strong> - <span>{{ $item['jobCity'] ?? 'Sleman' }}</span></p>
-          <p style="color:#111;">{{ $item['jobStartDate'] ?? 'Jan 2024' }} - {{ ($item['isPresent'] ?? false) ? 'Sekarang' : ($item['jobEndDate'] ?? 'Jan 2025') }}</p>
+          <p style="color:#111;">{{ $item['jobStartDate'] ?? 'Jan 2024' }} - {{ ($item['jobIsPresent'] ?? false) ? 'Sekarang' : ($item['jobEndDate'] ?? 'Jan 2025') }}</p>
         </div>
         <p>{{ $item['jobPosition'] ?? 'Marcelle Program' }}</p>
         <ul>
@@ -140,13 +140,13 @@
     @foreach ($proyek as $item)
       <div class="mb-4">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-          <p><strong>{{ $item['title'] ?? 'Industrial Basics and General Application' }}</strong></p>
-          <p style="color:#111;">{{ $item['startDate'] ?? 'Jan 2023' }} - {{ $item['endDate'] ?? 'Jun 2023' }}</p>
+          <p><strong>{{ $item['projectName'] ?? 'Industrial Basics and General Application' }}</strong></p>
+          <p style="color:#111;">{{ $item['projectStartDate'] ?? 'Jan 2023' }} - {{ ($item['isPresent'] ?? false) ? 'Sekarang' : ($item['projectEndDate'] ?? 'Jun 2023') }}</p>
         </div>
-        <p class="italic">{{ $item['institution'] ?? 'University of Engineering Process Cohort' }}</p>
+        <p class="italic">{{ $item['projectPosition'] ?? 'University of Engineering Process Cohort' }}</p>
         <ul>
           @php
-            $descArr = $item['description'] ?? [
+            $descArr = $item['projectDescription'] ?? [
               'Automotive Technology.',
               'Technological Advancements within the current Chemical & Process Industry.',
               'Other relevant information.'
@@ -208,13 +208,13 @@
     @foreach ($pendidikan as $edu)
       <div class="mb-4">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-          <p><strong>{{ $edu['institution'] ?? 'Engineering University' }}</strong></p>
-          <p style="color:#111;">{{ $edu['startDate'] ?? 'Jan 2024' }} - {{ $edu['endDate'] ?? 'Jan 2025' }}</p>
+          <p><strong>{{ $edu['educationInstitution'] ?? 'Engineering University' }}</strong></p>
+          <p style="color:#111;">{{ $edu['educationStartDate'] ?? 'Jan 2024' }} - {{ ($edu['isPresent'] ?? false) ? 'Sekarang' : ($edu['educationEndDate'] ?? 'Jan 2025') }}</p>
         </div>
-        <p class="italic">{{ $edu['degree'] ?? 'Bachelor of Design in Process Engineering' }}</p>
+        <p class="italic">{{ $edu['educationDegree'] ?? 'Bachelor of Design in Process Engineering' }}</p>
         <ul>
           @php
-            $descArr = $edu['description'] ?? [
+            $descArr = $edu['educationDescription'] ?? [
               'Relevant coursework in Process Design and Project Management.',
               'Streamlined manufacturing processes, reducing production costs by 10%.',
               'Implemented preventive maintenance strategies, resulting in a 20% decrease in equipment downtime.'

@@ -3,10 +3,10 @@ window.saveData = function (id) {
 
     // Cek apakah data sudah ada
     if (window.tempData[id].length > 0) {
-        // Update data yang sudah ada
-        window.tempData[id][0] = { description: descriptionInput };
+        // Update hanya field description, field lain tetap ada
+        window.tempData[id][0].description = descriptionInput;
     } else {
-        // Simpan data baru
+        // Simpan data baru, field lain kosong
         window.tempData[id].push({ description: descriptionInput });
     }
 

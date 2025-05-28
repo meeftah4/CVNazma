@@ -1,5 +1,5 @@
 // resources/js/forms/step2/base.js
-window.tempData = {
+window.tempData = window.tempData || {
     profil: [],
     pengalamankerja: [],
     proyek: [],
