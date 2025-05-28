@@ -1,5 +1,5 @@
 {{-- filepath: d:\Magang\CVNazma\resources\views\partials\pengalaman-kerja.blade.php --}}
-<div id="pengalamankerjaList" class="mb-4">
+<div id="pengalamankerjaList" class="mb-4 break-words">
     <!-- Baris data akan ditampilkan di sini -->
 </div>
 

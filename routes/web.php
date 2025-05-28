@@ -21,8 +21,13 @@ Route::get('/cvats/unduh', function () {
 Route::get('/template', function () {
     return view('pages.template', [
     ]);
-}); // <-- Tambahkan penutup kurung kurawal di sini
+});
 
+Route::get('/rating', function () {
+    return view('dashboard.rating');
+})->name('rating');
+
+Route::post('/rating', [RatingController::class, 'store'])->name('rating.store');
 Route::get('/template-cv-html', [TemplatesController::class, 'showTemplates']);
 
 // Profile Routes

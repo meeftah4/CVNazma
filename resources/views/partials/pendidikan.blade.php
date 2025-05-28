@@ -1,4 +1,4 @@
-<div id="pendidikanList" class="mb-4">
+<div id="pendidikanList" class="mb-4 break-words">
     <!-- Baris data akan ditampilkan di sini -->
 </div>
 

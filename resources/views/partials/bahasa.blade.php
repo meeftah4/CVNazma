@@ -1,5 +1,5 @@
 {{-- filepath: d:\Magang\CVNazma\resources\views\partials\bahasa.blade.php --}}
-<div id="bahasaList" class="mb-4">
+<div id="bahasaList" class="mb-4 break-words">
     <!-- Baris data akan ditampilkan di sini -->
 </div>
 <div id="bahasaForm" class="bg-white p-4 rounded-b-md rounded-t-none border-t-0">

@@ -1,0 +1,10 @@
+/* ...existing code... */
+.faq-answer {
+    transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 0;
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+/* ...existing code... */

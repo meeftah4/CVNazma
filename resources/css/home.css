@@ -242,32 +242,38 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: none; /* Hilangkan border bawah asli */
+    position: relative;  /* Untuk pseudo element */
 }
 
-.faq-question:hover {
-    background-color: #F4F8FF; /* Warna hover */
-}
-
-.faq-icon {
-    font-size: 24px;
-    font-weight: bold;
-    color: #01287E; /* Warna ikon */
-    margin-left: 1rem; /* Tambahkan jarak dari teks */
+.faq-question::after {
+    content: "";
+    display: block;
+    height: 1.5px;
+    background: #E0E7EF;
+    position: absolute;
+    left: 1.5rem;   /* Jarak dari kiri, samakan dengan padding pertanyaan */
+    right: 1.5rem;  /* Jarak dari kanan, samakan dengan padding pertanyaan */
+    bottom: 0;
+    width: auto;    /* Biarkan width otomatis */
 }
 
 .faq-answer {
-    display: block; /* Ubah dari 'none' ke 'block' untuk animasi */
-    height: 0; /* Awalnya tinggi 0 */
-    overflow: hidden; /* Sembunyikan konten yang meluap */
-    transition: height 0.3s ease; /* Tambahkan transisi untuk animasi */
-    padding: 0 1.5rem; /* Tambahkan padding horizontal */
+    transition: height 0.4s cubic-bezier(0.4,0,0.2,1);
+    height: 0;
+    overflow: hidden;
+    padding: 0 1.5rem;
     font-size: 20px;
-    color: #01287E; /* Warna teks */
+    color: #01287E;
     text-align: left;
+    border-top: none;
+    position: relative;
+    box-sizing: border-box;
 }
 
 .faq-item.active .faq-answer {
-    /* Tinggi akan diatur secara dinamis oleh JavaScript */
+    /* padding diatur oleh JS juga agar animasi halus */
+    /* Jangan set height di sini! */
 }
 
 /* Hilangkan gambar pada tampilan mobile */
