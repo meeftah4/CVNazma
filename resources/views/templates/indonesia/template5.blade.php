@@ -1,3 +1,6 @@
+@php
+  $profil0 = (is_array($profil) && isset($profil[0]) && is_array($profil[0])) ? $profil[0] : [];
+@endphp
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -73,25 +76,25 @@
   <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:2.2rem;">
     <div>
       <h1 style="font-size:2.2rem; font-weight:bold; letter-spacing:2px;" class="main-pink mb-1">
-        {{ $profil[0]['name'] ?? 'Nama Lengkap' }}
+        {{ $profil0['name'] ?? 'Nama Lengkap' }}
       </h1>
       <div style="font-size:1rem; letter-spacing:2px; margin-bottom:1.2rem;">
-        {{ $profil[0]['email'] ?? 'nama@email.com' }} | {{ $profil[0]['address'] ?? 'Jakarta, Indonesia' }}
+        {{ $profil0['email'] ?? 'nama@email.com' }} | {{ $profil0['address'] ?? 'Jakarta, Indonesia' }}
       </div>
       <!-- Foto -->
       <div style="width: 100px; height: 100px; overflow: hidden; flex-shrink: 0; margin-top:1rem;">
-        <img src="{{ session('foto') ?? ($profil[0]['photo'] ?? asset('images/CV Profil.jpg')) }}" alt="Foto Profil" style="width: 100%; height: 100%; object-fit: cover; border-radius: 0; border: none;">
+        <img src="{{ session('foto') ?? ($profil0['photo'] ?? asset('images/CV Profil.jpg')) }}" alt="Foto Profil" style="width: 100%; height: 100%; object-fit: cover; border-radius: 0; border: none;">
       </div>
     </div>
     <div style="text-align:right; min-width:260px; margin-top:5.8rem;">
       <div style="padding-bottom:0.3rem; margin-bottom:0.3rem; border-bottom:1px solid #df2176;">
-        {{ $profil[0]['phone'] ?? '0812-3456-7890' }}
+        {{ $profil0['phone'] ?? '0812-3456-7890' }}
       </div>
       <div style="padding-bottom:0.3rem; margin-bottom:0.3rem; border-bottom:1px solid #df2176;">
-        {{ $profil[0]['linkedin'] ?? 'LinkedIn Profile URL' }}
+        {{ $profil0['linkedin'] ?? 'LinkedIn Profile URL' }}
       </div>
       <div>
-        {{ $profil[0]['portfolio'] ?? 'Portfolio/Website URL' }}
+        {{ $profil0['portfolio'] ?? 'Portfolio/Website URL' }}
       </div>
     </div>
   </div>
@@ -102,7 +105,7 @@
     <span class="section-title-line"></span>
   </div>
   <div class="mb-4">
-    {{ $profil[0]['description'] ?? 'Lulusan [Nama Jurusan] dari [Nama Universitas] dengan ketertarikan tinggi pada bidang [bidang yang dilamar, misal: UI/UX Design, Data Analysis, Digital Marketing]. Memiliki pengalaman organisasi dan proyek yang mengasah kemampuan [contoh: desain visual, riset pengguna, dan analisis data]. Terbiasa menggunakan [sebutkan tools] dan siap berkontribusi secara profesional dalam tim.' }}
+    {{ $profil0['description'] ?? 'Lulusan [Nama Jurusan] dari [Nama Universitas] dengan ketertarikan tinggi pada bidang [bidang yang dilamar, misal: UI/UX Design, Data Analysis, Digital Marketing]. Memiliki pengalaman organisasi dan proyek yang mengasah kemampuan [contoh: desain visual, riset pengguna, dan analisis data]. Terbiasa menggunakan [sebutkan tools] dan siap berkontribusi secara profesional dalam tim.' }}
   </div>
 
   <!-- Pengalaman Kerja -->
@@ -110,21 +113,30 @@
     Pengalaman Kerja
     <span class="section-title-line"></span>
   </div>
-  @if(!empty($pengalamankerja))
+  @if(is_array($pengalamankerja) && count($pengalamankerja))
     @foreach ($pengalamankerja as $item)
       <div class="mb-3">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <span class="bold">{{ $item['companyName'] ?? 'Instrument Tech' }} - {{ $item['jobCity'] ?? 'Sleman' }}</span>
-          <span class="italic" style="font-size:0.98rem;">{{ $item['jobStartDate'] ?? 'Jan 2024' }} - {{ $item['isPresent'] ? 'Sekarang' : ($item['jobEndDate'] ?? 'Jan 2025') }}</span>
+          <span class="italic" style="font-size:0.98rem;">{{ $item['jobStartDate'] ?? 'Jan 2024' }} - {{ ($item['isPresent'] ?? false) ? 'Sekarang' : ($item['jobEndDate'] ?? 'Jan 2025') }}</span>
         </div>
         <div>{{ $item['jobPosition'] ?? 'Marcelle Program' }}</div>
         <ul>
-          @foreach ($item['jobDescription'] ?? [
-            'Led development of an advanced automation system, achieving a 15% increase in operational efficiency.',
-            'Streamlined manufacturing processes, reducing production costs by 10%.',
-            'Implemented preventive maintenance strategies, resulting in a 20% decrease in equipment downtime.'
-          ] as $desc)
-            <li>{{ $desc }}</li>
+          @php
+            $jobDesc = $item['jobDescription'] ?? [
+              'Led development of an advanced automation system, achieving a 15% increase in operational efficiency.',
+              'Streamlined manufacturing processes, reducing production costs by 10%.',
+              'Implemented preventive maintenance strategies, resulting in a 20% decrease in equipment downtime.'
+            ];
+            if (!is_array($jobDesc)) $jobDesc = [$jobDesc];
+            if (empty($jobDesc) || (count($jobDesc) === 1 && $jobDesc[0] === '')) $jobDesc = [
+              'Led development of an advanced automation system, achieving a 15% increase in operational efficiency.',
+              'Streamlined manufacturing processes, reducing production costs by 10%.',
+              'Implemented preventive maintenance strategies, resulting in a 20% decrease in equipment downtime.'
+            ];
+          @endphp
+          @foreach ($jobDesc as $desc)
+            <li>{{ is_array($desc) ? implode(', ', $desc) : $desc }}</li>
           @endforeach
         </ul>
       </div>
@@ -149,7 +161,7 @@
     Proyek
     <span class="section-title-line"></span>
   </div>
-  @if(!empty($proyek))
+  @if(is_array($proyek) && count($proyek))
     @foreach ($proyek as $item)
       <div class="mb-3">
         <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -158,12 +170,21 @@
         </div>
         <div class="italic">{{ $item['institution'] ?? 'University of Engineering Process Cohort' }}</div>
         <ul>
-          @foreach ($item['description'] ?? [
-            'Automotive Technology.',
-            'Technological Advancements within the current Chemical & Process Industry.',
-            'Other relevant information.'
-          ] as $desc)
-            <li>{{ $desc }}</li>
+          @php
+            $descArr = $item['description'] ?? [
+              'Automotive Technology.',
+              'Technological Advancements within the current Chemical & Process Industry.',
+              'Other relevant information.'
+            ];
+            if (!is_array($descArr)) $descArr = [$descArr];
+            if (empty($descArr) || (count($descArr) === 1 && $descArr[0] === '')) $descArr = [
+              'Automotive Technology.',
+              'Technological Advancements within the current Chemical & Process Industry.',
+              'Other relevant information.'
+            ];
+          @endphp
+          @foreach ($descArr as $desc)
+            <li>{{ is_array($desc) ? implode(', ', $desc) : $desc }}</li>
           @endforeach
         </ul>
       </div>
@@ -188,21 +209,19 @@
     Keahlian
     <span class="section-title-line"></span>
   </div>
-  @if(!empty($keahlian))
+  @if(is_array($keahlian) && count($keahlian))
     <ul class="two-col-list">
       @foreach ($keahlian as $skill)
-        <li>{{ $skill }}</li>
+        <span>{{ is_array($skill) ? implode(', ', $skill) : $skill }}</span>
       @endforeach
     </ul>
   @else
-    <ul class="two-col-list">
-      <li>Prototyping Tools</li>
-      <li>User Research</li>
-      <li>Interaction Design</li>
-      <li>Visual Design</li>
-      <li>Accessibility</li>
-      <li>Responsive Design</li>
-    </ul>
+      <span>Prototyping Tools</span>
+      <span>User Research</span>
+      <span>Interaction Design</span>
+      <span>Visual Design</span>
+      <span>Accessibility</span>
+      <span>Responsive Design</span>
   @endif
 
   <!-- Pendidikan -->
@@ -210,7 +229,7 @@
     Pendidikan
     <span class="section-title-line"></span>
   </div>
-  @if(!empty($pendidikan))
+  @if(is_array($pendidikan) && count($pendidikan))
     @foreach ($pendidikan as $edu)
       <div class="mb-3">
         <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -219,12 +238,21 @@
         </div>
         <div class="italic">{{ $edu['degree'] ?? 'Bachelor of Design in Process Engineering' }}</div>
         <ul>
-          @foreach ($edu['description'] ?? [
-            'Relevant coursework in Process Design and Project Management.',
-            'Streamlined manufacturing processes, reducing production costs by 10%.',
-            'Implemented preventive maintenance strategies, resulting in a 20% decrease in equipment downtime.'
-          ] as $desc)
-            <li>{{ $desc }}</li>
+          @php
+            $descArr = $edu['description'] ?? [
+              'Relevant coursework in Process Design and Project Management.',
+              'Streamlined manufacturing processes, reducing production costs by 10%.',
+              'Implemented preventive maintenance strategies, resulting in a 20% decrease in equipment downtime.'
+            ];
+            if (!is_array($descArr)) $descArr = [$descArr];
+            if (empty($descArr) || (count($descArr) === 1 && $descArr[0] === '')) $descArr = [
+              'Relevant coursework in Process Design and Project Management.',
+              'Streamlined manufacturing processes, reducing production costs by 10%.',
+              'Implemented preventive maintenance strategies, resulting in a 20% decrease in equipment downtime.'
+            ];
+          @endphp
+          @foreach ($descArr as $desc)
+            <li>{{ is_array($desc) ? implode(', ', $desc) : $desc }}</li>
           @endforeach
         </ul>
       </div>
@@ -250,9 +278,27 @@
     <span class="section-title-line"></span>
   </div>
   <div class="mb-4">
-    <p><strong>Bahasa:</strong> {{ !empty($bahasa) ? implode(', ', $bahasa) : 'English, French, Mandarin' }}</p>
-    <p><strong>Sertifikat:</strong> {{ !empty($sertifikat) ? implode(', ', $sertifikat) : 'Professional Design Engineer (PDE) License, Project Management Tech (PMT), Structural Process Design (SPD)' }}</p>
-    <p><strong>Hobi:</strong> {{ !empty($hobi) ? implode(', ', $hobi) : 'Tenis Lapangan' }}</p>
+    <p><strong>Bahasa:</strong>
+      @if(is_array($bahasa) && count($bahasa))
+        {{ implode(', ', array_map(fn($b) => is_array($b) ? implode(' ', $b) : $b, $bahasa)) }}
+      @else
+        English, French, Mandarin
+      @endif
+    </p>
+    <p><strong>Sertifikat:</strong>
+      @if(is_array($sertifikat) && count($sertifikat))
+        {{ implode(', ', array_map(fn($s) => is_array($s) ? implode(' ', $s) : $s, $sertifikat)) }}
+      @else
+        Professional Design Engineer (PDE) License, Project Management Tech (PMT), Structural Process Design (SPD)
+      @endif
+    </p>
+    <p><strong>Hobi:</strong>
+      @if(is_array($hobi) && count($hobi))
+        {{ implode(', ', array_map(fn($h) => is_array($h) ? implode(' ', $h) : $h, $hobi)) }}
+      @else
+        Tenis Lapangan
+      @endif
+    </p>
   </div>
 </body>
 </html>
