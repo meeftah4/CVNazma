@@ -51,20 +51,18 @@ function updateLivePreviewPengalamanKerja(dataList = null) {
     // Gunakan dataList jika ada (dari live preview), jika tidak pakai data tersimpan
     const pengalamanList = dataList || window.tempData.pengalamankerja || [];
 
+    // --- TAMBAHKAN INI: Tampilkan section jika ada data, sembunyikan jika kosong ---
+    const sectionEl = document.getElementById('sectionPengalamanKerja');
+    if (sectionEl) {
+        if (pengalamanList.length > 0) {
+            sectionEl.style.display = '';
+        } else {
+            sectionEl.style.display = 'none';
+        }
+    }
+
     if (pengalamanList.length === 0) {
-        // Tampilkan pesan kosong, hapus semua sisa template
-        previewContainer.innerHTML = `<div class="mb-4">
-            <div class="flex justify-between items-center">
-                <p><strong id="companyName">Instrument Tech</strong> - <span id="jobCity">Sleman</span></p>
-                <p class="text-gray-500" id="jobDuration">Jan 2024 - Jan 2025</p>
-            </div>
-            <p id="jobPosition">Marcelle Program</p>
-            <ul id="jobDescription" class="list-disc pl-5 text-gray-600">
-                <li>Led development of an advanced automation system, achieving a 15% increase in operational efficiency.</li>
-                <li>Streamlined manufacturing processes, reducing production costs by 10%.</li>
-                <li>Implemented preventive maintenance strategies, resulting in a 20% decrease in equipment downtime.</li>
-            </ul>
-        </div>`;
+        // Biarkan kosong, section akan di-hide otomatis
         return;
     }
 

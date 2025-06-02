@@ -7,51 +7,58 @@ window.tempData.pendidikan = window.tempData.pendidikan || [];
 // Fungsi untuk mengaktifkan live preview secara real-time
 window.enableLivePreviewPendidikan = function () {
     const form = document.getElementById('pendidikanForm');
-    if (!form) return; // Cegah error jika form belum ada di DOM
+    if (!form) return;
 
     const inputs = form.querySelectorAll('input, textarea');
     const previewContainer = document.getElementById('previewEducation');
+    const sectionEl = document.getElementById('sectionPendidikan');
 
     const updatePreview = () => {
-        const data = {};
+        // Ambil data yang sedang diketik
+        const currentInput = {};
         inputs.forEach(input => {
             if (input.type === 'checkbox') {
-                data[input.id] = input.checked;
+                currentInput[input.id] = input.checked;
             } else {
-                data[input.id] = input.value || '';
+                currentInput[input.id] = input.value || '';
             }
         });
 
-        // Hapus placeholder jika ada data pertama yang dimasukkan
-        if (window.tempData.pendidikan.length === 0 && previewContainer.children.length > 0) {
-            previewContainer.innerHTML = '';
+        // Gabungkan data yang sudah disimpan + data yang sedang diketik (belum disimpan)
+        let dataList = window.tempData.pendidikan ? [...window.tempData.pendidikan] : [];
+        const isFormFilled = Object.values(currentInput).some(val => val && val !== false);
+        if (isFormFilled) {
+            dataList.push(currentInput);
         }
 
-        // Tentukan indeks data baru
-        const newIndex = window.tempData.pendidikan.length;
-
-        // Cari atau buat elemen preview untuk data baru
-        let previewRow = document.getElementById(`previewEducation-${newIndex}`);
-        if (!previewRow) {
-            previewRow = document.createElement('div');
-            previewRow.id = `previewEducation-${newIndex}`;
-            previewRow.className = 'mb-4';
-            previewContainer.appendChild(previewRow);
+        // --- Tampilkan/hide section sesuai data ---
+        if (sectionEl) {
+            if (dataList.length > 0) {
+                sectionEl.style.display = '';
+            } else {
+                sectionEl.style.display = 'none';
+            }
         }
 
-        // Perbarui konten elemen preview
-        previewRow.innerHTML = `
-            <div class="flex justify-between items-center">
-                <p><strong>${data.educationInstitution || ''}</strong>${data.educationCity ? ` - ${data.educationCity}` : ''}</p>
-                ${data.educationStartDate || data.isPresent ? `<p class="text-gray-500">${formatDate(data.educationStartDate)} - ${data.isPresent ? 'Present' : formatDate(data.educationEndDate)}</p>` : ''}
-            </div>
-            ${data.educationDegree ? `<p class="italic text-gray-600">${data.educationDegree}</p>` : ''}
-            ${data.educationDescription ? `
-                <ul class="list-disc pl-5 text-gray-600">
-                    ${data.educationDescription.split('\n').map(desc => `<li>${desc}</li>`).join('')}
-                </ul>
-            ` : ''}
-        `;
+        // Render ke preview CV
+        previewContainer.innerHTML = '';
+        dataList.forEach((data, index) => {
+            const row = document.createElement('div');
+            row.className = 'mb-4';
+            row.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <p><strong>${data.educationInstitution || ''}</strong>${data.educationCity ? ` - ${data.educationCity}` : ''}</p>
+                    ${(data.educationStartDate || data.isPresent) ? `<p class="text-gray-500">${formatDate(data.educationStartDate)} - ${data.isPresent ? 'Present' : formatDate(data.educationEndDate)}</p>` : ''}
+                </div>
+                ${data.educationDegree ? `<p class="italic text-gray-600">${data.educationDegree}</p>` : ''}
+                ${data.educationDescription ? `
+                    <ul class="list-disc pl-5 text-gray-600">
+                        ${data.educationDescription.split('\n').map(desc => `<li>${desc}</li>`).join('')}
+                    </ul>
+                ` : ''}
+            `;
+            previewContainer.appendChild(row);
+        });
     };
 
     // Pasang event listener untuk setiap input
@@ -63,42 +70,33 @@ window.enableLivePreviewPendidikan = function () {
 };
 
 // Fungsi untuk memperbarui live preview pendidikan di CV setelah data disimpan
-function updateLivePreviewEducation() {
+function updateLivePreviewEducation(dataList = null) {
     const previewContainer = document.getElementById('previewEducation');
-    previewContainer.innerHTML = ''; // Kosongkan kontainer sebelum menambahkan data baru
+    const sectionEl = document.getElementById('sectionPendidikan');
+    previewContainer.innerHTML = '';
 
-    if (!window.tempData.pendidikan || window.tempData.pendidikan.length === 0) {
-        previewContainer.innerHTML = `
-            <div class="mb-4">
-                <div class="flex justify-between items-center">
-                    <p><strong id="educationInstitution">Engineering University</strong></p>
-                    <p class="text-gray-500" id="educationDuration">Jan 2024 - Jan 2025</p>
-                </div>
-                <p id="educationDegree" class="italic text-gray-600">Bachelor of Design in Process Engineering</p>
-                <ul id="educationDescription" class="list-disc pl-5 text-gray-600">
-                    <li>Relevant coursework in Process Design and Project Management.</li>
-                    <li>Streamlined manufacturing processes, reducing production costs by 10%.</li>
-                    <li>Implemented preventive maintenance strategies, resulting in a 20% decrease in equipment downtime.</li>
-                </ul>
-            </div>
-        `;
+    const pendidikanList = dataList || window.tempData.pendidikan || [];
+
+    if (sectionEl) {
+        if (pendidikanList.length > 0) {
+            sectionEl.style.display = '';
+        } else {
+            sectionEl.style.display = 'none';
+        }
+    }
+
+    if (pendidikanList.length === 0) {
+        // Biarkan kosong, section akan di-hide otomatis
         return;
     }
 
-    // Tambahkan setiap data pendidikan ke live preview
-    window.tempData.pendidikan.forEach((data, index) => {
-        let previewRow = document.getElementById(`previewEducation-${index}`);
-        if (!previewRow) {
-            previewRow = document.createElement('div');
-            previewRow.id = `previewEducation-${index}`;
-            previewRow.className = 'mb-4';
-            previewContainer.appendChild(previewRow);
-        }
-
-        previewRow.innerHTML = `
+    pendidikanList.forEach((data, index) => {
+        const row = document.createElement('div');
+        row.className = 'mb-4';
+        row.innerHTML = `
             <div class="flex justify-between items-center">
                 <p><strong>${data.educationInstitution || ''}</strong>${data.educationCity ? ` - ${data.educationCity}` : ''}</p>
-                ${data.educationStartDate || data.isPresent ? `<p class="text-gray-500">${formatDate(data.educationStartDate)} - ${data.isPresent ? 'Present' : formatDate(data.educationEndDate)}</p>` : ''}
+                ${(data.educationStartDate || data.isPresent) ? `<p class="text-gray-500">${formatDate(data.educationStartDate)} - ${data.isPresent ? 'Present' : formatDate(data.educationEndDate)}</p>` : ''}
             </div>
             ${data.educationDegree ? `<p class="italic text-gray-600">${data.educationDegree}</p>` : ''}
             ${data.educationDescription ? `
@@ -107,6 +105,7 @@ function updateLivePreviewEducation() {
                 </ul>
             ` : ''}
         `;
+        previewContainer.appendChild(row);
     });
 }
 

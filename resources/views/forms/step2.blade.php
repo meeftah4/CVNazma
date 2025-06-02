@@ -42,18 +42,22 @@
 {{-- resources/views/forms/step2.blade.php --}}
 <!-- Default hidden -->
 <div id="step-2" class="step hidden" style="background-color: #F4F8FF;">
-
     @foreach (['Profil', 'Pengalaman Kerja', 'Proyek', 'Keahlian', 'Pendidikan', 'Bahasa', 'Sertifikat', 'Hobi'] as $field)
         <div class="mb-4">
             <div class="bg-white rounded-md shadow p-0">
-                <div class="w-full flex justify-between items-center px-6 border-b font-bold text-blue-900 rounded-t-md text-base" style="min-height: 50px; padding-top: 0.75rem; padding-bottom: 0.75rem;">
+                <div 
+                    class="dropdown-header w-full flex justify-between items-center px-6 border-b font-bold text-blue-900 rounded-t-md text-base"
+                    data-dropdown="{{ strtolower(str_replace(' ', '', $field)) }}"
+                    style="min-height: 50px; padding-top: 0.75rem; padding-bottom: 0.75rem; cursor: pointer;"
+                >
                     <div class="flex items-center gap-2">
                         <span class="text-[18px]">{{ $field }}</span>
                     </div>
                     <button type="button"
                         class="text-blue-900 font-bold text-xl focus:outline-none"
-                        style="background: none; border: none;"
-                        onclick="toggleDropdown('{{ strtolower(str_replace(' ', '', $field)) }}')">
+                        style="background: none; border: none; pointer-events: none;" 
+                        tabindex="-1"
+                    >
                         <span id="{{ strtolower(str_replace(' ', '', $field)) }}Icon">+</span>
                     </button>
                 </div>
@@ -66,8 +70,7 @@
                         onclick="hapusSemuaDataSection('{{ strtolower(str_replace(' ', '', $field)) }}')"
                         title="Hapus Semua {{ $field }}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="inline h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M9 6v12m6-12v12" />
-                        </svg>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 7h12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3m2 0v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V7h12zM10 11v6m4-6v6" />                        </svg>
                     </button>
                     @endif
                     @include('partials.' . strtolower(str_replace(' ', '-', $field)))
@@ -244,26 +247,50 @@ window.tempData.foto = document.getElementById('photoPreview').src || '';
 
 // Gunakan id preview yang sudah ada, jangan diubah!
 window.hapusSemuaDataSection = function(section) {
-    // Mapping nama section ke key di tempData dan id preview
     const map = {
-        'pengalamankerja': { key: 'pengalamankerja', preview: 'previewPengalamanKerja' },
-        'proyek': { key: 'proyek', preview: 'previewProject' },
-        'keahlian': { key: 'keahlian', preview: 'previewSkill' },
-        'pendidikan': { key: 'pendidikan', preview: 'previewEducation' },
-        'bahasa': { key: 'bahasa', preview: 'previewBahasa' },
-        'sertifikat': { key: 'sertifikat', preview: 'previewCertificate' },
-        'hobi': { key: 'hobi', preview: 'previewHobby' },
+        'pengalamankerja': { key: 'pengalamankerja', preview: 'previewPengalamanKerja', sectionId: 'sectionPengalamanKerja' },
+        'proyek': { key: 'proyek', preview: 'previewProject', sectionId: 'sectionProyek' },
+        'keahlian': { key: 'keahlian', preview: 'previewSkill', sectionId: 'sectionKeahlian' },
+        'pendidikan': { key: 'pendidikan', preview: 'previewEducation', sectionId: 'sectionPendidikan' },
+        'bahasa': { key: 'bahasa', preview: 'previewBahasa', sectionId: 'previewBahasa' }, // Tidak ada section, hanya div
+        'sertifikat': { key: 'sertifikat', preview: 'previewCertificate', sectionId: 'previewCertificate' },
+        'hobi': { key: 'hobi', preview: 'previewHobby', sectionId: 'previewHobby' },
     };
     if (!map[section]) return;
 
     // Hapus data di tempData
     window.tempData[map[section].key] = [];
 
-    // Kosongkan isi preview (termasuk judul jika perlu)
-    const previewDiv = document.getElementById(map[section].preview);
-    if (previewDiv) previewDiv.innerHTML = '';
+    // Sembunyikan seluruh section di preview (jika ada)
+    const sectionEl = document.getElementById(map[section].sectionId);
+    if (sectionEl) sectionEl.style.display = 'none';
 
     // Update session jika perlu
     if (window.updateSessionCV) window.updateSessionCV();
+};
+
+// Toggle handler untuk seluruh header dropdown
+document.querySelectorAll('.dropdown-header').forEach(function(header){
+    header.addEventListener('click', function(e){
+        // Jika klik tombol hapus, jangan toggle
+        if (e.target.closest('button[title^="Hapus Semua"]')) return;
+
+        // Toggle dropdown
+        const section = this.getAttribute('data-dropdown');
+        const dropdown = document.getElementById(section + 'Dropdown');
+        const icon = document.getElementById(section + 'Icon');
+        if (dropdown.classList.contains('hidden')) {
+            dropdown.classList.remove('hidden');
+            if (icon) icon.textContent = '-';
+        } else {
+            dropdown.classList.add('hidden');
+            if (icon) icon.textContent = '+';
+        }
+    });
+});
+
+window.tampilkanSection = function(sectionId) {
+    const el = document.getElementById(sectionId);
+    if (el) el.style.display = '';
 };
 </script>

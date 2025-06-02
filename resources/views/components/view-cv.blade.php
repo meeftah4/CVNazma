@@ -28,8 +28,7 @@
         </p>
     </div>
 </section>
-
-<section class="mb-6">
+<section id="sectionPengalamanKerja" class="mb-6">
     <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-2">Pengalaman Kerja</h2>
     <div id="previewPengalamanKerja" class="text-sm text-gray-600">
         <div class="mb-4">
@@ -47,7 +46,7 @@
     </div>
 </section>
 
-<section class="mb-6">
+<section id="sectionProyek" class="mb-6">
     <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-2">Proyek</h2>
     <div id="previewProject" class="text-sm text-gray-600">
         <!-- Data proyek akan ditampilkan di sini -->
@@ -66,7 +65,7 @@
     </div>
 </section>
 
-<section class="mb-4">
+<section id="sectionKeahlian" class="mb-4">
     <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-2">Keahlian</h2>
     <div id="previewSkill" class="text-sm text-gray-600 grid grid-cols-3">
         <!-- Data keahlian akan ditampilkan di sini -->
@@ -79,7 +78,7 @@
     </div>
 </section>
 
-<section class="mb-6">
+<section id="sectionPendidikan" class="mb-6">
     <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-2">Pendidikan</h2>
     <div id="previewEducation" class="text-sm text-gray-600">
         <div class="mb-4">
@@ -111,4 +110,5 @@
     </div>
     </div>
 </section>
+
 
