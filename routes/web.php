@@ -7,6 +7,14 @@ use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\FaqsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TemplatesController;
+use App\Http\Controllers\CvsUsersController;
+use App\Http\Controllers\WorkExperiencesController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\EducationsController;
+use App\Http\Controllers\SkillsController;
+use App\Http\Controllers\LanguagesController;
+use App\Http\Controllers\CertificateController;
+use App\Http\Controllers\HobbiesController;
 
 // Page Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -27,7 +35,6 @@ Route::get('/rating', function () {
     return view('dashboard.rating');
 })->name('rating');
 
-Route::post('/rating', [RatingController::class, 'store'])->name('rating.store');
 Route::get('/template-cv-html', [TemplatesController::class, 'showTemplates']);
 
 // Profile Routes
@@ -107,3 +114,12 @@ Route::get('/cv/get-session', function() {
 Route::get('/view/{key}', function ($key) {
     return view('templates.view.' . $key);
 });
+Route::post('/cvs-users/save-from-session', [CvsUsersController::class, 'saveFromSession'])->middleware('auth');
+Route::post('/work-experiences/store-from-session', [WorkExperiencesController::class, 'storeFromSession'])->middleware('auth');
+Route::post('/projects/store-from-session', [ProjectController::class, 'storeFromSession'])->middleware('auth');
+Route::post('/educations/store-from-session', [EducationsController::class, 'storeFromSession'])->middleware('auth');
+Route::post('/skills/store-from-session', [SkillsController::class, 'storeFromSession'])->middleware('auth');
+Route::post('/languages/store-from-session', [LanguagesController::class, 'storeFromSession'])->middleware('auth');
+Route::post('/certificates/store-from-session', [CertificateController::class, 'storeFromSession'])->middleware('auth');
+Route::post('/hobbies/store-from-session', [HobbiesController::class, 'storeFromSession'])->middleware('auth');
+Route::post('/cvs-users/upload-photo', [CvsUsersController::class, 'uploadPhoto'])->middleware('auth');

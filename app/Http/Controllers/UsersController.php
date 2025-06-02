@@ -70,6 +70,12 @@ class UsersController extends Controller
         }
     }
 
+    protected function authenticated(Request $request, $user)
+    {
+        $redirect = session('url.intended', '/');
+        return redirect($redirect);
+    }
+
     public function showProfile(Request $request)
     {
         // Ambil data pengguna yang sedang login

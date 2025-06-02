@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('work_experiences', function (Blueprint $table) {
             $table->id();
             $table->foreignId('cvsy_id')->constrained('cvs_users')->onDelete('cascade');
-            $table->string('company_name');
-            $table->string('role');
-            $table->date('start_date');
+            $table->string('company_name')->nullable();
+            $table->string('role')->nullable();
+            $table->string('location')->nullable();
+            $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();

@@ -25,10 +25,9 @@
     </div>
 
     <!-- Preview Container -->
-    <div class="w-full max-w-[210mm] mb-6"> <!-- A4 width -->
+    <div class="w-full max-w-[210mm] mb-6">
         <div class="bg-white shadow-md rounded-lg overflow-hidden">
-            <!-- A4 Preview Area -->
-            <div class="w-[210mm] h-[297mm] mx-auto bg-white"> <!-- A4 dimensions -->
+            <div class="w-[210mm] h-[297mm] mx-auto bg-white">
                 <iframe 
                     src="{{ url('indonesia/' . $template) }}?preview=1"
                     class="w-full h-full border-0"
@@ -42,14 +41,11 @@
 
     <!-- Info Section -->
     <div class="w-full max-w-[210mm] space-y-4">
-        <!-- Template Name -->
         <div class="bg-white rounded-lg shadow-md p-4 text-center">
             <span class="font-semibold text-lg text-slate-900">
                 {{ $templateNames[$template] ?? $template }}
             </span>
         </div>
-
-        <!-- Price -->
         <div class="bg-white rounded-lg shadow-md p-4 text-center">
             <span class="font-semibold text-[#2196f3] text-lg">
                 Rp 20.000
@@ -57,21 +53,190 @@
         </div>
     </div>
 
-    <!-- Additional Info -->
     <p class="mt-4 text-xs text-gray-400 text-center max-w-[210mm]">
         Bisa kontak <a href="#" class="underline text-[#2196f3]">Pelayanan Azura</a> 
         untuk melengkapi instruksi/foto
     </p>
 
     <!-- Download Button -->
-    <button class="mt-6 bg-[#FFBC5D] hover:bg-[#e6a84f] text-[#01287E] font-bold
+    <button id="btnBerikutnya" class="mt-6 bg-[#FFBC5D] hover:bg-[#e6a84f] text-[#01287E] font-bold
         px-8 py-2 rounded-lg shadow transition-colors duration-200">
-        Unduh CV
+        Berikutnya
     </button>
+
+    <!-- Modal Alert -->
+    <div id="modalValidasi" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 md:p-10 max-w-md w-full text-center relative border border-[#FFBC5D]">
+            <!-- Tombol X (Tutup) -->
+            <button id="btnTutup" class="absolute top-4 right-4 text-gray-400 hover:text-[#FFBC5D] text-2xl font-bold focus:outline-none transition-colors duration-200" aria-label="Tutup">
+                &times;
+            </button>
+            <div class="flex flex-col items-center mb-4">
+                <div class="bg-[#FFBC5D] rounded-full p-3 mb-2 shadow">
+                    <svg class="w-8 h-8 text-[#01287E]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/>
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-extrabold mb-2 text-[#1a237e]">Validasi Data</h2>
+            </div>
+            <p class="mb-6 text-gray-700 leading-relaxed">
+                Data yang Anda masukkan <span class="font-semibold text-[#2196f3]">sudah sesuai</span> dan tidak ada kesalahan.<br>
+                Silakan lanjutkan untuk proses pembayaran.
+            </p>
+            <!-- Checkbox Persetujuan -->
+            <div class="flex flex-col items-center mb-6">
+                <label for="checkboxPersetujuan" class="flex items-center cursor-pointer group">
+                    <input type="checkbox" id="checkboxPersetujuan" class="accent-[#FFBC5D] w-5 h-5 transition-all duration-200 focus:ring-2 focus:ring-[#FFBC5D] group-hover:scale-105" />
+                    <span class="ml-3 text-sm text-gray-700 select-none transition-colors duration-200 group-hover:text-[#FFBC5D]">
+                        Saya menyetujui data sudah benar dan siap untuk diproses pembayaran.
+                    </span>
+                </label>
+            </div>
+            <div class="flex justify-between gap-3">
+                <button id="btnKembali" class="bg-gray-100 hover:bg-gray-200 text-[#01287E] font-semibold px-4 py-2 rounded-lg w-1/2 transition-all duration-200 shadow-sm border border-gray-200">
+                    Kembali
+                </button>
+                <button id="btnLanjutkan" class="bg-[#FFBC5D] text-[#01287E] font-bold px-4 py-2 rounded-lg w-1/2 transition-all duration-200 shadow-sm opacity-50 cursor-not-allowed border border-[#FFBC5D]" disabled>
+                    Lanjutkan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    window.profilServer = @json(session('profil', []));
+    </script>
+
+    <!-- Pastikan SweetAlert2 sudah di-load -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var btnBerikutnya = document.getElementById('btnBerikutnya');
+        if (btnBerikutnya) {
+            btnBerikutnya.onclick = function() {
+                @if(Auth::guest())
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Login Diperlukan',
+                        text: 'Silakan login terlebih dahulu untuk melanjutkan proses unduh CV.',
+                        confirmButtonColor: '#FFBC5D',
+                        confirmButtonText: 'Login Sekarang'
+                    }).then(() => {
+                        window.location.href = "{{ route('login') }}?redirect={{ urlencode(request()->fullUrl()) }}";
+                    });
+                    return;
+                @endif
+                document.getElementById('modalValidasi').classList.remove('hidden');
+            };
+        }
+    });
+
+    document.getElementById('btnKembali').onclick = function() {
+        window.location.href = '/cvats';
+    };
+
+    document.getElementById('btnTutup').onclick = function() {
+        document.getElementById('modalValidasi').classList.add('hidden');
+        const checkbox = document.getElementById('checkboxPersetujuan');
+        const btnLanjutkan = document.getElementById('btnLanjutkan');
+        checkbox.checked = false;
+        btnLanjutkan.disabled = true;
+        btnLanjutkan.classList.add('opacity-50', 'cursor-not-allowed');
+        btnLanjutkan.classList.remove('hover:bg-[#e6a84f]', 'hover:scale-105', 'ring-2', 'ring-[#FFBC5D]');
+    };
+
+    const checkbox = document.getElementById('checkboxPersetujuan');
+    const btnLanjutkan = document.getElementById('btnLanjutkan');
+
+    checkbox.onchange = function() {
+        if (this.checked) {
+            btnLanjutkan.disabled = false;
+            btnLanjutkan.classList.remove('opacity-50', 'cursor-not-allowed');
+            btnLanjutkan.classList.add('hover:bg-[#e6a84f]', 'hover:scale-105', 'ring-2', 'ring-[#FFBC5D]');
+        } else {
+            btnLanjutkan.disabled = true;
+            btnLanjutkan.classList.add('opacity-50', 'cursor-not-allowed');
+            btnLanjutkan.classList.remove('hover:bg-[#e6a84f]', 'hover:scale-105', 'ring-2', 'ring-[#FFBC5D]');
+        }
+    };
+
+    // Tombol Lanjutkan: simpan data ke database
+    btnLanjutkan.onclick = async function() {
+        if (this.disabled) return;
+        this.disabled = true;
+        this.textContent = 'Menyimpan...';
+
+        // Ambil data profil dari sessionStorage
+        let profilArr = JSON.parse(window.sessionStorage.getItem('profil') || 'null');
+        if (!profilArr || !profilArr.length) {
+            profilArr = window.profilServer || [];
+            window.sessionStorage.setItem('profil', JSON.stringify(profilArr));
+        }
+        let profil = profilArr[0] || {};
+
+        // 1. Upload foto jika ada (base64)
+        let photoUrl = profil.photoUrl || profil.photo || '';
+        if (photoUrl && photoUrl.startsWith('data:image/')) {
+            let uploadRes = await fetch('/cvs-users/upload-photo', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                body: JSON.stringify({ photo: photoUrl })
+            });
+            let uploadData = await uploadRes.json();
+            if (uploadData.path) {
+                profil.cv_picture = uploadData.path; // path hasil upload
+            } else {
+                profil.cv_picture = '';
+            }
+        }
+
+        // 2. Hapus base64 dari profil JS
+        profil.photo = undefined;
+        profil.photoUrl = undefined;
+        window.sessionStorage.setItem('profil', JSON.stringify([profil]));
+
+        // 3. Kirim ke server agar session server-side update dengan path gambar
+        await fetch('/cv/save-session', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+            body: JSON.stringify({
+                profil: [profil],
+                // ...tambahkan data lain dari sessionStorage jika perlu...
+            })
+        });
+
+        // 4. Simpan ke database (backend ambil path dari session)
+        let res = await fetch('/cvs-users/save-from-session', {
+            method: 'POST',
+            headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+        });
+        let data = await res.json();
+        let cvsy_id = data.cvsy_id;
+
+        // 5. Simpan data lain (work, project, dst)
+        const endpoints = [
+            {url: '/work-experiences/store-from-session'},
+            {url: '/projects/store-from-session'},
+            {url: '/educations/store-from-session'},
+            {url: '/skills/store-from-session'},
+            {url: '/languages/store-from-session'},
+            {url: '/certificates/store-from-session'},
+            {url: '/hobbies/store-from-session'},
+        ];
+        for (let ep of endpoints) {
+            await fetch(ep.url, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                body: JSON.stringify({cvsy_id})
+            });
+        }
+
+        window.location.href = '/pembayaran';
+    };
+    </script>
 </div>
 
 <style>
-    /* Untuk memastikan preview A4 tepat di layar */
     @media screen {
         .a4-preview {
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
