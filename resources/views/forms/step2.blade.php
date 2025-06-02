@@ -46,16 +46,30 @@
     @foreach (['Profil', 'Pengalaman Kerja', 'Proyek', 'Keahlian', 'Pendidikan', 'Bahasa', 'Sertifikat', 'Hobi'] as $field)
         <div class="mb-4">
             <div class="bg-white rounded-md shadow p-0">
-                <button type="button"
-                    class="w-full flex justify-between items-center px-6 border-b font-bold text-blue-900 rounded-t-md focus:outline-none text-base"
-                    style="min-height: 50px; padding-top: 0.75rem; padding-bottom: 0.75rem;" {{-- py-3 --}}
-                    onclick="toggleDropdown('{{ strtolower(str_replace(' ', '', $field)) }}')">
-                    <span class="text-[18px]">{{ $field }}</span>
-                    <span class="text-blue-900 font-bold text-xl">
+                <div class="w-full flex justify-between items-center px-6 border-b font-bold text-blue-900 rounded-t-md text-base" style="min-height: 50px; padding-top: 0.75rem; padding-bottom: 0.75rem;">
+                    <div class="flex items-center gap-2">
+                        <span class="text-[18px]">{{ $field }}</span>
+                    </div>
+                    <button type="button"
+                        class="text-blue-900 font-bold text-xl focus:outline-none"
+                        style="background: none; border: none;"
+                        onclick="toggleDropdown('{{ strtolower(str_replace(' ', '', $field)) }}')">
                         <span id="{{ strtolower(str_replace(' ', '', $field)) }}Icon">+</span>
-                    </span>
-                </button>
-                <div id="{{ strtolower(str_replace(' ', '', $field)) }}Dropdown" class="hidden">
+                    </button>
+                </div>
+                <div id="{{ strtolower(str_replace(' ', '', $field)) }}Dropdown" class="hidden relative">
+                    @if($field !== 'Profil')
+                    <button
+                        type="button"
+                        class="absolute right-6 top-4 text-red-500 hover:text-red-700 z-10"
+                        style="padding:0"
+                        onclick="hapusSemuaDataSection('{{ strtolower(str_replace(' ', '', $field)) }}')"
+                        title="Hapus Semua {{ $field }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="inline h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M9 6v12m6-12v12" />
+                        </svg>
+                    </button>
+                    @endif
                     @include('partials.' . strtolower(str_replace(' ', '-', $field)))
                 </div>
             </div>
@@ -227,4 +241,29 @@ document.getElementById('cropperModal').addEventListener('mousedown', function(e
 
 window.tempData = window.tempData || {};
 window.tempData.foto = document.getElementById('photoPreview').src || '';
+
+// Gunakan id preview yang sudah ada, jangan diubah!
+window.hapusSemuaDataSection = function(section) {
+    // Mapping nama section ke key di tempData dan id preview
+    const map = {
+        'pengalamankerja': { key: 'pengalamankerja', preview: 'previewPengalamanKerja' },
+        'proyek': { key: 'proyek', preview: 'previewProject' },
+        'keahlian': { key: 'keahlian', preview: 'previewSkill' },
+        'pendidikan': { key: 'pendidikan', preview: 'previewEducation' },
+        'bahasa': { key: 'bahasa', preview: 'previewBahasa' },
+        'sertifikat': { key: 'sertifikat', preview: 'previewCertificate' },
+        'hobi': { key: 'hobi', preview: 'previewHobby' },
+    };
+    if (!map[section]) return;
+
+    // Hapus data di tempData
+    window.tempData[map[section].key] = [];
+
+    // Kosongkan isi preview (termasuk judul jika perlu)
+    const previewDiv = document.getElementById(map[section].preview);
+    if (previewDiv) previewDiv.innerHTML = '';
+
+    // Update session jika perlu
+    if (window.updateSessionCV) window.updateSessionCV();
+};
 </script>

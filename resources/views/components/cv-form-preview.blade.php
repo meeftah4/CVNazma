@@ -30,11 +30,19 @@
     }
 
     function updateContactPreview() {
-        const email = document.getElementById('emailInput')?.value || 'nama@email.com';
-        const phone = document.getElementById('phoneInput')?.value || '0812-3456-7890';
-        const linkedin = document.getElementById('linkedinInput')?.value || 'LinkedIn Profile URL';
-        const portfolio = document.getElementById('portfolioInput')?.value || 'Portfolio/Website URL';
-        document.getElementById('previewContact').textContent = `${email} | ${phone} | ${linkedin} | ${portfolio}`;
+        const email = document.getElementById('emailInput')?.value || '';
+        const phone = document.getElementById('phoneInput')?.value || '';
+        const linkedin = document.getElementById('linkedinInput')?.value || '';
+        const portfolio = document.getElementById('portfolioInput')?.value || '';
+
+        // Hanya tampilkan field yang diisi
+        const contactArr = [];
+        if (email) contactArr.push(email);
+        if (phone) contactArr.push(phone);
+        if (linkedin) contactArr.push(linkedin);
+        if (portfolio) contactArr.push(portfolio);
+
+        document.getElementById('previewContact').textContent = contactArr.join(' | ');
     }
 
     function showTemplateCV() {
