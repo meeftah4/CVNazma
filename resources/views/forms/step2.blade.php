@@ -293,4 +293,13 @@ window.tampilkanSection = function(sectionId) {
     const el = document.getElementById(sectionId);
     if (el) el.style.display = '';
 };
+
+function showTemplateCV() {
+    // Simpan data step 2 ke session sebelum ke step 3
+    if (typeof window.updateSessionCV === 'function') {
+        window.updateSessionCV();
+    }
+    setActiveStep(3);
+}
+
 </script>

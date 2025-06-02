@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class CvsUsersController extends Controller
 {
     public function saveFromSession(Request $request)
     {
+        // Debug: cek isi session
+        Log::info('SESSION PROFIL', session('profil', []));
+
         $user = \Illuminate\Support\Facades\Auth::user();
         if (!$user) {
             return response()->json(['error' => 'User not authenticated'], 401);

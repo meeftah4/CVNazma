@@ -113,7 +113,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         var btnBerikutnya = document.getElementById('btnBerikutnya');
         if (btnBerikutnya) {
-            btnBerikutnya.onclick = function() {
+            btnBerikutnya.onclick = async function() {
                 @if(Auth::guest())
                     Swal.fire({
                         icon: 'info',
@@ -126,6 +126,21 @@
                     });
                     return;
                 @endif
+
+                // 1. Ambil data session terbaru dari backend (data yang dipakai iframe)
+                let sessionData = await fetch('/cv/get-session').then(res => res.json());
+
+                // 2. Kirim ulang ke backend agar session benar-benar update
+                await fetch('/cv/save-session', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content
+                    },
+                    body: JSON.stringify(sessionData)
+                });
+
+                // 3. Setelah session dipatenkan, tampilkan modal validasi
                 document.getElementById('modalValidasi').classList.remove('hidden');
             };
         }
