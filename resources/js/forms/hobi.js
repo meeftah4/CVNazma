@@ -12,43 +12,52 @@ if (!window.tempData.hobi) {
 // Fungsi untuk mengaktifkan live preview hobi
 window.enableLivePreviewHobi = function () {
     const form = document.getElementById('hobiForm');
+    if (!form) return;
     const inputs = form.querySelectorAll('input');
     const previewContainer = document.getElementById('previewHobby');
 
-    inputs.forEach(input => {
-        input.addEventListener('input', () => {
-            // Ambil semua hobi yang sudah tersimpan
-            const hobiList = window.tempData.hobi.map(data => data.hobbyName).filter(Boolean);
+    function updatePreview() {
+        // Tampilkan kembali section preview jika sebelumnya di-hide
+        if (previewContainer) previewContainer.style.display = '';
 
-            // Ambil input yang sedang diketik
-            let inputValue = '';
-            inputs.forEach(input => {
-                if (input.id === 'hobbyName') {
-                    inputValue = input.value.trim();
-                }
-            });
+        // Ambil semua hobi yang sudah tersimpan
+        let hobiList = window.tempData.hobi.map(data => data.hobbyName).filter(Boolean);
 
-            // Gabungkan data tersimpan dan input (jika sedang tambah baru)
-            const form = document.getElementById('hobiForm');
-            const editIndex = form.getAttribute('data-edit-index');
-            let previewList = [...hobiList];
-            if ((editIndex === null || editIndex === undefined) && inputValue) {
-                previewList.push(inputValue);
-            }
-            // Jika sedang edit, ganti data pada index yang diedit dengan input
-            if (editIndex !== null && inputValue) {
-                previewList[parseInt(editIndex)] = inputValue;
-            }
-
-            // Tampilkan preview
-            previewContainer.innerHTML = '';
-            if (previewList.length > 0) {
-                previewContainer.innerHTML = `<p><strong>Hobi:</strong> ${previewList.join(', ')}</p>`;
-            } else {
-                previewContainer.innerHTML = `<p><strong>Hobi:</strong> Tenis Lapangan</p>`;
+        // Ambil input yang sedang diketik
+        let inputValue = '';
+        inputs.forEach(input => {
+            if (input.id === 'hobbyName') {
+                inputValue = input.value.trim();
             }
         });
+
+        // Gabungkan data tersimpan dan input (jika sedang tambah baru)
+        const editIndex = form.getAttribute('data-edit-index');
+        let previewList = [...hobiList];
+        if ((editIndex === null || editIndex === undefined) && inputValue) {
+            previewList.push(inputValue);
+        }
+        // Jika sedang edit, ganti data pada index yang diedit dengan input
+        if (editIndex !== null && inputValue) {
+            previewList[parseInt(editIndex)] = inputValue;
+        }
+
+        // Tampilkan preview
+        previewContainer.innerHTML = '';
+        if (previewList.length > 0) {
+            previewContainer.innerHTML = `<p><strong>Hobi:</strong> ${previewList.join(', ')}</p>`;
+        } else {
+            previewContainer.innerHTML = `<p><strong>Hobi:</strong> Tenis Lapangan</p>`;
+        }
+    }
+
+    // Pasang event listener ke setiap input
+    inputs.forEach(input => {
+        input.addEventListener('input', updatePreview);
     });
+
+    // Jalankan sekali agar preview muncul walau belum ada input
+    updatePreview();
 };
 
 // Fungsi untuk menyimpan data hobi

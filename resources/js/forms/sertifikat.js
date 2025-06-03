@@ -12,43 +12,52 @@ if (!window.tempData.sertifikat) {
 // Fungsi untuk mengaktifkan live preview sertifikat
 window.enableLivePreviewSertifikat = function () {
     const form = document.getElementById('sertifikatForm');
+    if (!form) return;
     const inputs = form.querySelectorAll('input');
     const previewContainer = document.getElementById('previewCertificate');
 
-    inputs.forEach(input => {
-        input.addEventListener('input', () => {
-            // Ambil semua sertifikat yang sudah tersimpan
-            const sertifikatList = window.tempData.sertifikat.map(data => data.certificateName).filter(Boolean);
+    function updatePreview() {
+        // Tampilkan kembali section preview jika sebelumnya di-hide
+        if (previewContainer) previewContainer.style.display = '';
 
-            // Ambil input yang sedang diketik
-            let inputValue = '';
-            inputs.forEach(input => {
-                if (input.id === 'certificateName') {
-                    inputValue = input.value.trim();
-                }
-            });
+        // Ambil semua sertifikat yang sudah tersimpan
+        let sertifikatList = window.tempData.sertifikat.map(data => data.certificateName).filter(Boolean);
 
-            // Gabungkan data tersimpan dan input (jika sedang tambah baru)
-            const form = document.getElementById('sertifikatForm');
-            const editIndex = form.getAttribute('data-edit-index');
-            let previewList = [...sertifikatList];
-            if ((editIndex === null || editIndex === undefined) && inputValue) {
-                previewList.push(inputValue);
-            }
-            // Jika sedang edit, ganti data pada index yang diedit dengan input
-            if (editIndex !== null && inputValue) {
-                previewList[parseInt(editIndex)] = inputValue;
-            }
-
-            // Tampilkan preview
-            previewContainer.innerHTML = '';
-            if (previewList.length > 0) {
-                previewContainer.innerHTML = `<p><strong>Sertifikat:</strong> ${previewList.join(', ')}</p>`;
-            } else {
-                previewContainer.innerHTML = `<p><strong>Sertifikat:</strong> Professional Design Engineer (PDE) License, Project Management Tech (PMT), Structural Process Design (SPD)</p>`;
+        // Ambil input yang sedang diketik
+        let inputValue = '';
+        inputs.forEach(input => {
+            if (input.id === 'certificateName') {
+                inputValue = input.value.trim();
             }
         });
+
+        // Gabungkan data tersimpan dan input (jika sedang tambah baru)
+        const editIndex = form.getAttribute('data-edit-index');
+        let previewList = [...sertifikatList];
+        if ((editIndex === null || editIndex === undefined) && inputValue) {
+            previewList.push(inputValue);
+        }
+        // Jika sedang edit, ganti data pada index yang diedit dengan input
+        if (editIndex !== null && inputValue) {
+            previewList[parseInt(editIndex)] = inputValue;
+        }
+
+        // Tampilkan preview
+        previewContainer.innerHTML = '';
+        if (previewList.length > 0) {
+            previewContainer.innerHTML = `<p><strong>Sertifikat:</strong> ${previewList.join(', ')}</p>`;
+        } else {
+            previewContainer.innerHTML = `<p><strong>Sertifikat:</strong> Professional Design Engineer (PDE) License, Project Management Tech (PMT), Structural Process Design (SPD)</p>`;
+        }
+    }
+
+    // Pasang event listener ke setiap input
+    inputs.forEach(input => {
+        input.addEventListener('input', updatePreview);
     });
+
+    // Jalankan sekali agar preview muncul walau belum ada input
+    updatePreview();
 };
 
 // Fungsi untuk menyimpan data sertifikat

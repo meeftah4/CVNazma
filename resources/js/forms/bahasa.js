@@ -12,43 +12,52 @@ if (!window.tempData.bahasa) {
 // Fungsi untuk mengaktifkan live preview keahlian
 window.enableLivePreviewBahasa = function () {
     const form = document.getElementById('bahasaForm');
+    if (!form) return;
     const inputs = form.querySelectorAll('input');
     const previewContainer = document.getElementById('previewBahasa');
 
-    inputs.forEach(input => {
-        input.addEventListener('input', () => {
-            // Ambil semua bahasa yang sudah tersimpan
-            const bahasaList = window.tempData.bahasa.map(data => data.languageName).filter(Boolean);
+    function updatePreview() {
+        // Tampilkan kembali section preview jika sebelumnya di-hide
+        if (previewContainer) previewContainer.style.display = '';
 
-            // Ambil input yang sedang diketik
-            let inputValue = '';
-            inputs.forEach(input => {
-                if (input.id === 'languageName') {
-                    inputValue = input.value.trim();
-                }
-            });
+        // Ambil semua bahasa yang sudah tersimpan
+        let bahasaList = window.tempData.bahasa.map(data => data.languageName).filter(Boolean);
 
-            // Gabungkan data tersimpan dan input (jika sedang tambah baru)
-            const form = document.getElementById('bahasaForm');
-            const editIndex = form.getAttribute('data-edit-index');
-            let previewList = [...bahasaList];
-            if ((editIndex === null || editIndex === undefined) && inputValue) {
-                previewList.push(inputValue);
-            }
-            // Jika sedang edit, ganti data pada index yang diedit dengan input
-            if (editIndex !== null && inputValue) {
-                previewList[parseInt(editIndex)] = inputValue;
-            }
-
-            // Tampilkan preview
-            previewContainer.innerHTML = '';
-            if (previewList.length > 0) {
-                previewContainer.innerHTML = `<p><strong>Bahasa:</strong> ${previewList.join(', ')}</p>`;
-            } else {
-                previewContainer.innerHTML = `<p><strong>Bahasa:</strong> English, French, Mandarin</p>`;
+        // Ambil input yang sedang diketik
+        let inputValue = '';
+        inputs.forEach(input => {
+            if (input.id === 'languageName') {
+                inputValue = input.value.trim();
             }
         });
+
+        // Gabungkan data tersimpan dan input (jika sedang tambah baru)
+        const editIndex = form.getAttribute('data-edit-index');
+        let previewList = [...bahasaList];
+        if ((editIndex === null || editIndex === undefined) && inputValue) {
+            previewList.push(inputValue);
+        }
+        // Jika sedang edit, ganti data pada index yang diedit dengan input
+        if (editIndex !== null && inputValue) {
+            previewList[parseInt(editIndex)] = inputValue;
+        }
+
+        // Tampilkan preview
+        previewContainer.innerHTML = '';
+        if (previewList.length > 0) {
+            previewContainer.innerHTML = `<p><strong>Bahasa:</strong> ${previewList.join(', ')}</p>`;
+        } else {
+            previewContainer.innerHTML = `<p><strong>Bahasa:</strong> English, French, Mandarin</p>`;
+        }
+    }
+
+    // Pasang event listener ke setiap input
+    inputs.forEach(input => {
+        input.addEventListener('input', updatePreview);
     });
+
+    // Jalankan sekali agar preview muncul walau belum ada input
+    updatePreview();
 };
 
 // Fungsi untuk menyimpan data keahlian
@@ -139,7 +148,11 @@ window.deleteBahasa = function (index) {
 
 // Fungsi untuk memperbarui live preview
 window.updateLivePreviewBahasa = function () {
-    const previewContainer = document.getElementById('previewBahasa');
+    // Tampilkan kembali section preview jika sebelumnya di-hide
+    const sectionEl = document.getElementById('previewBahasa');
+    if (sectionEl) sectionEl.style.display = '';
+
+    const previewContainer = sectionEl;
     const bahasaList = window.tempData.bahasa.map(data => data.languageName).filter(Boolean);
 
     previewContainer.innerHTML = '';

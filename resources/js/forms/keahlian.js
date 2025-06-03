@@ -11,6 +11,10 @@ if (!window.tempData.keahlian) {
 
 // Definisikan handler di luar fungsi agar bisa di-remove
 function livePreviewInputHandler() {
+    // Tampilkan kembali section preview jika sebelumnya di-hide
+    const sectionEl = document.getElementById('sectionKeahlian');
+    if (sectionEl) sectionEl.style.display = '';
+
     const form = document.getElementById('keahlianForm');
     const inputs = form.querySelectorAll('input');
     const previewContainer = document.getElementById('previewSkill');
@@ -136,10 +140,6 @@ window.renderKeahlian = function () {
 
         listElement.appendChild(row);
     });
-
-    // Jangan panggil updateLivePreviewKeahlian di sini!
-    // Cukup enable live preview agar handler input aktif dan preview selalu update
-    enableLivePreviewKeahlian();
 };
 
 // Fungsi untuk mengedit data keahlian
@@ -170,6 +170,8 @@ window.deleteKeahlian = function (index) {
 
     // Render ulang daftar data
     renderKeahlian();
+
+    livePreviewInputHandler();
 };
 
 // Reset form
