@@ -17,7 +17,6 @@ window.enableLivePreviewHobi = function () {
 
     inputs.forEach(input => {
         input.addEventListener('input', () => {
-            window.tempData._hobiDihapus = false; // Reset flag saat user mulai input
             // Ambil semua hobi yang sudah tersimpan
             const hobiList = window.tempData.hobi.map(data => data.hobbyName).filter(Boolean);
 
@@ -80,8 +79,6 @@ window.saveDataHobi = function () {
 
     // Baru render ulang daftar data & update preview
     renderHobi();
-
-    window.tempData._hobiDihapus = false; // Reset flag saat user input/simpan
 };
 
 // Fungsi untuk merender daftar hobi
@@ -145,16 +142,10 @@ window.updateLivePreviewHobi = function () {
     const previewContainer = document.getElementById('previewHobby');
     const hobiList = window.tempData.hobi.map(data => data.hobbyName).filter(Boolean);
 
-    // Jika user sudah klik hapus semua, kosongkan preview (hilang total)
-    if (window.tempData._hobiDihapus) {
-        previewContainer.innerHTML = '';
-        return;
-    }
-
+    previewContainer.innerHTML = '';
     if (hobiList.length > 0) {
         previewContainer.innerHTML = `<p><strong>Hobi:</strong> ${hobiList.join(', ')}</p>`;
     } else {
-        // Tampilkan contoh default di awal
         previewContainer.innerHTML = `<p><strong>Hobi:</strong> Tenis Lapangan</p>`;
     }
 };
@@ -173,16 +164,6 @@ window.resetForm = function (id) {
         console.error(`Form dengan ID ${id}Form tidak ditemukan.`);
     }
     // Jangan update preview di sini!
-};
-
-// Hapus semua data di section tertentu
-window.hapusSemuaDataSection = function(section) {
-    if (section === 'hobi') {
-        window.tempData.hobi = [];
-        window.tempData._hobiDihapus = true; // Set flag agar preview hilang total
-        window.updateLivePreviewHobi();
-    }
-    // ...section lain...
 };
 
 // Panggil fungsi saat halaman dimuat

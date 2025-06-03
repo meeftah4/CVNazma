@@ -17,7 +17,6 @@ window.enableLivePreviewSertifikat = function () {
 
     inputs.forEach(input => {
         input.addEventListener('input', () => {
-            window.tempData._sertifikatDihapus = false; // Reset flag saat user mulai input
             // Ambil semua sertifikat yang sudah tersimpan
             const sertifikatList = window.tempData.sertifikat.map(data => data.certificateName).filter(Boolean);
 
@@ -81,8 +80,6 @@ window.saveDataSertifikat = function () {
 
     // Baru render ulang daftar data & update preview
     renderSertifikat();
-
-    window.tempData._sertifikatDihapus = false; // Reset flag saat user input/simpan
 };
 
 // Fungsi untuk merender daftar sertifikat
@@ -146,16 +143,10 @@ window.updateLivePreviewSertifikat = function () {
     const previewContainer = document.getElementById('previewCertificate');
     const sertifikatList = window.tempData.sertifikat.map(data => data.certificateName).filter(Boolean);
 
-    // Jika user sudah klik hapus semua, kosongkan preview (hilang total)
-    if (window.tempData._sertifikatDihapus) {
-        previewContainer.innerHTML = '';
-        return;
-    }
-
+    previewContainer.innerHTML = '';
     if (sertifikatList.length > 0) {
         previewContainer.innerHTML = `<p><strong>Sertifikat:</strong> ${sertifikatList.join(', ')}</p>`;
     } else {
-        // Tampilkan contoh default di awal
         previewContainer.innerHTML = `<p><strong>Sertifikat:</strong> Professional Design Engineer (PDE) License, Project Management Tech (PMT), Structural Process Design (SPD)</p>`;
     }
 };
@@ -174,16 +165,6 @@ window.resetForm = function (id) {
         console.error(`Form dengan ID ${id}Form tidak ditemukan.`);
     }
     // Jangan update preview di sini!
-};
-
-// Hapus semua data sertifikat
-window.hapusSemuaDataSection = function(section) {
-    if (section === 'sertifikat') {
-        window.tempData.sertifikat = [];
-        window.tempData._sertifikatDihapus = true; // Set flag agar preview hilang total
-        window.updateLivePreviewSertifikat();
-    }
-    // ...section lain...
 };
 
 // Panggil fungsi saat halaman dimuat

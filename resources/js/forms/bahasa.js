@@ -15,49 +15,39 @@ window.enableLivePreviewBahasa = function () {
     const inputs = form.querySelectorAll('input');
     const previewContainer = document.getElementById('previewBahasa');
 
-    const updatePreview = () => {
-        // RESET FLAG jika user mulai input lagi
-        window.tempData._bahasaDihapus = false;
+    inputs.forEach(input => {
+        input.addEventListener('input', () => {
+            // Ambil semua bahasa yang sudah tersimpan
+            const bahasaList = window.tempData.bahasa.map(data => data.languageName).filter(Boolean);
 
-        // Ambil semua bahasa yang sudah tersimpan
-        const bahasaList = window.tempData.bahasa.map(data => data.languageName).filter(Boolean);
+            // Ambil input yang sedang diketik
+            let inputValue = '';
+            inputs.forEach(input => {
+                if (input.id === 'languageName') {
+                    inputValue = input.value.trim();
+                }
+            });
 
-        // Ambil input yang sedang diketik
-        let inputValue = '';
-        inputs.forEach(input => {
-            if (input.id === 'languageName') {
-                inputValue = input.value.trim();
+            // Gabungkan data tersimpan dan input (jika sedang tambah baru)
+            const form = document.getElementById('bahasaForm');
+            const editIndex = form.getAttribute('data-edit-index');
+            let previewList = [...bahasaList];
+            if ((editIndex === null || editIndex === undefined) && inputValue) {
+                previewList.push(inputValue);
+            }
+            // Jika sedang edit, ganti data pada index yang diedit dengan input
+            if (editIndex !== null && inputValue) {
+                previewList[parseInt(editIndex)] = inputValue;
+            }
+
+            // Tampilkan preview
+            previewContainer.innerHTML = '';
+            if (previewList.length > 0) {
+                previewContainer.innerHTML = `<p><strong>Bahasa:</strong> ${previewList.join(', ')}</p>`;
+            } else {
+                previewContainer.innerHTML = `<p><strong>Bahasa:</strong> English, French, Mandarin</p>`;
             }
         });
-
-        // Gabungkan data tersimpan dan input (jika sedang tambah baru)
-        const editIndex = form.getAttribute('data-edit-index');
-        let previewList = [...bahasaList];
-        if ((editIndex === null || editIndex === undefined) && inputValue) {
-            previewList.push(inputValue);
-        }
-        if (editIndex !== null && inputValue) {
-            previewList[parseInt(editIndex)] = inputValue;
-        }
-
-        // Jika user sudah klik hapus semua, kosongkan preview
-        if (window.tempData._bahasaDihapus) {
-            previewContainer.innerHTML = '';
-            return;
-        }
-
-        // Tampilkan preview
-        if (previewList.length > 0) {
-            previewContainer.innerHTML = `<p><strong>Bahasa:</strong> ${previewList.join(', ')}</p>`;
-        } else {
-            previewContainer.innerHTML = `<p><strong>Bahasa:</strong> English, French, Mandarin</p>`;
-        }
-    };
-
-    inputs.forEach(input => {
-        input.removeEventListener('input', input._livePreviewHandler);
-        input._livePreviewHandler = updatePreview;
-        input.addEventListener('input', input._livePreviewHandler);
     });
 };
 
@@ -89,8 +79,6 @@ window.saveDataBahasa = function () {
 
     // Baru render ulang daftar data & update preview
     renderBahasa();
-
-    window.tempData._bahasaDihapus = false; // Reset flag saat user input/simpan
 };
 
 // Fungsi untuk merender daftar keahlian
@@ -150,20 +138,14 @@ window.deleteBahasa = function (index) {
 };
 
 // Fungsi untuk memperbarui live preview
-window.updateLivePreviewBahasa = function (dataList = null) {
+window.updateLivePreviewBahasa = function () {
     const previewContainer = document.getElementById('previewBahasa');
-    const bahasaList = (dataList || window.tempData.bahasa || []).map(data => data.languageName).filter(Boolean);
+    const bahasaList = window.tempData.bahasa.map(data => data.languageName).filter(Boolean);
 
-    // Jika user sudah klik hapus semua, kosongkan preview (hilang total)
-    if (window.tempData._bahasaDihapus) {
-        previewContainer.innerHTML = '';
-        return;
-    }
-
+    previewContainer.innerHTML = '';
     if (bahasaList.length > 0) {
         previewContainer.innerHTML = `<p><strong>Bahasa:</strong> ${bahasaList.join(', ')}</p>`;
     } else {
-        // Tampilkan contoh default di awal
         previewContainer.innerHTML = `<p><strong>Bahasa:</strong> English, French, Mandarin</p>`;
     }
 };
@@ -182,16 +164,6 @@ window.resetForm = function (id) {
         console.error(`Form dengan ID ${id}Form tidak ditemukan.`);
     }
     // Jangan update preview di sini!
-};
-
-// Hapus semua data section
-window.hapusSemuaDataSection = function(section) {
-    if (section === 'bahasa') {
-        window.tempData.bahasa = [];
-        window.tempData._bahasaDihapus = true; // Set flag agar preview hilang total
-        window.updateLivePreviewBahasa();
-    }
-    // ...section lain...
 };
 
 // Panggil fungsi saat halaman dimuat
