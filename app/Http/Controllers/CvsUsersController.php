@@ -10,18 +10,14 @@ class CvsUsersController extends Controller
 {
     public function saveFromSession(Request $request)
     {
-        // Debug: cek isi session
-        Log::info('SESSION PROFIL', session('profil', []));
-
         $user = \Illuminate\Support\Facades\Auth::user();
         if (!$user) {
             return response()->json(['error' => 'User not authenticated'], 401);
         }
 
-        // Ambil data dari session
-        $profil = session('profil', [])[0] ?? [];
+        // Ambil data dari body, bukan session
+        $profil = $request->input('profil', []);
 
-        // Simpan ke cvs_users
         $cv = \App\Models\Cvs_Users::create([
             'user_id'     => $user->id,
             'name'        => $profil['name'] ?? '',
@@ -31,7 +27,7 @@ class CvsUsersController extends Controller
             'linkedin'    => $profil['linkedin'] ?? '',
             'website'     => $profil['website'] ?? ($profil['portfolio'] ?? ''),
             'description' => $profil['description'] ?? '',
-            'cv_picture'  => $profil['cv_picture'] ?? '', // <-- path gambar dari session
+            'cv_picture'  => $profil['cv_picture'] ?? '',
         ]);
 
         $cvsy_id = $cv->id;

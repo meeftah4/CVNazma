@@ -41,7 +41,7 @@
 
 {{-- resources/views/forms/step2.blade.php --}}
 <!-- Default hidden -->
-<div id="step-2" class="step hidden" style="background-color: #F4F8FF;">
+<div id="step-2" class="step" style="background-color: #F4F8FF;">
     @foreach (['Profil', 'Pengalaman Kerja', 'Proyek', 'Keahlian', 'Pendidikan', 'Bahasa', 'Sertifikat', 'Hobi'] as $field)
         <div class="mb-4">
             <div class="bg-white rounded-md shadow p-0">
@@ -134,11 +134,21 @@
 
         // Sembunyikan tombol hapus
         this.classList.add('hidden');
+
+        // Hapus dari tempData dan update session
+        window.tempData.foto = '';
+        if (typeof window.updateSessionCV === 'function') {
+            window.updateSessionCV();
+        }
+    });
+
+    document.getElementById('uploadPhotoBtn').addEventListener('click', function() {
+        document.getElementById('photoInput').click();
     });
     </script>
 
     <div class="flex justify-center pb-10">
-        <button type="button" onclick="showTemplateCV()" 
+        <button type="button" onclick="goToTemplateStep()" 
             style="background:#FFBC5D; color:#01287E;" 
             class="font-bold px-6 py-2 rounded-md shadow transition hover:brightness-95">
             Langkah Selanjutnya
@@ -205,26 +215,12 @@ document.getElementById('cropBtn').onclick = function() {
     document.getElementById('cropperModal').classList.add('hidden');
     cropper.destroy();
 
-    // --- Tambahan: Kirim foto ke session via AJAX ---
-    // Kumpulkan data lain dari window.tempData jika ada
-    const data = {
-        ...window.tempData,
-        foto: dataUrl
-    };
-    fetch('/cv/save-session', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content
-        },
-        body: JSON.stringify(data)
-    }).then(res => res.json()).then(res => {
-        // Jika sukses, reload iframe/preview CV
-        const cvFrame = document.getElementById('cvPreviewIframe');
-        if (cvFrame) {
-            cvFrame.contentWindow.location.reload();
-        }
-    });
+    // Simpan ke tempData & sessionStorage saja
+    window.tempData = window.tempData || {};
+    window.tempData.foto = dataUrl;
+    if (typeof window.updateSessionCV === 'function') {
+        window.updateSessionCV();
+    }
 };
 
 function closeCropperModal() {
@@ -294,12 +290,44 @@ window.tampilkanSection = function(sectionId) {
     if (el) el.style.display = '';
 };
 
-function showTemplateCV() {
-    // Simpan data step 2 ke session sebelum ke step 3
-    if (typeof window.updateSessionCV === 'function') {
-        window.updateSessionCV();
+// Live preview: update preview setiap input berubah di setiap section
+[
+    {id: 'pengalamankerjaList', row: 'pengalamankerja'},
+    {id: 'proyekList', row: 'proyek'},
+    {id: 'keahlianList', row: 'keahlian'},
+    {id: 'pendidikanList', row: 'pendidikan'},
+    {id: 'bahasaList', row: 'bahasa'},
+    {id: 'sertifikatList', row: 'sertifikat'},
+    {id: 'hobiList', row: 'hobi'},
+].forEach(function(section){
+    var el = document.getElementById(section.id);
+    if (el) {
+        el.querySelectorAll('input, textarea, select').forEach(function(input){
+            input.addEventListener('input', function() {
+                if (window.renderDataRow) window.renderDataRow(section.row);
+            });
+        });
     }
-    setActiveStep(3);
+});
+
+function goToTemplateStep() {
+    // Ambil data terbaru dari window.tempData
+    const data = window.tempData || {};
+
+    // Simpan ke backend
+    fetch('/cv/save-session', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(() => {
+        // Redirect ke halaman template
+        window.location.href = '/cvats/templates';
+    });
 }
 
 </script>

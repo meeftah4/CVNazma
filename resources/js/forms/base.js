@@ -59,3 +59,13 @@ window.formatDate = function(date) {
 window.capitalizeFirstLetter = function(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 };
+
+window.saveTempDataToSessionStorage = function() {
+    Object.keys(window.tempData).forEach(key => {
+        window.sessionStorage.setItem(key, JSON.stringify(window.tempData[key] || []));
+    });
+};
+
+window.updateSessionCV = function() {
+    window.saveTempDataToSessionStorage();
+};

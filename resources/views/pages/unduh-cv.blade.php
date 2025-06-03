@@ -113,34 +113,8 @@
     document.addEventListener('DOMContentLoaded', function() {
         var btnBerikutnya = document.getElementById('btnBerikutnya');
         if (btnBerikutnya) {
-            btnBerikutnya.onclick = async function() {
-                @if(Auth::guest())
-                    Swal.fire({
-                        icon: 'info',
-                        title: 'Login Diperlukan',
-                        text: 'Silakan login terlebih dahulu untuk melanjutkan proses unduh CV.',
-                        confirmButtonColor: '#FFBC5D',
-                        confirmButtonText: 'Login Sekarang'
-                    }).then(() => {
-                        window.location.href = "{{ route('login') }}?redirect={{ urlencode(request()->fullUrl()) }}";
-                    });
-                    return;
-                @endif
-
-                // 1. Ambil data session terbaru dari backend (data yang dipakai iframe)
-                let sessionData = await fetch('/cv/get-session').then(res => res.json());
-
-                // 2. Kirim ulang ke backend agar session benar-benar update
-                await fetch('/cv/save-session', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content
-                    },
-                    body: JSON.stringify(sessionData)
-                });
-
-                // 3. Setelah session dipatenkan, tampilkan modal validasi
+            // Hanya tampilkan modal, JANGAN fetch dan overwrite session backend!
+            btnBerikutnya.onclick = function() {
                 document.getElementById('modalValidasi').classList.remove('hidden');
             };
         }
@@ -210,39 +184,31 @@
         profil.photoUrl = undefined;
         window.sessionStorage.setItem('profil', JSON.stringify([profil]));
 
-        // 3. Kirim ke server agar session server-side update dengan path gambar
-        await fetch('/cv/save-session', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-            body: JSON.stringify({
-                profil: [profil],
-                // ...tambahkan data lain dari sessionStorage jika perlu...
-            })
-        });
-
-        // 4. Simpan ke database (backend ambil path dari session)
+        // 3. Simpan profil ke database (langsung kirim data)
         let res = await fetch('/cvs-users/save-from-session', {
             method: 'POST',
-            headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+            headers: {'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+            body: JSON.stringify({ profil })
         });
         let data = await res.json();
         let cvsy_id = data.cvsy_id;
 
-        // 5. Simpan data lain (work, project, dst)
+        // 4. Simpan data lain (langsung kirim data array)
         const endpoints = [
-            {url: '/work-experiences/store-from-session'},
-            {url: '/projects/store-from-session'},
-            {url: '/educations/store-from-session'},
-            {url: '/skills/store-from-session'},
-            {url: '/languages/store-from-session'},
-            {url: '/certificates/store-from-session'},
-            {url: '/hobbies/store-from-session'},
+            { url: '/work-experiences/store-from-session', key: 'pengalamankerja' },
+            { url: '/projects/store-from-session', key: 'proyek' },
+            { url: '/educations/store-from-session', key: 'pendidikan' },
+            { url: '/skills/store-from-session', key: 'keahlian' },
+            { url: '/languages/store-from-session', key: 'bahasa' },
+            { url: '/certificates/store-from-session', key: 'sertifikat' },
+            { url: '/hobbies/store-from-session', key: 'hobi' },
         ];
         for (let ep of endpoints) {
+            let dataArr = JSON.parse(window.sessionStorage.getItem(ep.key) || '[]');
             await fetch(ep.url, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-                body: JSON.stringify({cvsy_id})
+                body: JSON.stringify({ cvsy_id, data: dataArr })
             });
         }
 
@@ -258,4 +224,31 @@
         }
     }
 </style>
+
+<div class="max-w-[210mm] w-full my-6">
+    <details class="bg-gray-100 rounded p-4 text-xs">
+        <summary class="cursor-pointer font-semibold text-[#01287E]">Lihat Data SessionStorage (Browser)</summary>
+        <pre id="sessionstorage-debug" class="overflow-x-auto mt-2 text-left bg-white p-2 rounded"></pre>
+    </details>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Ambil semua key yang ingin ditampilkan
+    const keys = [
+        'profil', 'pengalamankerja', 'proyek', 'pendidikan',
+        'keahlian', 'bahasa', 'sertifikat', 'hobi'
+    ];
+    let result = {};
+    keys.forEach(key => {
+        try {
+            result[key] = JSON.parse(window.sessionStorage.getItem(key) || '[]');
+        } catch (e) {
+            result[key] = window.sessionStorage.getItem(key);
+        }
+    });
+    document.getElementById('sessionstorage-debug').textContent =
+        JSON.stringify(result, null, 2);
+});
+</script>
 @endsection

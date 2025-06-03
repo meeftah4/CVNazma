@@ -10,15 +10,15 @@ class ProjectController extends Controller
     public function storeFromSession(Request $request)
     {
         $cvsy_id = $request->input('cvsy_id');
-        $proyek = session('proyek', []);
+        $proyek = $request->input('data', []);
         foreach ($proyek as $item) {
             \App\Models\Project::create([
-                'cvsy_id'     => $cvsy_id,
-                'name'        => $item['projectName'] ?? null,
-                'description' => $item['projectDescription'] ?? null,
-                'link'        => $item['projectLink'] ?? null,
-                'start_date'  => $item['projectStartDate'] ?? null,
-                'end_date'    => $item['projectIsPresent'] ? null : ($item['projectEndDate'] ?? null),
+                'cvsy_id'      => $cvsy_id,
+                'project_name' => $item['projectName'] ?? null,
+                'role'         => $item['projectPosition'] ?? null,
+                'start_date'   => $item['projectStartDate'] ?? null,
+                'end_date'     => ($item['isPresent'] ?? false) ? null : ($item['projectEndDate'] ?? null),
+                'description'  => $item['projectDescription'] ?? null,
             ]);
         }
         return response()->json(['success' => true]);
