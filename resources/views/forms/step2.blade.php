@@ -146,7 +146,7 @@
     </div>
 
     <!-- crop foto -->
-    <div id="cropperModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div id="cropperModal" class="fixed inset-0 bg-black bg-opacity-50 items-center flex justify-center z-50 hidden">
         <div class="bg-white p-4 rounded shadow max-w-[90vw] max-h-[90vh] flex flex-col items-center">
             <!-- Tambahkan tombol close di modal -->
             <button type="button" onclick="closeCropperModal()" style="position:absolute;top:10px;right:10px;background:none;border:none;font-size:24px;color:#01287E;cursor:pointer;">&times;</button>

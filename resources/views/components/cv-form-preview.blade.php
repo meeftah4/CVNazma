@@ -69,44 +69,6 @@
         document.getElementById('addressInput')?.addEventListener('input', function(e) {
             document.getElementById('previewAddress').textContent = e.target.value || 'Jakarta, Indonesia';
         });
-
-        // Ambil data session dari backend dan isi form
-        fetch('/cv/get-session')
-            .then(res => res.json())
-            .then(data => {
-                window.tempData = data || {};
-                // Isi Step 1
-                document.getElementById('nameInput').value = data.profil?.[0]?.name || '';
-                document.getElementById('emailInput').value = data.profil?.[0]?.email || '';
-                document.getElementById('phoneInput').value = data.profil?.[0]?.phone || '';
-                document.getElementById('addressInput').value = data.profil?.[0]?.address || '';
-                document.getElementById('linkedinInput').value = data.profil?.[0]?.linkedin || '';
-                document.getElementById('portfolioInput').value = data.profil?.[0]?.portfolio || '';
-                // Isi Step 2 (jika ada input lain, lakukan hal serupa)
-                // Isi foto
-                if (data.foto) {
-                    document.getElementById('photoPreview').src = data.foto;
-                    document.getElementById('photoPreview').classList.remove('hidden');
-                    document.getElementById('photoIcon').classList.add('hidden');
-                    document.getElementById('cvPhotoPreview').src = data.foto;
-                    document.getElementById('cvPhotoPreview').classList.remove('hidden');
-                    document.getElementById('removePhotoBtn').classList.remove('hidden');
-                }
-                // Update preview
-                updateContactPreview();
-                document.getElementById('previewName').textContent = data.profil?.[0]?.name || 'Nama Lengkap';
-                document.getElementById('previewAddress').textContent = data.profil?.[0]?.address || 'Jakarta, Indonesia';
-
-                // Tambahan: Render ulang semua data step 2 dari session
-                if (window.renderPengalamanKerja) window.renderPengalamanKerja();
-                if (window.renderProyek) window.renderProyek();
-                if (window.renderKeahlian) window.renderKeahlian();
-                if (window.renderPendidikan) window.renderPendidikan();
-                if (window.renderBahasa) window.renderBahasa();
-                if (window.renderSertifikat) window.renderSertifikat();
-                if (window.renderHobi) window.renderHobi();
-                if (window.renderDataRow) window.renderDataRow('profil');
-            });
     });
     
     // Helper untuk update window.tempData.profil dari input step 1
