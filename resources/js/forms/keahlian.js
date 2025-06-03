@@ -13,58 +13,43 @@ if (!window.tempData.keahlian) {
 window.enableLivePreviewKeahlian = function () {
     const form = document.getElementById('keahlianForm');
     const inputs = form.querySelectorAll('input');
-    const previewContainer = document.getElementById('previewSkill');
+    const sectionEl = document.getElementById('sectionKeahlian');
 
-    // Tambahkan event listener untuk setiap input
-    inputs.forEach(input => {
-        input.addEventListener('input', () => {
-            previewContainer.innerHTML = '';
+    const updatePreview = () => {
+        window.tempData._keahlianDihapus = false;
+        if (sectionEl) sectionEl.style.display = '';
 
-            const data = {};
-            inputs.forEach(input => {
-                data[input.id] = input.value || '';
-            });
-
-            const form = document.getElementById('keahlianForm');
-            const editIndex = form.getAttribute('data-edit-index');
-
-            // Jika input kosong dan belum ada data, tampilkan placeholder
-            if ((!data.skillName || data.skillName.trim() === '') && window.tempData.keahlian.length === 0) {
-                const placeholderSkills = [
-                    'Prototyping Tools',
-                    'User Research',
-                    'Interaction Design',
-                    'Visual Design',
-                    'Accessibility',
-                    'Responsive Design'
-                ];
-                placeholderSkills.forEach(skill => {
-                    const skillElement = document.createElement('p');
-                    skillElement.innerHTML = `${skill}`;
-                    previewContainer.appendChild(skillElement);
-                });
-                return;
-            }
-
-            // Tampilkan semua keahlian yang sudah tersimpan, jika sedang edit, ganti index yang diedit dengan input
-            window.tempData.keahlian.forEach((item, index) => {
-                const skillElement = document.createElement('p');
-                skillElement.id = `previewSkill-${index}`;
-                if (editIndex !== null && parseInt(editIndex) === index && data.skillName && data.skillName.trim() !== '') {
-                    skillElement.innerHTML = `${data.skillName}`;
-                } else {
-                    skillElement.innerHTML = `${item.skillName || ''}`;
-                }
-                previewContainer.appendChild(skillElement);
-            });
-
-            // Jika sedang tambah baru (bukan edit) dan input tidak kosong, tampilkan di bawahnya
-            if ((editIndex === null || editIndex === undefined) && data.skillName && data.skillName.trim() !== '') {
-                const skillElement = document.createElement('p');
-                skillElement.innerHTML = `${data.skillName}`;
-                previewContainer.appendChild(skillElement);
-            }
+        // Ambil data yang sedang diketik
+        const currentInput = {};
+        inputs.forEach(input => {
+            currentInput[input.id] = input.value || '';
         });
+
+        // Gabungkan data yang sudah tersimpan + data yang sedang diketik (belum disimpan)
+        let dataList = window.tempData.keahlian ? [...window.tempData.keahlian] : [];
+        const isFormFilled = Object.values(currentInput).some(val => val && val !== false);
+
+        // Cek apakah sedang edit
+        const editIndex = form.getAttribute('data-edit-index');
+        if (isFormFilled) {
+            if (editIndex !== null) {
+                // Jika edit, update di posisi yang diedit
+                dataList[parseInt(editIndex)] = currentInput;
+            } else {
+                // Jika tambah baru, push ke akhir
+                dataList.push(currentInput);
+            }
+        }
+
+        // Render ke preview CV
+        window.updateLivePreviewKeahlian(dataList);
+    };
+
+    // Pasang event listener untuk setiap input
+    inputs.forEach(input => {
+        input.removeEventListener('input', input._livePreviewHandler);
+        input._livePreviewHandler = updatePreview;
+        input.addEventListener('input', input._livePreviewHandler);
     });
 };
 
@@ -96,6 +81,8 @@ window.saveDataKeahlian = function () {
 
     // Reset form setelah menyimpan
     resetForm('keahlian');
+
+    window.tempData._keahlianDihapus = false; // Reset flag
 };
 
 // Fungsi untuk merender daftar keahlian
@@ -155,32 +142,31 @@ window.deleteKeahlian = function (index) {
 };
 
 // Fungsi untuk memperbarui live preview
-window.updateLivePreviewKeahlian = function () {
+window.updateLivePreviewKeahlian = function (dataList = null) {
     const previewContainer = document.getElementById('previewSkill');
-    previewContainer.innerHTML = ''; // Kosongkan elemen sebelum menambahkan data baru
-
-    if (window.tempData.keahlian.length === 0) {
-        // Tampilkan contoh keahlian sebagai placeholder
-        const placeholderSkills = [
-            'Prototyping Tools',
-            'User Research',
-            'Interaction Design',
-            'Visual Design',
-            'Accessibility',
-            'Responsive Design'
-        ];
-
-        placeholderSkills.forEach(skill => {
-            const skillElement = document.createElement('p');
-            skillElement.innerHTML = `${skill}`;
-            previewContainer.appendChild(skillElement);
-        });
-
+    // Jika user sudah klik hapus semua, kosongkan preview (hilang total)
+    if (window.tempData._keahlianDihapus) {
+        previewContainer.innerHTML = '';
         return;
     }
 
-    // Jika sudah ada data, tampilkan data keahlian saja (tanpa placeholder)
-    window.tempData.keahlian.forEach((data, index) => {
+    previewContainer.innerHTML = '';
+    const keahlianList = dataList || window.tempData.keahlian || [];
+
+    if (keahlianList.length === 0) {
+        // Tampilkan template default jika belum pernah dihapus semua
+        previewContainer.innerHTML = `
+            <p>Prototyping Tools</p>
+            <p>User Research</p>
+            <p>Interaction Design</p>
+            <p>Visual Design</p>
+            <p>Accessibility</p>
+            <p>Responsive Design</p>
+        `;
+        return;
+    }
+
+    keahlianList.forEach((data, index) => {
         const skillElement = document.createElement('p');
         skillElement.id = `previewSkill-${index}`;
         skillElement.innerHTML = `${data.skillName || ''}`;
@@ -201,6 +187,20 @@ window.resetForm = function (id) {
     } else {
         console.error(`Form dengan ID ${id}Form tidak ditemukan.`);
     }
+};
+
+// Fungsi untuk menghapus semua data di section tertentu
+window.hapusSemuaDataSection = function(section) {
+    if (section === 'keahlian') {
+        window.tempData.keahlian = [];
+        window.tempData._keahlianDihapus = true;
+        window.updateLivePreviewKeahlian();
+        // Sembunyikan seluruh section (judul, garis, dan preview)
+        const sectionEl = document.getElementById('sectionKeahlian');
+        if (sectionEl) sectionEl.style.display = 'none';
+        if (window.updateSessionCV) window.updateSessionCV();
+    }
+    // ...section lain jika perlu...
 };
 
 // Panggil fungsi saat halaman dimuat
