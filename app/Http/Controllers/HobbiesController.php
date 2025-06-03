@@ -10,7 +10,7 @@ class HobbiesController extends Controller
     public function storeFromSession(Request $request)
     {
         $cvsy_id = $request->input('cvsy_id');
-        $hobi = $request->input('data', []);
+        $hobi = session('hobi', []);
         foreach ($hobi as $item) {
             \App\Models\hobbies::create([
                 'cvsy_id' => $cvsy_id,

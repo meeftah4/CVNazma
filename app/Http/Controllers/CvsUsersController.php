@@ -15,8 +15,15 @@ class CvsUsersController extends Controller
             return response()->json(['error' => 'User not authenticated'], 401);
         }
 
-        // Ambil data dari body, bukan session
-        $profil = $request->input('profil', []);
+        // Ambil data profil dari session backend
+        $profilArr = session('profil', []);
+        $profil = is_array($profilArr) && isset($profilArr[0]) ? $profilArr[0] : [];
+
+        // Ambil foto dari session jika ada
+        $foto = session('foto', '');
+        if ($foto && !isset($profil['cv_picture'])) {
+            $profil['cv_picture'] = $foto;
+        }
 
         $cv = \App\Models\Cvs_Users::create([
             'user_id'     => $user->id,

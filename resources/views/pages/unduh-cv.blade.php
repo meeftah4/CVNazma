@@ -64,6 +64,25 @@
         Berikutnya
     </button>
 
+    {{-- Tambahkan di bagian yang mudah dilihat, misal sebelum tombol berikutnya --}}
+    <div class="max-w-[210mm] w-full my-6">
+        <details class="bg-gray-100 rounded p-4 text-xs" open>
+            <summary class="cursor-pointer font-semibold text-[#01287E]">Lihat Data Session Backend (Server)</summary>
+            <pre class="overflow-x-auto mt-2 text-left bg-white p-2 rounded">
+{{ json_encode([
+    'profil' => session('profil', []),
+    'pengalamankerja' => session('pengalamankerja', []),
+    'proyek' => session('proyek', []),
+    'pendidikan' => session('pendidikan', []),
+    'keahlian' => session('keahlian', []),
+    'bahasa' => session('bahasa', []),
+    'sertifikat' => session('sertifikat', []),
+    'hobi' => session('hobi', []),
+], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) }}
+            </pre>
+        </details>
+    </div>
+
     <!-- Modal Alert -->
     <div id="modalValidasi" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
         <div class="bg-white rounded-2xl shadow-2xl p-8 md:p-10 max-w-md w-full text-center relative border border-[#FFBC5D]">
@@ -110,61 +129,70 @@
     <!-- Pastikan SweetAlert2 sudah di-load -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var btnBerikutnya = document.getElementById('btnBerikutnya');
-        if (btnBerikutnya) {
-            // Hanya tampilkan modal, JANGAN fetch dan overwrite session backend!
-            btnBerikutnya.onclick = function() {
-                document.getElementById('modalValidasi').classList.remove('hidden');
-            };
-        }
-    });
+document.addEventListener('DOMContentLoaded', function() {
+    var btnBerikutnya = document.getElementById('btnBerikutnya');
+    if (btnBerikutnya) {
+        btnBerikutnya.onclick = async function() {
+            let cek = await fetch('/cv/get-session');
+            if (cek.status === 401 || cek.status === 419) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Sesi Habis',
+                    text: 'Silakan login terlebih dahulu untuk melanjutkan.',
+                    confirmButtonText: 'Login',
+                }).then(() => {
+                    window.location.href = '/login';
+                });
+                return;
+            }
+            document.getElementById('modalValidasi').classList.remove('hidden');
+        };
+    }
+});
 
-    document.getElementById('btnKembali').onclick = function() {
-        window.location.href = '/cvats';
-    };
+document.getElementById('btnKembali').onclick = function() {
+    window.location.href = '/cvats';
+};
 
-    document.getElementById('btnTutup').onclick = function() {
-        document.getElementById('modalValidasi').classList.add('hidden');
-        const checkbox = document.getElementById('checkboxPersetujuan');
-        const btnLanjutkan = document.getElementById('btnLanjutkan');
-        checkbox.checked = false;
+document.getElementById('btnTutup').onclick = function() {
+    document.getElementById('modalValidasi').classList.add('hidden');
+    const checkbox = document.getElementById('checkboxPersetujuan');
+    const btnLanjutkan = document.getElementById('btnLanjutkan');
+    checkbox.checked = false;
+    btnLanjutkan.disabled = true;
+    btnLanjutkan.classList.add('opacity-50', 'cursor-not-allowed');
+    btnLanjutkan.classList.remove('hover:bg-[#e6a84f]', 'hover:scale-105', 'ring-2', 'ring-[#FFBC5D]');
+};
+
+const checkbox = document.getElementById('checkboxPersetujuan');
+const btnLanjutkan = document.getElementById('btnLanjutkan');
+
+checkbox.onchange = function() {
+    if (this.checked) {
+        btnLanjutkan.disabled = false;
+        btnLanjutkan.classList.remove('opacity-50', 'cursor-not-allowed');
+        btnLanjutkan.classList.add('hover:bg-[#e6a84f]', 'hover:scale-105', 'ring-2', 'ring-[#FFBC5D]');
+    } else {
         btnLanjutkan.disabled = true;
         btnLanjutkan.classList.add('opacity-50', 'cursor-not-allowed');
         btnLanjutkan.classList.remove('hover:bg-[#e6a84f]', 'hover:scale-105', 'ring-2', 'ring-[#FFBC5D]');
-    };
+    }
+};
 
-    const checkbox = document.getElementById('checkboxPersetujuan');
-    const btnLanjutkan = document.getElementById('btnLanjutkan');
+// Tombol Lanjutkan: simpan data ke database
+btnLanjutkan.onclick = async function() {
+    if (this.disabled) return;
+    this.disabled = true;
+    this.textContent = 'Menyimpan...';
 
-    checkbox.onchange = function() {
-        if (this.checked) {
-            btnLanjutkan.disabled = false;
-            btnLanjutkan.classList.remove('opacity-50', 'cursor-not-allowed');
-            btnLanjutkan.classList.add('hover:bg-[#e6a84f]', 'hover:scale-105', 'ring-2', 'ring-[#FFBC5D]');
-        } else {
-            btnLanjutkan.disabled = true;
-            btnLanjutkan.classList.add('opacity-50', 'cursor-not-allowed');
-            btnLanjutkan.classList.remove('hover:bg-[#e6a84f]', 'hover:scale-105', 'ring-2', 'ring-[#FFBC5D]');
-        }
-    };
-
-    // Tombol Lanjutkan: simpan data ke database
-    btnLanjutkan.onclick = async function() {
-        if (this.disabled) return;
-        this.disabled = true;
-        this.textContent = 'Menyimpan...';
-
-        // Ambil data profil dari sessionStorage
-        let profilArr = JSON.parse(window.sessionStorage.getItem('profil') || 'null');
-        if (!profilArr || !profilArr.length) {
-            profilArr = window.profilServer || [];
-            window.sessionStorage.setItem('profil', JSON.stringify(profilArr));
-        }
+    try {
+        // Ambil SEMUA data dari session backend
+        let sessionData = await fetch('/cv/get-session').then(res => res.json());
+        let profilArr = sessionData.profil || [];
         let profil = profilArr[0] || {};
+        let photoUrl = sessionData.foto || profil.photoUrl || profil.photo || '';
 
         // 1. Upload foto jika ada (base64)
-        let photoUrl = profil.photoUrl || profil.photo || '';
         if (photoUrl && photoUrl.startsWith('data:image/')) {
             let uploadRes = await fetch('/cvs-users/upload-photo', {
                 method: 'POST',
@@ -173,47 +201,54 @@
             });
             let uploadData = await uploadRes.json();
             if (uploadData.path) {
-                profil.cv_picture = uploadData.path; // path hasil upload
+                profil.cv_picture = uploadData.path;
             } else {
                 profil.cv_picture = '';
             }
         }
-
-        // 2. Hapus base64 dari profil JS
         profil.photo = undefined;
         profil.photoUrl = undefined;
-        window.sessionStorage.setItem('profil', JSON.stringify([profil]));
 
-        // 3. Simpan profil ke database (langsung kirim data)
+        // 2. Simpan profil ke database (ambil data dari session di backend)
         let res = await fetch('/cvs-users/save-from-session', {
             method: 'POST',
             headers: {'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-            body: JSON.stringify({ profil })
+            body: JSON.stringify({})
         });
+        if (!res.ok) throw new Error('Gagal menyimpan profil');
         let data = await res.json();
         let cvsy_id = data.cvsy_id;
 
-        // 4. Simpan data lain (langsung kirim data array)
+        // 3. Simpan data lain ke database (ambil data dari session di backend)
         const endpoints = [
-            { url: '/work-experiences/store-from-session', key: 'pengalamankerja' },
-            { url: '/projects/store-from-session', key: 'proyek' },
-            { url: '/educations/store-from-session', key: 'pendidikan' },
-            { url: '/skills/store-from-session', key: 'keahlian' },
-            { url: '/languages/store-from-session', key: 'bahasa' },
-            { url: '/certificates/store-from-session', key: 'sertifikat' },
-            { url: '/hobbies/store-from-session', key: 'hobi' },
+            '/work-experiences/store-from-session',
+            '/projects/store-from-session',
+            '/educations/store-from-session',
+            '/skills/store-from-session',
+            '/languages/store-from-session',
+            '/certificates/store-from-session',
+            '/hobbies/store-from-session',
         ];
-        for (let ep of endpoints) {
-            let dataArr = JSON.parse(window.sessionStorage.getItem(ep.key) || '[]');
-            await fetch(ep.url, {
+        for (let url of endpoints) {
+            let resp = await fetch(url, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-                body: JSON.stringify({ cvsy_id, data: dataArr })
+                body: JSON.stringify({ cvsy_id })
             });
+            if (!resp.ok) throw new Error('Gagal menyimpan data ke ' + url);
         }
 
         window.location.href = '/pembayaran';
-    };
+    } catch (err) {
+        this.disabled = false;
+        this.textContent = 'Lanjutkan';
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal',
+            text: err.message || 'Terjadi kesalahan saat menyimpan data. Silakan coba lagi.',
+        });
+    }
+};
     </script>
 </div>
 
@@ -224,31 +259,4 @@
         }
     }
 </style>
-
-<div class="max-w-[210mm] w-full my-6">
-    <details class="bg-gray-100 rounded p-4 text-xs">
-        <summary class="cursor-pointer font-semibold text-[#01287E]">Lihat Data SessionStorage (Browser)</summary>
-        <pre id="sessionstorage-debug" class="overflow-x-auto mt-2 text-left bg-white p-2 rounded"></pre>
-    </details>
-</div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Ambil semua key yang ingin ditampilkan
-    const keys = [
-        'profil', 'pengalamankerja', 'proyek', 'pendidikan',
-        'keahlian', 'bahasa', 'sertifikat', 'hobi'
-    ];
-    let result = {};
-    keys.forEach(key => {
-        try {
-            result[key] = JSON.parse(window.sessionStorage.getItem(key) || '[]');
-        } catch (e) {
-            result[key] = window.sessionStorage.getItem(key);
-        }
-    });
-    document.getElementById('sessionstorage-debug').textContent =
-        JSON.stringify(result, null, 2);
-});
-</script>
 @endsection

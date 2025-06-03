@@ -10,7 +10,7 @@ class WorkExperiencesController extends Controller
     public function storeFromSession(Request $request)
     {
         $cvsy_id = $request->input('cvsy_id');
-        $pengalamankerja = $request->input('data', []);
+        $pengalamankerja = session('pengalamankerja', []);
         foreach ($pengalamankerja as $item) {
             \App\Models\work_experiences::create([
                 'cvsy_id'      => $cvsy_id,

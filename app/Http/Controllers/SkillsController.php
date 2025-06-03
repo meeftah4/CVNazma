@@ -10,7 +10,7 @@ class SkillsController extends Controller
     public function storeFromSession(Request $request)
     {
         $cvsy_id = $request->input('cvsy_id');
-        $keahlian = $request->input('data', []);
+        $keahlian = session('keahlian', []);
         foreach ($keahlian as $item) {
             \App\Models\skills::create([
                 'cvsy_id'    => $cvsy_id,

@@ -10,7 +10,7 @@ class CertificateController extends Controller
     public function storeFromSession(Request $request)
     {
         $cvsy_id = $request->input('cvsy_id');
-        $sertifikat = $request->input('data', []);
+        $sertifikat = session('sertifikat', []);
         foreach ($sertifikat as $item) {
             \App\Models\certificate::create([
                 'cvsy_id'         => $cvsy_id,

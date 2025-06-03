@@ -10,7 +10,7 @@ class ProjectController extends Controller
     public function storeFromSession(Request $request)
     {
         $cvsy_id = $request->input('cvsy_id');
-        $proyek = $request->input('data', []);
+        $proyek = session('proyek', []);
         foreach ($proyek as $item) {
             \App\Models\Project::create([
                 'cvsy_id'      => $cvsy_id,

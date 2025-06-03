@@ -110,7 +110,7 @@ Route::get('/cv/get-session', function() {
         'hobi' => session('hobi', []),
         'foto' => session('foto', ''),
     ]);
-});
+})->middleware('auth');
 Route::get('/view/{key}', function ($key) {
     return view('templates.view.' . $key);
 });

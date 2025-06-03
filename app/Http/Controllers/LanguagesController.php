@@ -10,7 +10,7 @@ class LanguagesController extends Controller
     public function storeFromSession(Request $request)
     {
         $cvsy_id = $request->input('cvsy_id');
-        $bahasa = $request->input('data', []);
+        $bahasa = session('bahasa', []);
         foreach ($bahasa as $item) {
             \App\Models\languages::create([
                 'cvsy_id'      => $cvsy_id,
