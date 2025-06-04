@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('website')->nullable();
             $table->string('description')->nullable();
             $table->string('cv_picture')->nullable();
+            $table->boolean('status_bayar')->default(false);
             $table->timestamps();
         });        
     }

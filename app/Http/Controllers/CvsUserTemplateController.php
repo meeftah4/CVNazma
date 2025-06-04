@@ -9,8 +9,16 @@ class CvsUserTemplateController extends Controller
     // Simpan data ke session
     public function saveSession(Request $request)
     {
+        $profil = $request->input('profil', []);
+        $foto = $request->input('foto', '');
+
+        // Jika ada foto hasil crop, update ke profil[0]['cv_picture']
+        if ($foto && isset($profil[0])) {
+            $profil[0]['cv_picture'] = $foto;
+        }
+
         session([
-            'profil' => $request->input('profil', []),
+            'profil' => $profil,
             'pengalamankerja' => $request->input('pengalamankerja', []),
             'proyek' => $request->input('proyek', []),
             'pendidikan' => $request->input('pendidikan', []),
@@ -18,7 +26,7 @@ class CvsUserTemplateController extends Controller
             'bahasa' => $request->input('bahasa', []),
             'sertifikat' => $request->input('sertifikat', []),
             'hobi' => $request->input('hobi', []),
-            'foto' => $request->input('foto', ''), // Tambahkan ini
+            'foto' => $foto, // opsional, boleh dihapus jika sudah di profil[0]['cv_picture']
         ]);
         return response()->json(['success' => true]);
     }

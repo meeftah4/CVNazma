@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class hobbies extends Model
 {
-    /** @use HasFactory<\Database\Factories\HobbiesFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'cvsy_id',
+        'hobby',
+    ];
 }

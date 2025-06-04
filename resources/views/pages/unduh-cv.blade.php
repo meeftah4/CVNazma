@@ -64,24 +64,10 @@
         Berikutnya
     </button>
 
-    {{-- Tambahkan di bagian yang mudah dilihat, misal sebelum tombol berikutnya --}}
-    <div class="max-w-[210mm] w-full my-6">
-        <details class="bg-gray-100 rounded p-4 text-xs" open>
-            <summary class="cursor-pointer font-semibold text-[#01287E]">Lihat Data Session Backend (Server)</summary>
-            <pre class="overflow-x-auto mt-2 text-left bg-white p-2 rounded">
-{{ json_encode([
-    'profil' => session('profil', []),
-    'pengalamankerja' => session('pengalamankerja', []),
-    'proyek' => session('proyek', []),
-    'pendidikan' => session('pendidikan', []),
-    'keahlian' => session('keahlian', []),
-    'bahasa' => session('bahasa', []),
-    'sertifikat' => session('sertifikat', []),
-    'hobi' => session('hobi', []),
-], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) }}
-            </pre>
-        </details>
-    </div>
+    <!-- Tambahkan tombol preview sebelum tombol Lanjutkan -->
+    <button id="btnPreviewData" class="mt-4 bg-blue-200 hover:bg-blue-300 text-blue-900 font-bold px-6 py-2 rounded-lg shadow transition-colors duration-200">
+        Preview Data yang Akan Dikirim
+    </button>
 
     <!-- Modal Alert -->
     <div id="modalValidasi" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
@@ -122,6 +108,17 @@
         </div>
     </div>
 
+    <!-- Modal Preview Data -->
+    <div id="modalPreviewData" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 md:p-10 max-w-2xl w-full text-left relative border border-blue-200">
+            <button id="btnTutupPreview" class="absolute top-4 right-4 text-gray-400 hover:text-blue-400 text-2xl font-bold focus:outline-none transition-colors duration-200" aria-label="Tutup">
+                &times;
+            </button>
+            <h2 class="text-xl font-bold mb-4 text-blue-900">Preview Data yang Akan Dikirim ke Database</h2>
+            <pre id="previewJson" class="bg-gray-100 rounded p-4 text-xs overflow-auto max-h-[60vh]"></pre>
+        </div>
+    </div>
+
     <script>
     window.profilServer = @json(session('profil', []));
     </script>
@@ -129,70 +126,84 @@
     <!-- Pastikan SweetAlert2 sudah di-load -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-document.addEventListener('DOMContentLoaded', function() {
-    var btnBerikutnya = document.getElementById('btnBerikutnya');
-    if (btnBerikutnya) {
-        btnBerikutnya.onclick = async function() {
-            let cek = await fetch('/cv/get-session');
-            if (cek.status === 401 || cek.status === 419) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Sesi Habis',
-                    text: 'Silakan login terlebih dahulu untuk melanjutkan.',
-                    confirmButtonText: 'Login',
-                }).then(() => {
-                    window.location.href = '/login';
+    document.addEventListener('DOMContentLoaded', function() {
+        var btnBerikutnya = document.getElementById('btnBerikutnya');
+        if (btnBerikutnya) {
+            btnBerikutnya.onclick = async function() {
+                @if(Auth::guest())
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Login Diperlukan',
+                        text: 'Silakan login terlebih dahulu untuk melanjutkan proses unduh CV.',
+                        confirmButtonColor: '#FFBC5D',
+                        confirmButtonText: 'Login Sekarang'
+                    }).then(() => {
+                        window.location.href = "{{ route('login') }}?redirect={{ urlencode(request()->fullUrl()) }}";
+                    });
+                    return;
+                @endif
+
+                // 1. Ambil data session terbaru dari backend (data yang dipakai iframe)
+                let sessionData = await fetch('/cv/get-session').then(res => res.json());
+
+                // 2. Kirim ulang ke backend agar session benar-benar update
+                await fetch('/cv/save-session', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content
+                    },
+                    body: JSON.stringify(sessionData)
                 });
-                return;
-            }
-            document.getElementById('modalValidasi').classList.remove('hidden');
-        };
-    }
-});
 
-document.getElementById('btnKembali').onclick = function() {
-    window.location.href = '/cvats';
-};
+                // 3. Setelah session dipatenkan, tampilkan modal validasi
+                document.getElementById('modalValidasi').classList.remove('hidden');
+            };
+        }
+    });
 
-document.getElementById('btnTutup').onclick = function() {
-    document.getElementById('modalValidasi').classList.add('hidden');
-    const checkbox = document.getElementById('checkboxPersetujuan');
-    const btnLanjutkan = document.getElementById('btnLanjutkan');
-    checkbox.checked = false;
-    btnLanjutkan.disabled = true;
-    btnLanjutkan.classList.add('opacity-50', 'cursor-not-allowed');
-    btnLanjutkan.classList.remove('hover:bg-[#e6a84f]', 'hover:scale-105', 'ring-2', 'ring-[#FFBC5D]');
-};
+    document.getElementById('btnKembali').onclick = function() {
+        window.location.href = '/cvats';
+    };
 
-const checkbox = document.getElementById('checkboxPersetujuan');
-const btnLanjutkan = document.getElementById('btnLanjutkan');
-
-checkbox.onchange = function() {
-    if (this.checked) {
-        btnLanjutkan.disabled = false;
-        btnLanjutkan.classList.remove('opacity-50', 'cursor-not-allowed');
-        btnLanjutkan.classList.add('hover:bg-[#e6a84f]', 'hover:scale-105', 'ring-2', 'ring-[#FFBC5D]');
-    } else {
+    document.getElementById('btnTutup').onclick = function() {
+        document.getElementById('modalValidasi').classList.add('hidden');
+        const checkbox = document.getElementById('checkboxPersetujuan');
+        const btnLanjutkan = document.getElementById('btnLanjutkan');
+        checkbox.checked = false;
         btnLanjutkan.disabled = true;
         btnLanjutkan.classList.add('opacity-50', 'cursor-not-allowed');
         btnLanjutkan.classList.remove('hover:bg-[#e6a84f]', 'hover:scale-105', 'ring-2', 'ring-[#FFBC5D]');
-    }
-};
+    };
 
-// Tombol Lanjutkan: simpan data ke database
-btnLanjutkan.onclick = async function() {
-    if (this.disabled) return;
-    this.disabled = true;
-    this.textContent = 'Menyimpan...';
+    const checkbox = document.getElementById('checkboxPersetujuan');
+    const btnLanjutkan = document.getElementById('btnLanjutkan');
 
-    try {
-        // Ambil SEMUA data dari session backend
+    checkbox.onchange = function() {
+        if (this.checked) {
+            btnLanjutkan.disabled = false;
+            btnLanjutkan.classList.remove('opacity-50', 'cursor-not-allowed');
+            btnLanjutkan.classList.add('hover:bg-[#e6a84f]', 'hover:scale-105', 'ring-2', 'ring-[#FFBC5D]');
+        } else {
+            btnLanjutkan.disabled = true;
+            btnLanjutkan.classList.add('opacity-50', 'cursor-not-allowed');
+            btnLanjutkan.classList.remove('hover:bg-[#e6a84f]', 'hover:scale-105', 'ring-2', 'ring-[#FFBC5D]');
+        }
+    };
+
+    // Tombol Lanjutkan: simpan data ke database
+    btnLanjutkan.onclick = async function() {
+        if (this.disabled) return;
+        this.disabled = true;
+        this.textContent = 'Menyimpan...';
+
+        // Ambil data session terbaru dari backend
         let sessionData = await fetch('/cv/get-session').then(res => res.json());
         let profilArr = sessionData.profil || [];
         let profil = profilArr[0] || {};
-        let photoUrl = sessionData.foto || profil.photoUrl || profil.photo || '';
 
         // 1. Upload foto jika ada (base64)
+        let photoUrl = profil.cv_picture || profil.photoUrl || profil.photo || '';
         if (photoUrl && photoUrl.startsWith('data:image/')) {
             let uploadRes = await fetch('/cvs-users/upload-photo', {
                 method: 'POST',
@@ -200,63 +211,109 @@ btnLanjutkan.onclick = async function() {
                 body: JSON.stringify({ photo: photoUrl })
             });
             let uploadData = await uploadRes.json();
-            if (uploadData.path) {
+            if (uploadRes.ok && uploadData.path) {
                 profil.cv_picture = uploadData.path;
             } else {
                 profil.cv_picture = '';
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Upload Foto Gagal',
+                    text: uploadData.message || 'Foto tidak berhasil diupload. Silakan coba lagi.',
+                    confirmButtonColor: '#FFBC5D'
+                });
             }
         }
+
+        // 2. Hapus base64 dari profil JS
         profil.photo = undefined;
         profil.photoUrl = undefined;
 
-        // 2. Simpan profil ke database (ambil data dari session di backend)
-        let res = await fetch('/cvs-users/save-from-session', {
+        // 3. Kirim ke server agar session server-side update dengan path gambar
+        await fetch('/cv/save-session', {
             method: 'POST',
             headers: {'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-            body: JSON.stringify({})
+            body: JSON.stringify({
+                profil: [profil],
+                pengalamankerja: sessionData.pengalamankerja || [],
+                proyek: sessionData.proyek || [],
+                pendidikan: sessionData.pendidikan || [],
+                keahlian: sessionData.keahlian || [],
+                bahasa: sessionData.bahasa || [],
+                sertifikat: sessionData.sertifikat || [],
+                hobi: sessionData.hobi || []
+            })
         });
-        if (!res.ok) throw new Error('Gagal menyimpan profil');
+
+        // 4. Simpan ke database (backend ambil path dari session)
+        let res = await fetch('/cvs-users/save-from-session', {
+            method: 'POST',
+            headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+        });
         let data = await res.json();
         let cvsy_id = data.cvsy_id;
 
-        // 3. Simpan data lain ke database (ambil data dari session di backend)
+        // 5. Simpan data lain (work, project, dst)
         const endpoints = [
-            '/work-experiences/store-from-session',
-            '/projects/store-from-session',
-            '/educations/store-from-session',
-            '/skills/store-from-session',
-            '/languages/store-from-session',
-            '/certificates/store-from-session',
-            '/hobbies/store-from-session',
+            {url: '/work-experiences/store-from-session'},
+            {url: '/projects/store-from-session'},
+            {url: '/educations/store-from-session'},
+            {url: '/skills/store-from-session'},
+            {url: '/languages/store-from-session'},
+            {url: '/certificates/store-from-session'},
+            {url: '/hobbies/store-from-session'},
         ];
-        for (let url of endpoints) {
-            let resp = await fetch(url, {
+        for (let ep of endpoints) {
+            await fetch(ep.url, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-                body: JSON.stringify({ cvsy_id })
+                body: JSON.stringify({cvsy_id})
             });
-            if (!resp.ok) throw new Error('Gagal menyimpan data ke ' + url);
         }
 
         window.location.href = '/pembayaran';
-    } catch (err) {
-        this.disabled = false;
-        this.textContent = 'Lanjutkan';
-        Swal.fire({
-            icon: 'error',
-            title: 'Gagal',
-            text: err.message || 'Terjadi kesalahan saat menyimpan data. Silakan coba lagi.',
-        });
-    }
-};
-    </script>
-</div>
+    };
 
-<style>
-    @media screen {
-        .a4-preview {
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    // Tombol Preview Data
+    document.getElementById('btnPreviewData').onclick = async function() {
+        // Ambil data session terbaru dari backend
+        let sessionData = await fetch('/cv/get-session').then(res => res.json());
+        let profilArr = sessionData.profil || [];
+        let profil = profilArr[0] || {};
+
+        // Ambil data lain dari sessionData (atau sessionStorage jika tidak ada)
+        let pengalaman = sessionData.pengalamankerja || JSON.parse(window.sessionStorage.getItem('pengalamankerja') || '[]');
+        let proyek = sessionData.proyek || JSON.parse(window.sessionStorage.getItem('proyek') || '[]');
+        let pendidikan = sessionData.pendidikan || JSON.parse(window.sessionStorage.getItem('pendidikan') || '[]');
+        let keahlian = sessionData.keahlian || JSON.parse(window.sessionStorage.getItem('keahlian') || '[]');
+        let bahasa = sessionData.bahasa || JSON.parse(window.sessionStorage.getItem('bahasa') || '[]');
+        let sertifikat = sessionData.sertifikat || JSON.parse(window.sessionStorage.getItem('sertifikat') || '[]');
+        let hobi = sessionData.hobi || JSON.parse(window.sessionStorage.getItem('hobi') || '[]');
+
+        let dataPreview = {
+            profil: [profil],
+            pengalamankerja: pengalaman,
+            proyek: proyek,
+            pendidikan: pendidikan,
+            keahlian: keahlian,
+            bahasa: bahasa,
+            sertifikat: sertifikat,
+            hobi: hobi
+        };
+
+        document.getElementById('previewJson').textContent = JSON.stringify(dataPreview, null, 2);
+        document.getElementById('modalPreviewData').classList.remove('hidden');
+    };
+
+    document.getElementById('btnTutupPreview').onclick = function() {
+        document.getElementById('modalPreviewData').classList.add('hidden');
+    };
+    </script>
+
+    <style>
+        @media screen {
+            .a4-preview {
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
         }
-    }
-</style>
+    </style>
 @endsection

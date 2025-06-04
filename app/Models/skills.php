@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class skills extends Model
 {
-    /** @use HasFactory<\Database\Factories\SkillsFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'cvsy_id',
+        'skill_name',
+    ];
 }

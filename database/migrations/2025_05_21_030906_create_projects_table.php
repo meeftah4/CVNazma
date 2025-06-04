@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->foreignId('cvsy_id')->constrained('cvs_users')->onDelete('cascade');
-            $table->string('project_name');
-            $table->string('role');
-            $table->date('start_date');
+            $table->string('project_name')->nullable();
+            $table->string('role')->nullable();
+            $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();

@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class languages extends Model
 {
-    /** @use HasFactory<\Database\Factories\LanguagesFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'cvsy_id',
+        'language_name',
+    ];
 }
