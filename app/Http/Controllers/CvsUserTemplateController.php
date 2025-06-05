@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Spatie\Browsershot\Browsershot;
 
 class CvsUserTemplateController extends Controller
 {
@@ -121,5 +123,70 @@ class CvsUserTemplateController extends Controller
         return view('templates.indonesia.template5', compact(
             'profil', 'pengalamankerja', 'proyek', 'pendidikan', 'keahlian', 'bahasa', 'sertifikat', 'hobi'
         ));
+    }
+
+    public function showTemplate($template, Request $request)
+    {
+        $allowed = [
+            'basic', 'template1', 'template2', 'template3', 'template4', 'template5'
+        ];
+
+        if (!in_array($template, $allowed)) {
+            abort(404, 'Template tidak ditemukan.');
+        }
+
+        // Ambil data dari session
+        $profil = session('profil', []);
+        $pengalamankerja = session('pengalamankerja', []);
+        $proyek = session('proyek', []);
+        $pendidikan = session('pendidikan', []);
+        $keahlian = session('keahlian', []);
+        $bahasa = session('bahasa', []);
+        $sertifikat = session('sertifikat', []);
+        $hobi = session('hobi', []);
+
+        $view = 'templates.indonesia.' . $template;
+        $data = compact('profil', 'pengalamankerja', 'proyek', 'pendidikan', 'keahlian', 'bahasa', 'sertifikat', 'hobi');
+
+        if ($request->has('download') && $request->query('download') == 1) {
+            // Generate PDF dan download
+            $pdf = Pdf::loadView($view, $data);
+            $pdf->setPaper('a4', 'portrait');
+
+            // Gunakan method download() agar header Content-Disposition diset dengan benar
+            return $pdf->download("CV-{$template}.pdf");
+        }
+
+        // Jika bukan download, tampilkan view biasa untuk preview
+        return view($view, $data);
+    }
+    public function downloadTemplate($template, Request $request)
+    {
+        $allowed = [
+            'basic', 'template1', 'template2', 'template3', 'template4', 'template5'
+        ];
+        if (!in_array($template, $allowed)) abort(404);
+
+        // Render HTML dari view (dengan asset eksternal)
+        $html = view('templates.indonesia.' . $template, [
+            'profil' => session('profil', []),
+            'pengalamankerja' => session('pengalamankerja', []),
+            'proyek' => session('proyek', []),
+            'pendidikan' => session('pendidikan', []),
+            'keahlian' => session('keahlian', []),
+            'bahasa' => session('bahasa', []),
+            'sertifikat' => session('sertifikat', []),
+            'hobi' => session('hobi', []),
+        ])->render();
+
+        $pdf = Browsershot::html($html)
+            ->format('A4')
+            ->showBackground()
+            ->margins(0, 0, 0, 0)
+            ->pdf();
+
+        return response($pdf)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'attachment; filename="CV-' . $template . '.pdf"');
     }
 }

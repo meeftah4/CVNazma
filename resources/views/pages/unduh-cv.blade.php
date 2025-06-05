@@ -270,7 +270,56 @@
             });
         }
 
-        window.location.href = '/pembayaran';
+        // 6. Ambil snap token dari backend
+        let snapRes = await fetch('/midtrans/get-snap-token', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+            body: JSON.stringify({cvsy_id})
+        });
+        let snapData = await snapRes.json();
+
+        // Tutup modal validasi sebelum membuka Snap
+        document.getElementById('modalValidasi').classList.add('hidden');
+
+        // 7. Tampilkan modal pembayaran Midtrans Snap
+        window.snap.pay(snapData.snap_token, {
+            onSuccess: function(result){
+                // Setelah sukses, polling status transaksi ke backend
+                checkTransactionStatus(snapData.order_id);
+            },
+            onPending: function(result){
+                window.location.href = '/';
+            },
+            onError: function(result){
+                Swal.fire('Gagal', 'Pembayaran gagal. Silakan coba lagi.', 'error');
+            },
+            onClose: function(){}
+        });
+
+        // Fungsi polling status transaksi
+        async function checkTransactionStatus(order_id) {
+            let maxTries = 10;
+            let tries = 0;
+            let settled = false;
+            while (tries < maxTries && !settled) {
+                let res = await fetch('/midtrans/check-status', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                    body: JSON.stringify({order_id})
+                });
+                let data = await res.json();
+                if (data.status === 'settlement' || data.status === 'capture') {
+                    settled = true;
+                    // Tambahkan template ke URL
+                    window.location.href = `/cvats/cv-complete?template={{ $template }}`;
+                    return;
+                }
+                await new Promise(r => setTimeout(r, 2000)); // tunggu 2 detik
+                tries++;
+            }
+            // Jika belum settlement setelah polling, redirect ke home
+            window.location.href = '/';
+        }
     };
 
     // Tombol Preview Data
@@ -308,6 +357,9 @@
         document.getElementById('modalPreviewData').classList.add('hidden');
     };
     </script>
+
+    <!-- Midtrans Snap.js -->
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-server-tNOItnN7xmutsv1uuPr4zC7e"></script>
 
     <style>
         @media screen {

@@ -15,6 +15,9 @@ use App\Http\Controllers\SkillsController;
 use App\Http\Controllers\LanguagesController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\HobbiesController;
+use App\Http\Controllers\TransactionsController;
+use App\Http\Controllers\CvsUserTemplateController;
+use App\Models\transactions;
 
 // Page Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -123,3 +126,22 @@ Route::post('/languages/store-from-session', [LanguagesController::class, 'store
 Route::post('/certificates/store-from-session', [CertificateController::class, 'storeFromSession'])->middleware('auth');
 Route::post('/hobbies/store-from-session', [HobbiesController::class, 'storeFromSession'])->middleware('auth');
 Route::post('/cvs-users/upload-photo', [CvsUsersController::class, 'uploadPhoto'])->middleware('auth');
+Route::post('/midtrans/get-snap-token', [\App\Http\Controllers\TransactionsController::class, 'getSnapToken'])->middleware('auth');
+Route::post('/midtrans/callback', [TransactionsController::class, 'midtransCallback']);
+Route::post('/midtrans/check-status', [\App\Http\Controllers\TransactionsController::class, 'checkStatus'])->middleware('auth');
+Route::get('/cvats/cv-complete', function () {
+    $user = Auth::user();
+    // Ambil transaksi terakhir user
+    $trx = transactions::whereHas('cvsy', function($q) use ($user) {
+        $q->where('user_id', $user->id);
+    })->orderBy('created_at', 'desc')->first();
+
+    // Jika tidak ada transaksi atau belum lunas, redirect ke home
+    if (!$trx || !in_array($trx->transaction_status, ['settlement', 'capture'])) {
+        return redirect('/')->with('error', 'Pembayaran belum lunas.');
+    }
+
+    return view('pages.cv-complete');
+})->middleware('auth');
+Route::get('/indonesia/{template}/download', [\App\Http\Controllers\CvsUserTemplateController::class, 'downloadTemplate']);
+Route::get('/indonesia/{template}', [\App\Http\Controllers\CvsUserTemplateController::class, 'showTemplate']);
