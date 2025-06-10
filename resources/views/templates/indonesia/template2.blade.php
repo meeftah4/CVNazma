@@ -51,6 +51,12 @@
     .mb-3 { margin-bottom: 0.75rem; }
     .mb-4 { margin-bottom: 1rem; }
     .mt-2 { margin-top: 0.5rem; }
+    body, h1, h2, h3, h4, h5, h6, .section-title, .bold, .italic, div, span, p, li, ul, ol, table, th, td {
+      font-family: Arial, Helvetica, sans-serif !important;
+    }
+    .justify {
+      text-align: justify;
+    }
   </style>
 </head>
 <body>
@@ -87,7 +93,7 @@
 
   <!-- Profil -->
   @if(!empty($profil0['description']))
-    <div class="mb-4">
+    <div class="mb-4 justify">
       {{ $profil0['description'] }}
     </div>
   @endif
@@ -108,23 +114,46 @@
     @foreach ($pengalamankerja as $item)
       <div class="mb-3">
         <div style="display:flex; justify-content:space-between;">
-          <span class="bold">{{ $item['companyName'] ?? '' }}{{ !empty($item['jobCity']) ? ' - '.$item['jobCity'] : '' }}</span>
-          <span class="text-xs" id="job-date-{{ $loop->index }}"></span>
+          <span>
+            <span class="bold">{{ $item['companyName'] ?? '' }}</span>
+            @if(!empty($item['jobCity']))
+              - <span>{{ $item['jobCity'] }}</span>
+            @endif
+          </span>
+          <span id="job-date-{{ $loop->index }}"></span>
         </div>
-        <div class="mb-1">{{ $item['jobPosition'] ?? '' }}</div>
-        @if(!empty($item['jobDescription']))
+        @if(!empty($item['jobPosition']))
+          <div class="italic mb-1">{{ $item['jobPosition'] }}</div>
+        @endif
+        @php
+          $jobDesc = $item['jobDescription'] ?? [];
+          if (!is_array($jobDesc)) $jobDesc = [$jobDesc];
+          $descList = [];
+          foreach ($jobDesc as $desc) {
+            if (is_array($desc)) {
+              foreach ($desc as $d) {
+                foreach (preg_split('/\r\n|\r|\n/', $d) as $line) {
+                  if (trim($line) !== '') $descList[] = $line;
+                }
+              }
+            } else {
+              foreach (preg_split('/\r\n|\r|\n/', $desc) as $line) {
+                if (trim($line) !== '') $descList[] = $line;
+              }
+            }
+          }
+        @endphp
+        @if(count($descList))
           <ul>
-            @php
-              $jobDesc = $item['jobDescription'];
-              if (!is_array($jobDesc)) $jobDesc = [$jobDesc];
-            @endphp
-            @foreach ($jobDesc as $desc)
-              @if(!empty($desc))
-                <li>{{ is_array($desc) ? implode(', ', $desc) : $desc }}</li>
-              @endif
+            @foreach ($descList as $line)
+              <li>{{ $line }}</li>
             @endforeach
           </ul>
         @endif
+        <div style="display:flex; justify-content:space-between;">
+          <span></span>
+          <span id="job-date-{{ $loop->index }}"></span>
+        </div>
         <script>
         (function() {
           function formatDate(dateStr) {
@@ -154,19 +183,31 @@
       <div class="mb-3">
         <div style="display:flex; justify-content:space-between;">
           <span class="bold">{{ $item['projectName'] ?? '' }}</span>
-          <span class="text-xs" id="project-date-{{ $loop->index }}"></span>
+          <span id="project-date-{{ $loop->index }}"></span>
         </div>
         <div class="italic mb-1">{{ $item['projectPosition'] ?? '' }}</div>
-        @if(!empty($item['projectDescription']))
+        @php
+          $descArr = $item['projectDescription'] ?? [];
+          if (!is_array($descArr)) $descArr = [$descArr];
+          $descList = [];
+          foreach ($descArr as $desc) {
+            if (is_array($desc)) {
+              foreach ($desc as $d) {
+                foreach (preg_split('/\r\n|\r|\n/', $d) as $line) {
+                  if (trim($line) !== '') $descList[] = $line;
+                }
+              }
+            } else {
+              foreach (preg_split('/\r\n|\r|\n/', $desc) as $line) {
+                if (trim($line) !== '') $descList[] = $line;
+              }
+            }
+          }
+        @endphp
+        @if(count($descList))
           <ul>
-            @php
-              $descArr = $item['projectDescription'];
-              if (!is_array($descArr)) $descArr = [$descArr];
-            @endphp
-            @foreach ($descArr as $desc)
-              @if(!empty($desc))
-                <li>{{ is_array($desc) ? implode(', ', $desc) : $desc }}</li>
-              @endif
+            @foreach ($descList as $line)
+              <li>{{ $line }}</li>
             @endforeach
           </ul>
         @endif
@@ -199,19 +240,31 @@
       <div class="mb-3">
         <div style="display:flex; justify-content:space-between;">
           <span class="bold">{{ $edu['educationInstitution'] ?? '' }}</span>
-          <span class="text-xs" id="edu-date-{{ $loop->index }}"></span>
+          <span id="edu-date-{{ $loop->index }}"></span>
         </div>
         <div class="italic mb-1">{{ $edu['educationDegree'] ?? '' }}</div>
-        @if(!empty($edu['educationDescription']))
+        @php
+          $descArr = $edu['educationDescription'] ?? [];
+          if (!is_array($descArr)) $descArr = [$descArr];
+          $descList = [];
+          foreach ($descArr as $desc) {
+            if (is_array($desc)) {
+              foreach ($desc as $d) {
+                foreach (preg_split('/\r\n|\r|\n/', $d) as $line) {
+                  if (trim($line) !== '') $descList[] = $line;
+                }
+              }
+            } else {
+              foreach (preg_split('/\r\n|\r|\n/', $desc) as $line) {
+                if (trim($line) !== '') $descList[] = $line;
+              }
+            }
+          }
+        @endphp
+        @if(count($descList))
           <ul>
-            @php
-              $descArr = $edu['educationDescription'];
-              if (!is_array($descArr)) $descArr = [$descArr];
-            @endphp
-            @foreach ($descArr as $desc)
-              @if(!empty($desc))
-                <li>{{ is_array($desc) ? implode(', ', $desc) : $desc }}</li>
-              @endif
+            @foreach ($descList as $line)
+              <li>{{ $line }}</li>
             @endforeach
           </ul>
         @endif

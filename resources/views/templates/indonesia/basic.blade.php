@@ -42,13 +42,13 @@
     <h1 class="text-3xl font-bold text-black">
       {{ $profil0['name'] ?? '' }}
     </h1>
-    <p class="text-sm text-black">
+    <p class="text-black">
       {{ $profil0['email'] ?? '' }}@if(!empty($profil0['email']) && !empty($profil0['phone'])) | @endif
       {{ $profil0['phone'] ?? '' }}@if(!empty($profil0['phone']) && !empty($profil0['linkedin'])) | @endif
       {{ $profil0['linkedin'] ?? '' }}@if(!empty($profil0['linkedin']) && !empty($profil0['portfolio'])) | @endif
       {{ $profil0['portfolio'] ?? '' }}
     </p>
-    <p class="text-sm text-black">
+    <p class="text-black">
       {{ $profil0['address'] ?? '' }}
     </p>
   </div>
@@ -57,8 +57,8 @@
 <!-- PROFIL SINGKAT -->
 @if(!empty($profil0['description']))
   <section class="mb-8">
-    <h2 class="text-xl font-semibold border-b border-gray-300 "></h2>
-    <p class="text-black">
+    <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-3 text-black">Profil Singkat</h2>
+    <p class="text-black text-justify">
       {{ $profil0['description'] }}
     </p>
   </section>
@@ -69,7 +69,7 @@
   <section class="mb-8">
     <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-3 text-black">Pengalaman Kerja</h2>
     @foreach ($pengalamankerja as $item)
-      <div class="mb-5 text-sm text-black">
+      <div class="mb-5 text-black">
         <div class="flex justify-between">
           <p>
             <span class="font-semibold">{{ $item['companyName'] ?? '' }}</span>
@@ -98,13 +98,25 @@
         @php
           $jobDesc = $item['jobDescription'] ?? [];
           if (!is_array($jobDesc)) $jobDesc = [$jobDesc];
+          $descList = [];
+          foreach ($jobDesc as $desc) {
+            if (is_array($desc)) {
+              foreach ($desc as $d) {
+                foreach (preg_split('/\r\n|\r|\n/', $d) as $line) {
+                  if (trim($line) !== '') $descList[] = $line;
+                }
+              }
+            } else {
+              foreach (preg_split('/\r\n|\r|\n/', $desc) as $line) {
+                if (trim($line) !== '') $descList[] = $line;
+              }
+            }
+          }
         @endphp
-        @if(count($jobDesc) && !empty($jobDesc[0]))
+        @if(count($descList))
           <ul class="list-disc list-inside">
-            @foreach ($jobDesc as $desc)
-              @if(!empty($desc))
-                <li>{{ is_array($desc) ? implode(', ', $desc) : $desc }}</li>
-              @endif
+            @foreach ($descList as $line)
+              <li>{{ $line }}</li>
             @endforeach
           </ul>
         @endif
@@ -119,7 +131,7 @@
   <section class="mb-8">
     <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-3 text-black">Proyek</h2>
     @foreach ($proyek as $item)
-      <div class="mb-5 text-sm text-black">
+      <div class="mb-5 text-black">
         <div class="flex justify-between">
           <p class="font-semibold">{{ $item['projectName'] ?? '' }}</p>
           <span class="text-black font-normal" id="project-date-{{ $loop->index }}"></span>
@@ -146,13 +158,25 @@
         @php
           $descArr = $item['projectDescription'] ?? [];
           if (!is_array($descArr)) $descArr = [$descArr];
+          $descList = [];
+          foreach ($descArr as $desc) {
+            if (is_array($desc)) {
+              foreach ($desc as $d) {
+                foreach (preg_split('/\r\n|\r|\n/', $d) as $line) {
+                  if (trim($line) !== '') $descList[] = $line;
+                }
+              }
+            } else {
+              foreach (preg_split('/\r\n|\r|\n/', $desc) as $line) {
+                if (trim($line) !== '') $descList[] = $line;
+              }
+            }
+          }
         @endphp
-        @if(count($descArr) && !empty($descArr[0]))
+        @if(count($descList))
           <ul class="list-disc list-inside">
-            @foreach ($descArr as $desc)
-              @if(!empty($desc))
-                <li>{{ is_array($desc) ? implode(', ', $desc) : $desc }}</li>
-              @endif
+            @foreach ($descList as $line)
+              <li>{{ $line }}</li>
             @endforeach
           </ul>
         @endif
@@ -165,7 +189,7 @@
 @if(is_array($keahlian) && count($keahlian))
   <section class="mb-8">
     <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-3 text-black">Keahlian</h2>
-    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm text-black">
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-black">
       @foreach ($keahlian as $skill)
         <p>{{ is_array($skill) ? implode(', ', $skill) : $skill }}</p>
       @endforeach
@@ -178,7 +202,7 @@
   <section class="mb-8">
     <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-3 text-black">Pendidikan</h2>
     @foreach ($pendidikan as $edu)
-      <div class="mb-5 text-sm text-black">
+      <div class="mb-5 text-black">
         <div class="flex justify-between">
           <p class="font-semibold">{{ $edu['educationInstitution'] ?? '' }}</p>
           <span class="text-black font-normal" id="edu-date-{{ $loop->index }}"></span>
@@ -205,13 +229,25 @@
         @php
           $descArr = $edu['educationDescription'] ?? [];
           if (!is_array($descArr)) $descArr = [$descArr];
+          $descList = [];
+          foreach ($descArr as $desc) {
+            if (is_array($desc)) {
+              foreach ($desc as $d) {
+                foreach (preg_split('/\r\n|\r|\n/', $d) as $line) {
+                  if (trim($line) !== '') $descList[] = $line;
+                }
+              }
+            } else {
+              foreach (preg_split('/\r\n|\r|\n/', $desc) as $line) {
+                if (trim($line) !== '') $descList[] = $line;
+              }
+            }
+          }
         @endphp
-        @if(count($descArr) && !empty($descArr[0]))
+        @if(count($descList))
           <ul class="list-disc list-inside">
-            @foreach ($descArr as $desc)
-              @if(!empty($desc))
-                <li>{{ is_array($desc) ? implode(', ', $desc) : $desc }}</li>
-              @endif
+            @foreach ($descList as $line)
+              <li>{{ $line }}</li>
             @endforeach
           </ul>
         @endif
@@ -228,7 +264,7 @@
 )
   <section>
     <h2 class="text-xl font-semibold border-b border-gray-300 pb-1 mb-3 text-black">Informasi Tambahan</h2>
-    <div class="text-sm text-black space-y-2">
+    <div class="text-black space-y-2">
       @if(is_array($bahasa) && count($bahasa))
         <p><strong>Bahasa:</strong> {{ implode(', ', array_map(fn($b) => is_array($b) ? implode(' ', $b) : $b, $bahasa)) }}</p>
       @endif

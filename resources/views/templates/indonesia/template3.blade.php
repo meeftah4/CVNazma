@@ -28,6 +28,9 @@
       padding: 32px 32px 32px 32px;
       font-size: 15px;
     }
+    body, h1, h2, h3, h4, h5, h6, .section-title, .bold, .italic, div, span, p, li, ul, ol, table, th, td {
+      font-family: Arial, Helvetica, sans-serif !important;
+    }
     .section-title {
       color: #111;
       text-transform: uppercase;
@@ -63,6 +66,9 @@
       border-top: 2px solid #111;
       margin: 0;
       width: 100%;
+    }
+    .justify {
+      text-align: justify;
     }
   </style>
 </head>
@@ -104,7 +110,7 @@
   <hr class="section-divider">
   <div class="section-title">Profil</div>
   <hr class="section-divider">
-  <div class="mb-4">
+  <div class="mb-4 justify">
     {{ $profil0['description'] }}
   </div>
 @endif
@@ -150,17 +156,31 @@
       </div>
       <p>{{ $item['jobPosition'] ?? '' }}</p>
       @if(!empty($item['jobDescription']))
-        <ul>
-          @php
-            $jobDesc = $item['jobDescription'];
-            if (!is_array($jobDesc)) $jobDesc = [$jobDesc];
-          @endphp
-          @foreach ($jobDesc as $desc)
-            @if(!empty($desc))
-              <li>{{ is_array($desc) ? implode(', ', $desc) : $desc }}</li>
-            @endif
-          @endforeach
-        </ul>
+        @php
+          $jobDesc = $item['jobDescription'];
+          if (!is_array($jobDesc)) $jobDesc = [$jobDesc];
+          $descList = [];
+          foreach ($jobDesc as $desc) {
+            if (is_array($desc)) {
+              foreach ($desc as $d) {
+                foreach (preg_split('/\r\n|\r|\n/', $d) as $line) {
+                  if (trim($line) !== '') $descList[] = $line;
+                }
+              }
+            } else {
+              foreach (preg_split('/\r\n|\r|\n/', $desc) as $line) {
+                if (trim($line) !== '') $descList[] = $line;
+              }
+            }
+          }
+        @endphp
+        @if(count($descList))
+          <ul>
+            @foreach ($descList as $line)
+              <li>{{ $line }}</li>
+            @endforeach
+          </ul>
+        @endif
       @endif
     </div>
   @endforeach
@@ -197,17 +217,31 @@
       </div>
       <p class="italic">{{ $item['projectPosition'] ?? '' }}</p>
       @if(!empty($item['projectDescription']))
-        <ul>
-          @php
-            $descArr = $item['projectDescription'];
-            if (!is_array($descArr)) $descArr = [$descArr];
-          @endphp
-          @foreach ($descArr as $desc)
-            @if(!empty($desc))
-              <li>{{ is_array($desc) ? implode(', ', $desc) : $desc }}</li>
-            @endif
-          @endforeach
-        </ul>
+        @php
+          $descArr = $item['projectDescription'];
+          if (!is_array($descArr)) $descArr = [$descArr];
+          $descList = [];
+          foreach ($descArr as $desc) {
+            if (is_array($desc)) {
+              foreach ($desc as $d) {
+                foreach (preg_split('/\r\n|\r|\n/', $d) as $line) {
+                  if (trim($line) !== '') $descList[] = $line;
+                }
+              }
+            } else {
+              foreach (preg_split('/\r\n|\r|\n/', $desc) as $line) {
+                if (trim($line) !== '') $descList[] = $line;
+              }
+            }
+          }
+        @endphp
+        @if(count($descList))
+          <ul>
+            @foreach ($descList as $line)
+              <li>{{ $line }}</li>
+            @endforeach
+          </ul>
+        @endif
       @endif
     </div>
   @endforeach
@@ -256,17 +290,31 @@
       </div>
       <p class="italic">{{ $edu['educationDegree'] ?? '' }}</p>
       @if(!empty($edu['educationDescription']))
-        <ul>
-          @php
-            $descArr = $edu['educationDescription'];
-            if (!is_array($descArr)) $descArr = [$descArr];
-          @endphp
-          @foreach ($descArr as $desc)
-            @if(!empty($desc))
-              <li>{{ is_array($desc) ? implode(', ', $desc) : $desc }}</li>
-            @endif
-          @endforeach
-        </ul>
+        @php
+          $descArr = $edu['educationDescription'];
+          if (!is_array($descArr)) $descArr = [$descArr];
+          $descList = [];
+          foreach ($descArr as $desc) {
+            if (is_array($desc)) {
+              foreach ($desc as $d) {
+                foreach (preg_split('/\r\n|\r|\n/', $d) as $line) {
+                  if (trim($line) !== '') $descList[] = $line;
+                }
+              }
+            } else {
+              foreach (preg_split('/\r\n|\r|\n/', $desc) as $line) {
+                if (trim($line) !== '') $descList[] = $line;
+              }
+            }
+          }
+        @endphp
+        @if(count($descList))
+          <ul>
+            @foreach ($descList as $line)
+              <li>{{ $line }}</li>
+            @endforeach
+          </ul>
+        @endif
       @endif
     </div>
   @endforeach

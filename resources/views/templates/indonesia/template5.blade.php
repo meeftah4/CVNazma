@@ -18,6 +18,9 @@
       padding: 40px 32px 32px 32px;
       font-size: 15px;
     }
+    body, h1, h2, h3, h4, h5, h6, .section-title, .bold, .italic, div, span, p, li, ul, ol, table, th, td {
+      font-family: Arial, Helvetica, sans-serif !important;
+    }
     .main-pink { color: #df2176; }
     .border-pink { border-color: #df2176 !important; }
     .section-title {
@@ -52,7 +55,7 @@
     }
     .two-col-list {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
       gap: 0.2rem 2rem;
       margin-left: 0;
       list-style-position: inside;
@@ -69,6 +72,9 @@
     .mb-4 { margin-bottom: 1rem; }
     .mt-2 { margin-top: 0.5rem; }
     .grid-skill { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem 1.5rem; }
+    .justify {
+      text-align: justify;
+    }
   </style>
 </head>
 <body>
@@ -124,15 +130,15 @@
   </div>
   
 <!-- Profil -->
-  @if(!empty($profil0['description']))
-    <div class="section-title">
-      Profil
-      <span class="section-title-line"></span>
-    </div>
-    <div class="mb-4">
-      {{ $profil0['description'] }}
-    </div>
-  @endif
+@if(!empty($profil0['description']))
+  <div class="section-title">
+    Profil
+    <span class="section-title-line"></span>
+  </div>
+  <div class="mb-4 justify">
+    {{ $profil0['description'] }}
+  </div>
+@endif
 
   <!-- Pengalaman Kerja -->
   @if(is_array($pengalamankerja) && count($pengalamankerja))
@@ -143,8 +149,13 @@
     @foreach ($pengalamankerja as $item)
       <div class="mb-3">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-          <span class="bold">{{ $item['companyName'] ?? '' }}{{ !empty($item['jobCity']) ? ' - '.$item['jobCity'] : '' }}</span>
-          <span class="italic" style="font-size:0.98rem;" id="job-date-{{ $loop->index }}"></span>
+          <span>
+            <span class="bold">{{ $item['companyName'] ?? '' }}</span>
+            @if(!empty($item['jobCity']))
+              <span>{{ ' - ' . $item['jobCity'] }}</span>
+            @endif
+          </span>
+          <span class="italic" id="job-date-{{ $loop->index }}"></span>
           <script>
           (function() {
             function formatDate(dateStr) {
@@ -166,17 +177,31 @@
         </div>
         <div>{{ $item['jobPosition'] ?? '' }}</div>
         @if(!empty($item['jobDescription']))
-          <ul>
-            @php
-              $jobDesc = $item['jobDescription'];
-              if (!is_array($jobDesc)) $jobDesc = [$jobDesc];
-            @endphp
-            @foreach ($jobDesc as $desc)
-              @if(!empty($desc))
-                <li>{{ is_array($desc) ? implode(', ', $desc) : $desc }}</li>
-              @endif
-            @endforeach
-          </ul>
+          @php
+            $jobDesc = $item['jobDescription'];
+            if (!is_array($jobDesc)) $jobDesc = [$jobDesc];
+            $descList = [];
+            foreach ($jobDesc as $desc) {
+              if (is_array($desc)) {
+                foreach ($desc as $d) {
+                  foreach (preg_split('/\r\n|\r|\n/', $d) as $line) {
+                    if (trim($line) !== '') $descList[] = $line;
+                  }
+                }
+              } else {
+                foreach (preg_split('/\r\n|\r|\n/', $desc) as $line) {
+                  if (trim($line) !== '') $descList[] = $line;
+                }
+              }
+            }
+          @endphp
+          @if(count($descList))
+            <ul>
+              @foreach ($descList as $line)
+                <li>{{ $line }}</li>
+              @endforeach
+            </ul>
+          @endif
         @endif
       </div>
     @endforeach
@@ -192,7 +217,7 @@
     <div class="mb-3">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <span class="bold">{{ $item['projectName'] ?? '' }}</span>
-        <span class="italic" style="font-size:0.98rem;" id="project-date-{{ $loop->index }}"></span>
+        <span class="italic" id="project-date-{{ $loop->index }}"></span>
         <script>
         (function() {
           function formatDate(dateStr) {
@@ -214,17 +239,31 @@
       </div>
       <div class="italic">{{ $item['projectPosition'] ?? '' }}</div>
       @if(!empty($item['projectDescription']))
-        <ul>
-          @php
-            $descArr = $item['projectDescription'];
-            if (!is_array($descArr)) $descArr = [$descArr];
-          @endphp
-          @foreach ($descArr as $desc)
-            @if(!empty($desc))
-              <li>{{ is_array($desc) ? implode(', ', $desc) : $desc }}</li>
-            @endif
-          @endforeach
-        </ul>
+        @php
+          $descArr = $item['projectDescription'];
+          if (!is_array($descArr)) $descArr = [$descArr];
+          $descList = [];
+          foreach ($descArr as $desc) {
+            if (is_array($desc)) {
+              foreach ($desc as $d) {
+                foreach (preg_split('/\r\n|\r|\n/', $d) as $line) {
+                  if (trim($line) !== '') $descList[] = $line;
+                }
+              }
+            } else {
+              foreach (preg_split('/\r\n|\r|\n/', $desc) as $line) {
+                if (trim($line) !== '') $descList[] = $line;
+              }
+            }
+          }
+        @endphp
+        @if(count($descList))
+          <ul>
+            @foreach ($descList as $line)
+              <li>{{ $line }}</li>
+            @endforeach
+          </ul>
+        @endif
       @endif
     </div>
   @endforeach
@@ -253,7 +292,7 @@
     <div class="mb-3">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <span class="bold">{{ $edu['educationInstitution'] ?? '' }}</span>
-        <span class="italic" style="font-size:0.98rem;" id="edu-date-{{ $loop->index }}"></span>
+        <span class="italic" id="edu-date-{{ $loop->index }}"></span>
         <script>
         (function() {
           function formatDate(dateStr) {
@@ -275,17 +314,31 @@
       </div>
       <div class="italic">{{ $edu['educationDegree'] ?? '' }}</div>
       @if(!empty($edu['educationDescription']))
-        <ul>
-          @php
-            $descArr = $edu['educationDescription'];
-            if (!is_array($descArr)) $descArr = [$descArr];
-          @endphp
-          @foreach ($descArr as $desc)
-            @if(!empty($desc))
-              <li>{{ is_array($desc) ? implode(', ', $desc) : $desc }}</li>
-            @endif
-          @endforeach
-        </ul>
+        @php
+          $descArr = $edu['educationDescription'];
+          if (!is_array($descArr)) $descArr = [$descArr];
+          $descList = [];
+          foreach ($descArr as $desc) {
+            if (is_array($desc)) {
+              foreach ($desc as $d) {
+                foreach (preg_split('/\r\n|\r|\n/', $d) as $line) {
+                  if (trim($line) !== '') $descList[] = $line;
+                }
+              }
+            } else {
+              foreach (preg_split('/\r\n|\r|\n/', $desc) as $line) {
+                if (trim($line) !== '') $descList[] = $line;
+              }
+            }
+          }
+        @endphp
+        @if(count($descList))
+          <ul>
+            @foreach ($descList as $line)
+              <li>{{ $line }}</li>
+            @endforeach
+          </ul>
+        @endif
       @endif
     </div>
   @endforeach
