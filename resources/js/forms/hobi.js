@@ -100,10 +100,10 @@ window.renderHobi = function () {
         row.className = 'flex justify-between items-center bg-white p-2 rounded-md shadow mb-2';
 
         row.innerHTML = `
-            <div>
+            <div class="pl-4 flex-1">
                 <p>${data.hobbyName || ''}</p>
             </div>
-            <div class="flex space-x-2">
+            <div class="flex items-start space-x-2 h-full pr-4">
                 <button class="text-red-500" onclick="deleteHobi(${index})">X</button>
                 <button class="text-blue-500" onclick="editHobi(${index})">✎</button>
             </div>

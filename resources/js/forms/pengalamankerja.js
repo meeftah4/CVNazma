@@ -131,8 +131,8 @@ window.renderPengalamanKerja = function () {
         row.className = 'flex justify-between items-center bg-white p-2 rounded-md shadow mb-2';
 
         row.innerHTML = `
-            <div>
-                <p><strong>${data.companyName || ''}</strong>${data.JobCity ? ` - ${data.jobCity}` : ''}</p>
+            <div class="pl-4 flex-1">
+                <p><strong>${data.companyName || ''}</strong>${data.jobCity ? ` - ${data.jobCity}` : ''}</p>
                 ${data.jobStartDate || data.jobIsPresent ? `<p class="text-gray-500">${formatDate(data.jobStartDate)} - ${data.jobIsPresent ? 'Present' : formatDate(data.jobEndDate)}</p>` : ''}
                 ${data.jobPosition ? `<p>${data.jobPosition}</p>` : ''}
                 ${data.jobDescription ? `
@@ -141,9 +141,9 @@ window.renderPengalamanKerja = function () {
                     </ul>
                 ` : ''}
             </div>
-            <div class="flex space-x-2">
-                <button class="text-red-500" onclick="deletePengalamanKerja(${index})">X</button>
-                <button class="text-blue-500" onclick="editPengalamanKerja(${index})">✎</button>
+            <div class="flex items-start space-x-2 h-full pr-4">
+                <button class="text-red-500 font-bold" onclick="deletePengalamanKerja(${index})">X</button>
+                <button class="text-[#01287E]" onclick="editPengalamanKerja(${index})">✎</button>
             </div>
         `;
 

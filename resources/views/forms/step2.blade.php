@@ -53,26 +53,31 @@
                     <div class="flex items-center gap-2">
                         <span class="text-[18px]">{{ $field }}</span>
                     </div>
-                    <button type="button"
-                        class="text-blue-900 font-bold text-xl focus:outline-none"
-                        style="background: none; border: none; pointer-events: none;" 
-                        tabindex="-1"
-                    >
-                        <span id="{{ strtolower(str_replace(' ', '', $field)) }}Icon">+</span>
-                    </button>
+                    <div class="flex items-center gap-2">
+                        @if($field !== 'Profil')
+                        <button
+                            type="button"
+                            id="{{ strtolower(str_replace(' ', '', $field)) }}TrashBtn"
+                            class="text-red-500 hover:text-red-700 z-10 ml-1 hidden"
+                            style="padding:0"
+                            onclick="hapusSemuaDataSection('{{ strtolower(str_replace(' ', '', $field)) }}')"
+                            title="Hapus Semua {{ $field }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="inline h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 7h12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3m2 0v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V7h12zM10 11v6m4-6v6" />
+                            </svg>
+                        </button>
+                        @endif
+                        <button type="button"
+                            class="text-blue-900 font-bold text-xl focus:outline-none"
+                            style="background: none; border: none;"
+                            tabindex="-1"
+                            id="{{ strtolower(str_replace(' ', '', $field)) }}ToggleBtn"
+                        >
+                            <span id="{{ strtolower(str_replace(' ', '', $field)) }}Icon">+</span>
+                        </button>
+                    </div>
                 </div>
                 <div id="{{ strtolower(str_replace(' ', '', $field)) }}Dropdown" class="hidden relative">
-                    @if($field !== 'Profil')
-                    <button
-                        type="button"
-                        class="absolute right-6 top-4 text-red-500 hover:text-red-700 z-10"
-                        style="padding:0"
-                        onclick="hapusSemuaDataSection('{{ strtolower(str_replace(' ', '', $field)) }}')"
-                        title="Hapus Semua {{ $field }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="inline h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 7h12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3m2 0v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V7h12zM10 11v6m4-6v6" />                        </svg>
-                    </button>
-                    @endif
                     @include('partials.' . strtolower(str_replace(' ', '-', $field)))
                 </div>
             </div>
@@ -275,16 +280,18 @@ document.querySelectorAll('.dropdown-header').forEach(function(header){
         // Jika klik tombol hapus, jangan toggle
         if (e.target.closest('button[title^="Hapus Semua"]')) return;
 
-        // Toggle dropdown
         const section = this.getAttribute('data-dropdown');
         const dropdown = document.getElementById(section + 'Dropdown');
         const icon = document.getElementById(section + 'Icon');
+        const trashBtn = document.getElementById(section + 'TrashBtn');
         if (dropdown.classList.contains('hidden')) {
             dropdown.classList.remove('hidden');
             if (icon) icon.textContent = '-';
+            if (trashBtn) trashBtn.classList.remove('hidden');
         } else {
             dropdown.classList.add('hidden');
             if (icon) icon.textContent = '+';
+            if (trashBtn) trashBtn.classList.add('hidden');
         }
     });
 });

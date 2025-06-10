@@ -165,7 +165,7 @@ window.renderProyek = function () {
         row.className = 'flex justify-between items-center bg-white p-2 rounded-md shadow mb-2';
 
         row.innerHTML = `
-            <div>
+            <div class="pl-4 flex-1">
                 <p><strong>${data.projectName || ''}</strong></p>
                 ${data.projectStartDate || data.isPresent ? `<p class="text-gray-500">${formatDate(data.projectStartDate)} - ${data.isPresent ? 'Present' : formatDate(data.projectEndDate)}</p>` : ''}
                 ${data.projectPosition ? `<p class="italic text-gray-600">${data.projectPosition}</p>` : ''}
@@ -175,9 +175,9 @@ window.renderProyek = function () {
                     </ul>
                 ` : ''}
             </div>
-            <div class="flex space-x-2">
+            <div class="flex items-start space-x-2 h-full pr-4">
                 <button class="text-red-500" onclick="deleteProyek(${index})">X</button>
-                <button class="text-blue-500" onclick="editProyek(${index})">✎</button>
+                <button class="text-[#01287E]" onclick="editProyek(${index})">✎</button>
             </div>
         `;
 

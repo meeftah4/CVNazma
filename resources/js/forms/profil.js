@@ -71,10 +71,10 @@ window.renderDataRow = function (id) {
         row.className = 'flex justify-between items-center bg-white p-2 rounded-md shadow mb-2';
 
         row.innerHTML = `
-            <p class="text-gray-700">${data.description}</p>
-            <div class="flex space-x-2">
+            <p class="text-gray-700 pl-4">${data.description}</p>
+            <div class="flex items-start space-x-2 h-full pr-4">
                 <button class="text-red-500" onclick="deleteData('${id}')">X</button>
-                <button class="text-blue-500" onclick="editData('${id}')">✎</button>
+                <button class="text-[#01287E]" onclick="editData('${id}')">✎</button>
             </div>
         `;
 

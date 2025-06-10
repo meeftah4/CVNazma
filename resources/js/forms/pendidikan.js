@@ -154,7 +154,7 @@ window.renderPendidikan = function () {
         row.className = 'flex justify-between items-center bg-white p-2 rounded-md shadow mb-2';
 
         row.innerHTML = `
-            <div>
+            <div class="pl-4 flex-1">
                 <p><strong>${data.educationInstitution || ''}</strong>${data.educationCity ? ` - ${data.educationCity}` : ''}</p>
                 ${data.educationStartDate || data.isPresent ? `<p class="text-gray-500">${formatDate(data.educationStartDate)} - ${data.isPresent ? 'Present' : formatDate(data.educationEndDate)}</p>` : ''}
                 ${data.educationDegree ? `<p class="italic text-gray-600">${data.educationDegree}</p>` : ''}
@@ -164,7 +164,7 @@ window.renderPendidikan = function () {
                     </ul>
                 ` : ''}
             </div>
-            <div class="flex space-x-2">
+            <div class="flex items-start space-x-2 h-full pr-4">
                 <button class="text-red-500" onclick="deletePendidikan(${index})">X</button>
                 <button class="text-blue-500" onclick="editPendidikan(${index})">✎</button>
             </div>

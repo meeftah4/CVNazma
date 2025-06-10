@@ -30,10 +30,10 @@
         }
     </script>
 </head>
-<body class="font-sans bg-slate-50 text-slate-800 min-h-screen">
+<body class="font-sans min-h-screen" style="background-color: #F4F8FF;">
     <div class="container mx-auto px-6 py-10 max-w-7xl">
         <div class="text-center mb-12 max-w-3xl mx-auto">
-            <h1 class="font-bold text-4xl mb-2 bg-gradient-to-r from-indigo-500 to-indigo-800 text-transparent bg-clip-text">
+            <h1 class="font-bold text-4xl mb-2" style="color: #01287E;">
                 Preview Template CV
             </h1>
             <p class="text-gray-600 text-lg">
