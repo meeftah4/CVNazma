@@ -135,7 +135,34 @@ class CvsUserTemplateController extends Controller
             abort(404, 'Template tidak ditemukan.');
         }
 
-        // Ambil data dari session
+        $cvsy_id = $request->query('cvsy_id');
+        if ($cvsy_id) {
+            $cv = \App\Models\Cvs_Users::findOrFail($cvsy_id);
+
+            $profil = [[
+                'name' => $cv->name,
+                'email' => $cv->email,
+                'phone' => $cv->phone,
+                'address' => $cv->address,
+                'description' => $cv->description,
+                'photo' => $cv->cv_picture,
+                'linkedin' => $cv->linkedin,
+                'portfolio' => $cv->portfolio,
+            ]];
+            $pengalamankerja = \App\Models\work_experiences::where('cvsy_id', $cvsy_id)->get()->toArray();
+            $proyek = \App\Models\Project::where('cvsy_id', $cvsy_id)->get()->toArray();
+            $pendidikan = \App\Models\educations::where('cvsy_id', $cvsy_id)->get()->toArray();
+            $keahlian = \App\Models\skills::where('cvsy_id', $cvsy_id)->pluck('skill')->toArray();
+            $bahasa = \App\Models\languages::where('cvsy_id', $cvsy_id)->pluck('language')->toArray();
+            $sertifikat = \App\Models\certificate::where('cvsy_id', $cvsy_id)->pluck('certificate')->toArray();
+            $hobi = \App\Models\hobbies::where('cvsy_id', $cvsy_id)->pluck('hobby')->toArray();
+
+            return view('templates.indonesia.' . $template, compact(
+                'profil', 'pengalamankerja', 'proyek', 'pendidikan', 'keahlian', 'bahasa', 'sertifikat', 'hobi'
+            ));
+        }
+
+        // fallback ke session (preview sebelum bayar)
         $profil = session('profil', []);
         $pengalamankerja = session('pengalamankerja', []);
         $proyek = session('proyek', []);
@@ -145,21 +172,11 @@ class CvsUserTemplateController extends Controller
         $sertifikat = session('sertifikat', []);
         $hobi = session('hobi', []);
 
-        $view = 'templates.indonesia.' . $template;
-        $data = compact('profil', 'pengalamankerja', 'proyek', 'pendidikan', 'keahlian', 'bahasa', 'sertifikat', 'hobi');
-
-        if ($request->has('download') && $request->query('download') == 1) {
-            // Generate PDF dan download
-            $pdf = Pdf::loadView($view, $data);
-            $pdf->setPaper('a4', 'portrait');
-
-            // Gunakan method download() agar header Content-Disposition diset dengan benar
-            return $pdf->download("CV-{$template}.pdf");
-        }
-
-        // Jika bukan download, tampilkan view biasa untuk preview
-        return view($view, $data);
+        return view('templates.indonesia.' . $template, compact(
+            'profil', 'pengalamankerja', 'proyek', 'pendidikan', 'keahlian', 'bahasa', 'sertifikat', 'hobi'
+        ));
     }
+    
     public function downloadTemplate($template, Request $request)
     {
         $allowed = [
@@ -167,19 +184,46 @@ class CvsUserTemplateController extends Controller
         ];
         if (!in_array($template, $allowed)) abort(404);
 
-        // Render HTML dari view (dengan asset eksternal)
-        $html = view('templates.indonesia.' . $template, [
-            'profil' => session('profil', []),
-            'pengalamankerja' => session('pengalamankerja', []),
-            'proyek' => session('proyek', []),
-            'pendidikan' => session('pendidikan', []),
-            'keahlian' => session('keahlian', []),
-            'bahasa' => session('bahasa', []),
-            'sertifikat' => session('sertifikat', []),
-            'hobi' => session('hobi', []),
-        ])->render();
+        $cvsy_id = $request->query('cvsy_id');
+        if ($cvsy_id) {
+            $cv = \App\Models\Cvs_Users::findOrFail($cvsy_id);
 
-        $pdf = Browsershot::html($html)
+            $profil = [[
+                'name' => $cv->name,
+                'email' => $cv->email,
+                'phone' => $cv->phone,
+                'address' => $cv->address,
+                'description' => $cv->description,
+                'photo' => $cv->cv_picture,
+                'linkedin' => $cv->linkedin,
+                'portfolio' => $cv->portfolio,
+            ]];
+            $pengalamankerja = \App\Models\work_experiences::where('cvsy_id', $cvsy_id)->get()->toArray();
+            $proyek = \App\Models\Project::where('cvsy_id', $cvsy_id)->get()->toArray();
+            $pendidikan = \App\Models\educations::where('cvsy_id', $cvsy_id)->get()->toArray();
+            $keahlian = \App\Models\skills::where('cvsy_id', $cvsy_id)->pluck('skill')->toArray();
+            $bahasa = \App\Models\languages::where('cvsy_id', $cvsy_id)->pluck('language')->toArray();
+            $sertifikat = \App\Models\certificate::where('cvsy_id', $cvsy_id)->pluck('certificate')->toArray();
+            $hobi = \App\Models\hobbies::where('cvsy_id', $cvsy_id)->pluck('hobby')->toArray();
+
+            $html = view('templates.indonesia.' . $template, compact(
+                'profil', 'pengalamankerja', 'proyek', 'pendidikan', 'keahlian', 'bahasa', 'sertifikat', 'hobi'
+            ))->render();
+        } else {
+            // fallback ke session (preview sebelum bayar)
+            $html = view('templates.indonesia.' . $template, [
+                'profil' => session('profil', []),
+                'pengalamankerja' => session('pengalamankerja', []),
+                'proyek' => session('proyek', []),
+                'pendidikan' => session('pendidikan', []),
+                'keahlian' => session('keahlian', []),
+                'bahasa' => session('bahasa', []),
+                'sertifikat' => session('sertifikat', []),
+                'hobi' => session('hobi', []),
+            ])->render();
+        }
+
+        $pdf = \Spatie\Browsershot\Browsershot::html($html)
             ->format('A4')
             ->showBackground()
             ->margins(0, 0, 0, 0)

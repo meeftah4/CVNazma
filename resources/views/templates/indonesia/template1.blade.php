@@ -53,25 +53,33 @@
 </head>
 <body>
 {{-- @dump($foto) --}}
-@php
-    use Illuminate\Support\Str;
+      @php
+        use Illuminate\Support\Str;
+        $fromDatabase = request()->has('cvsy_id');
+        $profil0 = (is_array($profil) && isset($profil[0]) && is_array($profil[0])) ? $profil[0] : [];
 
-    $profil0 = (is_array($profil) && isset($profil[0]) && is_array($profil[0])) ? $profil[0] : [];
-    $foto = !empty(session('foto')) ? session('foto') : ($profil0['photo'] ?? '');
-    $foto = trim($foto);
+        // Ambil foto dari key 'photo' atau fallback ke 'cv_picture'
+        if ($fromDatabase) {
+            $foto = $profil0['photo'] ?? $profil0['cv_picture'] ?? '';
+        } else {
+            $foto = !empty(session('foto')) ? session('foto') : ($profil0['photo'] ?? $profil0['cv_picture'] ?? '');
+        }
 
-    // Foto dianggap valid jika:
-    // - Tidak kosong
-    // - Bukan 'null', '#', atau hanya spasi
-    // - (Mengandung ekstensi gambar ATAU diawali 'data:image/')
-    $showPhoto = $foto !== ''
-        && strtolower($foto) !== 'null'
-        && $foto !== '#'
-        && (
-            preg_match('/\.(jpg|jpeg|png|gif)$/i', $foto)
-            || Str::startsWith($foto, 'data:image/')
-        );
-@endphp
+        $foto = trim($foto);
+
+        if ($foto && !Str::startsWith($foto, ['http', 'data:image/'])) {
+            $foto = asset($foto);
+        }
+
+        $showPhoto = $foto !== ''
+            && strtolower($foto) !== 'null'
+            && $foto !== '#'
+            && (
+                preg_match('/\.(jpg|jpeg|png|gif)$/i', $foto)
+                || Str::startsWith($foto, 'data:image/')
+                || Str::startsWith($foto, 'http')
+            );
+      @endphp
 <!-- Header -->
 <div style="display: flex; align-items: center; gap: 24px; margin-bottom: 1.5rem;">
   @if($showPhoto)

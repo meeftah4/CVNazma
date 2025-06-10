@@ -14,6 +14,6 @@ class Cvs_Users extends Model
 
     protected $fillable = [
         'user_id', 'name', 'email', 'phone', 'address',
-        'linkedin', 'website', 'description', 'cv_picture'
+        'linkedin', 'website', 'description', 'cv_picture', 'template_cv'
     ];
 }

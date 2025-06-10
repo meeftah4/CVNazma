@@ -4,6 +4,7 @@
 
 @section('content')
 @php
+    // Ambil nama template dari session/request, fallback ke 'basic'
     $template = request('template', 'basic');
     $templateNames = [
         'basic' => 'Klasik Minimalis',
@@ -13,6 +14,7 @@
         'template4' => 'Simetris Bersih',
         'template5' => 'Bold Kontras',
     ];
+    $templateDisplay = $templateNames[$template] ?? $template;
 @endphp
 
 <div class="min-h-screen flex flex-col items-center justify-center py-8 px-4 bg-[#f5f8ff]">
@@ -25,26 +27,18 @@
             <div class="w-[210mm] h-[297mm] mx-auto bg-white">
                 <iframe 
                     id="cvPreview"
-                    src="{{ url('indonesia/' . $template) }}"
+                    src="{{ url('indonesia/' . $template) }}?cvsy_id={{ $cvsy_id }}"
                     class="w-full h-full border-0"
                     loading="lazy"
-                    title="Preview {{ $templateNames[$template] ?? $template }}"
+                    title="Preview {{ $templateDisplay }}"
                     sandbox="allow-same-origin allow-scripts"
                 ></iframe>
             </div>
         </div>
     </div>
 
-    <div class="w-full max-w-[210mm] space-y-4 mb-4">
-        <div class="bg-white rounded-lg shadow-md p-4 text-center">
-            <span class="font-semibold text-lg text-slate-900">
-                {{ $templateNames[$template] ?? $template }}
-            </span>
-        </div>
-    </div>
-
     <!-- Tombol Unduh PDF -->
-    <form method="GET" action="{{ url('indonesia/' . $template . '/download') }}">
+    <form method="GET" action="{{ url('indonesia/' . $template . '/download') }}?cvsy_id={{ $cvsy_id }}">
         <button type="submit" class="bg-[#2196f3] text-white px-6 py-3 rounded-lg font-bold shadow hover:bg-[#1769aa] transition">
             Unduh CV
         </button>

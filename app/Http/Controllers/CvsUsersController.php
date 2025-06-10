@@ -35,6 +35,7 @@ class CvsUsersController extends Controller
             'website'     => $profil['website'] ?? ($profil['portfolio'] ?? ''),
             'description' => $profil['description'] ?? '',
             'cv_picture'  => $profil['cv_picture'] ?? '',
+            'template_cv' => $request->input('template', ''), // tambahkan baris ini
         ]);
 
         $cvsy_id = $cv->id;

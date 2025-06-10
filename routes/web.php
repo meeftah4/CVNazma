@@ -131,17 +131,19 @@ Route::post('/midtrans/callback', [TransactionsController::class, 'midtransCallb
 Route::post('/midtrans/check-status', [\App\Http\Controllers\TransactionsController::class, 'checkStatus'])->middleware('auth');
 Route::get('/cvats/cv-complete', function () {
     $user = Auth::user();
-    // Ambil transaksi terakhir user
-    $trx = transactions::whereHas('cvsy', function($q) use ($user) {
-        $q->where('user_id', $user->id);
-    })->orderBy('created_at', 'desc')->first();
+    $cvsy_id = request('cvsy_id');
+    $template = request('template', 'basic');
+    $cv = \App\Models\Cvs_Users::where('id', $cvsy_id)
+        ->where('user_id', $user->id)
+        ->firstOrFail();
 
-    // Jika tidak ada transaksi atau belum lunas, redirect ke home
-    if (!$trx || !in_array($trx->transaction_status, ['settlement', 'capture'])) {
-        return redirect('/')->with('error', 'Pembayaran belum lunas.');
-    }
+    // Data lain jika perlu bisa diambil di sini
 
-    return view('pages.cv-complete');
+    return view('pages.cv-complete', [
+        'cv' => $cv,
+        'template' => $template,
+        'cvsy_id' => $cvsy_id,
+    ]);
 })->middleware('auth');
 Route::get('/indonesia/{template}/download', [\App\Http\Controllers\CvsUserTemplateController::class, 'downloadTemplate']);
 Route::get('/indonesia/{template}', [\App\Http\Controllers\CvsUserTemplateController::class, 'showTemplate']);

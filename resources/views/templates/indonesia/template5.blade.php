@@ -94,15 +94,31 @@
         </div>
       @endif
       @php
-        $foto = !empty(session('foto')) ? session('foto') : ($profil0['photo'] ?? '');
+        use Illuminate\Support\Str;
+        $fromDatabase = request()->has('cvsy_id');
+        $profil0 = (is_array($profil) && isset($profil[0]) && is_array($profil[0])) ? $profil[0] : [];
+
+        // Ambil foto dari key 'photo' atau fallback ke 'cv_picture'
+        if ($fromDatabase) {
+            $foto = $profil0['photo'] ?? $profil0['cv_picture'] ?? '';
+        } else {
+            $foto = !empty(session('foto')) ? session('foto') : ($profil0['photo'] ?? $profil0['cv_picture'] ?? '');
+        }
+
         $foto = trim($foto);
+
+        if ($foto && !Str::startsWith($foto, ['http', 'data:image/'])) {
+            $foto = asset($foto);
+        }
+
         $showPhoto = $foto !== ''
-          && strtolower($foto) !== 'null'
-          && $foto !== '#'
-          && (
-            preg_match('/\.(jpg|jpeg|png|gif)$/i', $foto)
-            || \Illuminate\Support\Str::startsWith($foto, 'data:image/'))
-        ;
+            && strtolower($foto) !== 'null'
+            && $foto !== '#'
+            && (
+                preg_match('/\.(jpg|jpeg|png|gif)$/i', $foto)
+                || Str::startsWith($foto, 'data:image/')
+                || Str::startsWith($foto, 'http')
+            );
       @endphp
       @if($showPhoto)
         <div style="width: 100px; height: 100px; overflow: hidden; flex-shrink: 0; margin-top:1rem;">

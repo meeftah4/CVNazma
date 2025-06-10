@@ -20,18 +20,33 @@
   </style>
 </head>
 <body class="leading-relaxed">
-@php
-  use Illuminate\Support\Str;
-  $profil0 = (is_array($profil) && isset($profil[0]) && is_array($profil[0])) ? $profil[0] : [];
-  $foto = !empty(session('foto')) ? session('foto') : ($profil0['photo'] ?? '');
-  $foto = trim($foto);
-  $showPhoto = $foto !== ''
-      && strtolower($foto) !== 'null'
-      && $foto !== '#'
-      && (
-          preg_match('/\.(jpg|jpeg|png|gif)$/i', $foto)
-          || Str::startsWith($foto, 'data:image/'))
-@endphp
+      @php
+        use Illuminate\Support\Str;
+        $fromDatabase = request()->has('cvsy_id');
+        $profil0 = (is_array($profil) && isset($profil[0]) && is_array($profil[0])) ? $profil[0] : [];
+
+        // Ambil foto dari key 'photo' atau fallback ke 'cv_picture'
+        if ($fromDatabase) {
+            $foto = $profil0['photo'] ?? $profil0['cv_picture'] ?? '';
+        } else {
+            $foto = !empty(session('foto')) ? session('foto') : ($profil0['photo'] ?? $profil0['cv_picture'] ?? '');
+        }
+
+        $foto = trim($foto);
+
+        if ($foto && !Str::startsWith($foto, ['http', 'data:image/'])) {
+            $foto = asset($foto);
+        }
+
+        $showPhoto = $foto !== ''
+            && strtolower($foto) !== 'null'
+            && $foto !== '#'
+            && (
+                preg_match('/\.(jpg|jpeg|png|gif)$/i', $foto)
+                || Str::startsWith($foto, 'data:image/')
+                || Str::startsWith($foto, 'http')
+            );
+      @endphp
 <header class="flex flex-col sm:flex-row items-start gap-6 mb-8">
   @if($showPhoto)
     <div style="width: 100px; height: 100px; overflow: hidden; border-radius: 0; flex-shrink:0;">

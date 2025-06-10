@@ -64,11 +64,6 @@
         Berikutnya
     </button>
 
-    <!-- Tambahkan tombol preview sebelum tombol Lanjutkan -->
-    <button id="btnPreviewData" class="mt-4 bg-blue-200 hover:bg-blue-300 text-blue-900 font-bold px-6 py-2 rounded-lg shadow transition-colors duration-200">
-        Preview Data yang Akan Dikirim
-    </button>
-
     <!-- Modal Alert -->
     <div id="modalValidasi" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
         <div class="bg-white rounded-2xl shadow-2xl p-8 md:p-10 max-w-md w-full text-center relative border border-[#FFBC5D]">
@@ -105,17 +100,6 @@
                     Lanjutkan
                 </button>
             </div>
-        </div>
-    </div>
-
-    <!-- Modal Preview Data -->
-    <div id="modalPreviewData" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-2xl shadow-2xl p-8 md:p-10 max-w-2xl w-full text-left relative border border-blue-200">
-            <button id="btnTutupPreview" class="absolute top-4 right-4 text-gray-400 hover:text-blue-400 text-2xl font-bold focus:outline-none transition-colors duration-200" aria-label="Tutup">
-                &times;
-            </button>
-            <h2 class="text-xl font-bold mb-4 text-blue-900">Preview Data yang Akan Dikirim ke Database</h2>
-            <pre id="previewJson" class="bg-gray-100 rounded p-4 text-xs overflow-auto max-h-[60vh]"></pre>
         </div>
     </div>
 
@@ -321,45 +305,10 @@
             window.location.href = '/';
         }
     };
-
-    // Tombol Preview Data
-    document.getElementById('btnPreviewData').onclick = async function() {
-        // Ambil data session terbaru dari backend
-        let sessionData = await fetch('/cv/get-session').then(res => res.json());
-        let profilArr = sessionData.profil || [];
-        let profil = profilArr[0] || {};
-
-        // Ambil data lain dari sessionData (atau sessionStorage jika tidak ada)
-        let pengalaman = sessionData.pengalamankerja || JSON.parse(window.sessionStorage.getItem('pengalamankerja') || '[]');
-        let proyek = sessionData.proyek || JSON.parse(window.sessionStorage.getItem('proyek') || '[]');
-        let pendidikan = sessionData.pendidikan || JSON.parse(window.sessionStorage.getItem('pendidikan') || '[]');
-        let keahlian = sessionData.keahlian || JSON.parse(window.sessionStorage.getItem('keahlian') || '[]');
-        let bahasa = sessionData.bahasa || JSON.parse(window.sessionStorage.getItem('bahasa') || '[]');
-        let sertifikat = sessionData.sertifikat || JSON.parse(window.sessionStorage.getItem('sertifikat') || '[]');
-        let hobi = sessionData.hobi || JSON.parse(window.sessionStorage.getItem('hobi') || '[]');
-
-        let dataPreview = {
-            profil: [profil],
-            pengalamankerja: pengalaman,
-            proyek: proyek,
-            pendidikan: pendidikan,
-            keahlian: keahlian,
-            bahasa: bahasa,
-            sertifikat: sertifikat,
-            hobi: hobi
-        };
-
-        document.getElementById('previewJson').textContent = JSON.stringify(dataPreview, null, 2);
-        document.getElementById('modalPreviewData').classList.remove('hidden');
-    };
-
-    document.getElementById('btnTutupPreview').onclick = function() {
-        document.getElementById('modalPreviewData').classList.add('hidden');
-    };
     </script>
 
     <!-- Midtrans Snap.js -->
-<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-server-tNOItnN7xmutsv1uuPr4zC7e"></script>
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-server-tNOItnN7xmutsv1uuPr4zC7e"></script>
 
     <style>
         @media screen {
