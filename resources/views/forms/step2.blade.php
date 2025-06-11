@@ -275,7 +275,7 @@ window.hapusSemuaDataSection = function(section) {
     if (window.updateSessionCV) window.updateSessionCV();
 };
 
-// Toggle handler untuk seluruh header dropdown
+// Toggle handler untuk seluruh header dropdown (accordion style)
 document.querySelectorAll('.dropdown-header').forEach(function(header){
     header.addEventListener('click', function(e){
         // Jika klik tombol hapus, jangan toggle
@@ -285,6 +285,21 @@ document.querySelectorAll('.dropdown-header').forEach(function(header){
         const dropdown = document.getElementById(section + 'Dropdown');
         const icon = document.getElementById(section + 'Icon');
         const trashBtn = document.getElementById(section + 'TrashBtn');
+
+        // Tutup semua dropdown lain
+        document.querySelectorAll('.dropdown-header').forEach(function(otherHeader){
+            const otherSection = otherHeader.getAttribute('data-dropdown');
+            const otherDropdown = document.getElementById(otherSection + 'Dropdown');
+            const otherIcon = document.getElementById(otherSection + 'Icon');
+            const otherTrashBtn = document.getElementById(otherSection + 'TrashBtn');
+            if (otherDropdown && otherDropdown !== dropdown) {
+                otherDropdown.classList.add('hidden');
+                if (otherIcon) otherIcon.textContent = '+';
+                if (otherTrashBtn) otherTrashBtn.classList.add('hidden');
+            }
+        });
+
+        // Toggle dropdown yang diklik
         if (dropdown.classList.contains('hidden')) {
             dropdown.classList.remove('hidden');
             if (icon) icon.textContent = '-';

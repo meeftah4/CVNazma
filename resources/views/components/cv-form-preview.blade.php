@@ -1,17 +1,18 @@
 <div class="flex flex-col md:flex-row gap-4">
-        <!-- Form Section -->
-        <div class="w-full md:w-1/2">
-            <form id="cvForm" method="POST" action="#" onsubmit="return false;">
-                @csrf
+    <!-- Form Section -->
+    <div class="w-full md:w-1/2">
+        <form id="cvForm" method="POST" action="#" onsubmit="return false;">
+            @csrf
 
-                @include('forms.step1')
-                @include('forms.step2')
-            </form>
-        </div>
+            @include('forms.step1')
+            @include('forms.step2')
+        </form>
+    </div>
 
-        <!-- Live Preview Section -->
-        <div class="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-lg flex flex-col">
-            <div id="previewWrapper" style="overflow-y:auto;">
+    <!-- Live Preview Section -->
+    <div class="w-full md:w-1/2 bg-white rounded-lg shadow-lg flex flex-col">
+        <div id="previewWrapper" style="overflow-y:auto;">
+            <div class="p-6">
                 @include('components.view-cv')
             </div>
         </div>

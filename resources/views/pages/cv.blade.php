@@ -3,7 +3,7 @@
 @section('title', 'CV Nazma')
 
 @section('content')
-<div style="background-color: #F4F8FF; min-height: 100vh;" class="pt-4 pb-10">
+<div style="background-color: #F4F8FF; min-height: 0;" class="pt-4 pb-4">
     <div class="container mx-auto px-4">
         <!-- Stepper & Judul -->
         <div class="flex flex-col items-center mb-12">
@@ -46,7 +46,7 @@
         </div>
         <!-- END Stepper & Judul -->
 
-        <div style="background-color: #F4F8FF; min-height: 100vh;" class="pt-4 pb-10">
+        <div style="background-color: #F4F8FF; min-height: 0;" class="pt-4 pb-4">
             <div class="container mx-auto px-4" id="main-content">
                 <div id="form-section">
                     @include('components.cv-form-preview')
