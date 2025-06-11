@@ -231,7 +231,8 @@
         // 4. Simpan ke database (backend ambil path dari session)
         let res = await fetch('/cvs-users/save-from-session', {
             method: 'POST',
-            headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+            headers: {'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+            body: JSON.stringify({ template: "{{ $template }}" })
         });
         let data = await res.json();
         let cvsy_id = data.cvsy_id;
@@ -295,7 +296,7 @@
                 if (data.status === 'settlement' || data.status === 'capture') {
                     settled = true;
                     // Tambahkan template ke URL
-                    window.location.href = `/cvats/cv-complete?template={{ $template }}`;
+                    window.location.href = `/cvats/cv-complete?template={{ $template }}&cvsy_id=${cvsy_id}`;
                     return;
                 }
                 await new Promise(r => setTimeout(r, 2000)); // tunggu 2 detik

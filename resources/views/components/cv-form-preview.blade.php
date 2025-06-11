@@ -1,7 +1,7 @@
 <div class="flex flex-col md:flex-row gap-4">
         <!-- Form Section -->
         <div class="w-full md:w-1/2">
-            <form id="cvForm" method="POST" action="#">
+            <form id="cvForm" method="POST" action="#" onsubmit="return false;">
                 @csrf
 
                 @include('forms.step1')

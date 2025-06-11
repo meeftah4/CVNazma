@@ -137,8 +137,6 @@ Route::get('/cvats/cv-complete', function () {
         ->where('user_id', $user->id)
         ->firstOrFail();
 
-    // Data lain jika perlu bisa diambil di sini
-
     return view('pages.cv-complete', [
         'cv' => $cv,
         'template' => $template,
@@ -146,4 +144,7 @@ Route::get('/cvats/cv-complete', function () {
     ]);
 })->middleware('auth');
 Route::get('/indonesia/{template}/download', [\App\Http\Controllers\CvsUserTemplateController::class, 'downloadTemplate']);
-Route::get('/indonesia/{template}', [\App\Http\Controllers\CvsUserTemplateController::class, 'showTemplate']);
+//Route::get('/indonesia/{template}', [\App\Http\Controllers\CvsUserTemplateController::class, 'showTemplate']);
+Route::delete('/cvs-users/{id}', [\App\Http\Controllers\CvsUsersController::class, 'destroy'])->name('cvs-users.destroy');
+Route::get('/cv-user/{template}', [\App\Http\Controllers\CvsUserTemplateController::class, 'showTemplate']);
+Route::get('/cv-user/{template}/download', [\App\Http\Controllers\CvsUserTemplateController::class, 'downloadTemplate']);

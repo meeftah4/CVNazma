@@ -1,5 +1,15 @@
 @php
+  use Illuminate\Support\Str;
   $profil0 = (is_array($profil) && isset($profil[0]) && is_array($profil[0])) ? $profil[0] : [];
+  $foto = !empty(session('foto')) ? session('foto') : ($profil0['photo'] ?? '');
+  $foto = trim($foto);
+  $showPhoto = $foto !== ''
+    && strtolower($foto) !== 'null'
+    && $foto !== '#'
+    && (
+      preg_match('/\.(jpg|jpeg|png|gif)$/i', $foto)
+      || Str::startsWith($foto, 'data:image/')
+    );
 @endphp
 <!DOCTYPE html>
 <html lang="id">
@@ -93,17 +103,6 @@
           {{ $profil0['address'] ?? '' }}
         </div>
       @endif
-      @php
-        $foto = !empty(session('foto')) ? session('foto') : ($profil0['photo'] ?? '');
-        $foto = trim($foto);
-        $showPhoto = $foto !== ''
-          && strtolower($foto) !== 'null'
-          && $foto !== '#'
-          && (
-            preg_match('/\.(jpg|jpeg|png|gif)$/i', $foto)
-            || \Illuminate\Support\Str::startsWith($foto, 'data:image/'))
-        ;
-      @endphp
       @if($showPhoto)
         <div style="width: 100px; height: 100px; overflow: hidden; flex-shrink: 0; margin-top:1rem;">
           <img src="{{ $foto }}" alt="Foto Profil" style="width: 100%; height: 100%; object-fit: cover; border-radius: 0; border: none;">
@@ -121,9 +120,9 @@
           {{ $profil0['linkedin'] }}
         </div>
       @endif
-      @if(!empty($profil0['portfolio']))
+      @if(!empty($profil0['website']))
         <div>
-          {{ $profil0['portfolio'] }}
+          {{ $profil0['website'] }}
         </div>
       @endif
     </div>
@@ -150,9 +149,9 @@
       <div class="mb-3">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <span>
-            <span class="bold">{{ $item['companyName'] ?? '' }}</span>
-            @if(!empty($item['jobCity']))
-              <span>{{ ' - ' . $item['jobCity'] }}</span>
+            <span class="bold">{{ $item['company_name'] ?? '' }}</span>
+            @if(!empty($item['location']))
+              <span>{{ ' - ' . $item['location'] }}</span>
             @endif
           </span>
           <span class="italic" id="job-date-{{ $loop->index }}"></span>
@@ -164,9 +163,9 @@
               if (isNaN(date)) return '';
               return date.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
             }
-            const start = @json($item['jobStartDate'] ?? '' );
-            const end = @json($item['jobEndDate'] ?? '' );
-            const present = @json($item['jobIsPresent'] ?? false);
+            const start = @json($item['start_date'] ?? '' );
+            const end = @json($item['end_date'] ?? '' );
+            const present = @json(empty($item['end_date']));
             let text = '';
             if (start || present) {
               text = `${formatDate(start)} - ${present ? 'Sekarang' : formatDate(end)}`;
@@ -175,33 +174,23 @@
           })();
           </script>
         </div>
-        <div>{{ $item['jobPosition'] ?? '' }}</div>
-        @if(!empty($item['jobDescription']))
-          @php
-            $jobDesc = $item['jobDescription'];
-            if (!is_array($jobDesc)) $jobDesc = [$jobDesc];
-            $descList = [];
-            foreach ($jobDesc as $desc) {
-              if (is_array($desc)) {
-                foreach ($desc as $d) {
-                  foreach (preg_split('/\r\n|\r|\n/', $d) as $line) {
-                    if (trim($line) !== '') $descList[] = $line;
-                  }
-                }
-              } else {
-                foreach (preg_split('/\r\n|\r|\n/', $desc) as $line) {
-                  if (trim($line) !== '') $descList[] = $line;
-                }
-              }
+        <div>{{ $item['role'] ?? '' }}</div>
+        @php
+          $jobDesc = $item['description'] ?? [];
+          if (!is_array($jobDesc)) $jobDesc = [$jobDesc];
+          $descList = [];
+          foreach ($jobDesc as $desc) {
+            foreach (preg_split('/\r\n|\r|\n/', $desc) as $line) {
+              if (trim($line) !== '') $descList[] = $line;
             }
-          @endphp
-          @if(count($descList))
-            <ul>
-              @foreach ($descList as $line)
-                <li>{{ $line }}</li>
-              @endforeach
-            </ul>
-          @endif
+          }
+        @endphp
+        @if(count($descList))
+          <ul>
+            @foreach ($descList as $line)
+              <li>{{ $line }}</li>
+            @endforeach
+          </ul>
         @endif
       </div>
     @endforeach
@@ -216,7 +205,7 @@
   @foreach ($proyek as $item)
     <div class="mb-3">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span class="bold">{{ $item['projectName'] ?? '' }}</span>
+        <span class="bold">{{ $item['project_name'] ?? '' }}</span>
         <span class="italic" id="project-date-{{ $loop->index }}"></span>
         <script>
         (function() {
@@ -226,9 +215,9 @@
             if (isNaN(date)) return '';
             return date.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
           }
-          const start = @json($item['projectStartDate'] ?? '');
-          const end = @json($item['projectEndDate'] ?? '');
-          const present = @json($item['isPresent'] ?? false);
+          const start = @json($item['start_date'] ?? '');
+          const end = @json($item['end_date'] ?? '');
+          const present = @json(empty($item['end_date']));
           let text = '';
           if (start || present) {
             text = `${formatDate(start)} - ${present ? 'Sekarang' : formatDate(end)}`;
@@ -237,33 +226,23 @@
         })();
         </script>
       </div>
-      <div class="italic">{{ $item['projectPosition'] ?? '' }}</div>
-      @if(!empty($item['projectDescription']))
-        @php
-          $descArr = $item['projectDescription'];
-          if (!is_array($descArr)) $descArr = [$descArr];
-          $descList = [];
-          foreach ($descArr as $desc) {
-            if (is_array($desc)) {
-              foreach ($desc as $d) {
-                foreach (preg_split('/\r\n|\r|\n/', $d) as $line) {
-                  if (trim($line) !== '') $descList[] = $line;
-                }
-              }
-            } else {
-              foreach (preg_split('/\r\n|\r|\n/', $desc) as $line) {
-                if (trim($line) !== '') $descList[] = $line;
-              }
-            }
+      <div class="italic">{{ $item['role'] ?? '' }}</div>
+      @php
+        $descArr = $item['description'] ?? [];
+        if (!is_array($descArr)) $descArr = [$descArr];
+        $descList = [];
+        foreach ($descArr as $desc) {
+          foreach (preg_split('/\r\n|\r|\n/', $desc) as $line) {
+            if (trim($line) !== '') $descList[] = $line;
           }
-        @endphp
-        @if(count($descList))
-          <ul>
-            @foreach ($descList as $line)
-              <li>{{ $line }}</li>
-            @endforeach
-          </ul>
-        @endif
+        }
+      @endphp
+      @if(count($descList))
+        <ul>
+          @foreach ($descList as $line)
+            <li>{{ $line }}</li>
+          @endforeach
+        </ul>
       @endif
     </div>
   @endforeach
@@ -277,7 +256,7 @@
     </div>
     <ul class="two-col-list">
       @foreach ($keahlian as $skill)
-        <span>{{ is_array($skill) ? implode(', ', $skill) : $skill }}</span>
+        <span>{{ $skill['skill_name'] ?? (is_array($skill) ? implode(', ', $skill) : $skill) }}</span>
       @endforeach
     </ul>
   @endif
@@ -291,7 +270,7 @@
   @foreach ($pendidikan as $edu)
     <div class="mb-3">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span class="bold">{{ $edu['educationInstitution'] ?? '' }}</span>
+        <span class="bold">{{ $edu['institution'] ?? '' }}</span>
         <span class="italic" id="edu-date-{{ $loop->index }}"></span>
         <script>
         (function() {
@@ -301,9 +280,9 @@
             if (isNaN(date)) return '';
             return date.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
           }
-          const start = @json($edu['educationStartDate'] ?? '');
-          const end = @json($edu['educationEndDate'] ?? '');
-          const present = @json($edu['isPresent'] ?? false);
+          const start = @json($edu['start_date'] ?? '');
+          const end = @json($edu['end_date'] ?? '');
+          const present = @json(empty($edu['end_date']));
           let text = '';
           if (start || present) {
             text = `${formatDate(start)} - ${present ? 'Sekarang' : formatDate(end)}`;
@@ -312,33 +291,23 @@
         })();
         </script>
       </div>
-      <div class="italic">{{ $edu['educationDegree'] ?? '' }}</div>
-      @if(!empty($edu['educationDescription']))
-        @php
-          $descArr = $edu['educationDescription'];
-          if (!is_array($descArr)) $descArr = [$descArr];
-          $descList = [];
-          foreach ($descArr as $desc) {
-            if (is_array($desc)) {
-              foreach ($desc as $d) {
-                foreach (preg_split('/\r\n|\r|\n/', $d) as $line) {
-                  if (trim($line) !== '') $descList[] = $line;
-                }
-              }
-            } else {
-              foreach (preg_split('/\r\n|\r|\n/', $desc) as $line) {
-                if (trim($line) !== '') $descList[] = $line;
-              }
-            }
+      <div class="italic">{{ $edu['degree'] ?? '' }}</div>
+      @php
+        $descArr = $edu['description'] ?? [];
+        if (!is_array($descArr)) $descArr = [$descArr];
+        $descList = [];
+        foreach ($descArr as $desc) {
+          foreach (preg_split('/\r\n|\r|\n/', $desc) as $line) {
+            if (trim($line) !== '') $descList[] = $line;
           }
-        @endphp
-        @if(count($descList))
-          <ul>
-            @foreach ($descList as $line)
-              <li>{{ $line }}</li>
-            @endforeach
-          </ul>
-        @endif
+        }
+      @endphp
+      @if(count($descList))
+        <ul>
+          @foreach ($descList as $line)
+            <li>{{ $line }}</li>
+          @endforeach
+        </ul>
       @endif
     </div>
   @endforeach
@@ -355,13 +324,15 @@
   </div>
   <div class="mb-4">
     @if(is_array($bahasa) && count($bahasa))
-      <p><strong>Bahasa:</strong> {{ implode(', ', array_map(fn($b) => is_array($b) ? implode(' ', $b) : $b, $bahasa)) }}</p>
+      <p><strong>Bahasa:</strong> {{ implode(', ', array_map(fn($b) => $b['language_name'] ?? (is_array($b) ? implode(' ', $b) : $b), $bahasa)) }}</p>
     @endif
     @if(is_array($sertifikat) && count($sertifikat))
-      <p><strong>Sertifikat:</strong> {{ implode(', ', array_map(fn($s) => is_array($s) ? implode(' ', $s) : $s, $sertifikat)) }}</p>
+      <p><strong>Sertifikat:</strong> {{ implode(', ', array_map(fn($s) => $s['certificate_name'] ?? (is_array($s) ? implode(' ', $s) : $s), $sertifikat)) }}</p>
     @endif
     @if(is_array($hobi) && count($hobi))
-      <p><strong>Hobi:</strong> {{ implode(', ', array_map(fn($h) => is_array($h) ? implode(' ', $h) : $h, $hobi)) }}</p>
+      <p><strong>Hobi:</strong> {{ implode(', ', array_map(fn($h) => $h['hobby'] ?? (is_array($h) ? implode(' ', $h) : $h), $hobi)) }}</p>
     @endif
   </div>
 @endif
+</body>
+</html>

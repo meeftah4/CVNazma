@@ -1,11 +1,13 @@
+{{-- filepath: d:\Magang\CVNazma\resources\views\pages\cv-complete.blade.php --}}
 @extends('layouts.app')
 
 @section('title', 'Unduh CV')
 
 @section('content')
 @php
-    // Ambil nama template dari session/request, fallback ke 'basic'
+    // Ambil nama template dan id dari request
     $template = request('template', 'basic');
+    $cvsy_id = request('cvsy_id');
     $templateNames = [
         'basic' => 'Klasik Minimalis',
         'template1' => 'Modern Elegan',
@@ -27,7 +29,7 @@
             <div class="w-[210mm] h-[297mm] mx-auto bg-white">
                 <iframe 
                     id="cvPreview"
-                    src="{{ url('indonesia/' . $template) }}?cvsy_id={{ $cvsy_id }}"
+                    src="{{ url('cv-user/' . $template) }}?cvsy_id={{ $cvsy_id }}"
                     class="w-full h-full border-0"
                     loading="lazy"
                     title="Preview {{ $templateDisplay }}"
@@ -38,11 +40,10 @@
     </div>
 
     <!-- Tombol Unduh PDF -->
-    <form method="GET" action="{{ url('indonesia/' . $template . '/download') }}?cvsy_id={{ $cvsy_id }}">
-        <button type="submit" class="bg-[#2196f3] text-white px-6 py-3 rounded-lg font-bold shadow hover:bg-[#1769aa] transition">
-            Unduh CV
-        </button>
-    </form>
+    <a href="{{ url('cv-user/' . $template . '/download') }}?cvsy_id={{ $cvsy_id }}" 
+       class="bg-[#2196f3] text-white px-6 py-3 rounded-lg font-bold shadow hover:bg-[#1769aa] transition block text-center">
+        Unduh CV
+    </a>
 
     <!-- Tombol Kembali ke Home -->
     <a href="{{ url('/') }}" class="mt-4 inline-block bg-gray-200 text-[#1a237e] px-6 py-3 rounded-lg font-bold shadow hover:bg-gray-300 transition">

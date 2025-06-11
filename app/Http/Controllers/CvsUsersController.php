@@ -64,4 +64,17 @@ class CvsUsersController extends Controller
         }
         return response()->json(['message' => 'No file uploaded'], 400);
     }
+    public function destroy($id)
+    {
+        $cv = \App\Models\Cvs_Users::findOrFail($id);
+
+        // Pastikan hanya pemilik CV yang bisa menghapus
+        if ($cv->user_id !== optional(\Illuminate\Support\Facades\Auth::user())->id) {
+            abort(403, 'Anda tidak berhak menghapus CV ini.');
+        }
+
+        $cv->delete();
+
+        return redirect()->back()->with('success', 'CV berhasil dihapus.');
+    }
 }
