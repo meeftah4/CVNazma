@@ -133,7 +133,7 @@ window.renderKeahlian = function () {
                 <p>${data.skillName || ''}</p>
             </div>
             <div class="flex items-start space-x-2 h-full pr-4">
-                <button class="text-red-500" onclick="deleteKeahlian(${index})">X</button>
+                <button class="text-red-500 font-bold" onclick="deleteKeahlian(${index})">X</button>
                 <button class="text-blue-500" onclick="editKeahlian(${index})">✎</button>
             </div>
         `;

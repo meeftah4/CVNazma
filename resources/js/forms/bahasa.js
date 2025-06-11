@@ -104,7 +104,7 @@ window.renderBahasa = function () {
                 <p>${data.languageName || ''}</p>
             </div>
             <div class="flex items-start space-x-2 h-full pr-4">
-                <button class="text-red-500" onclick="deleteBahasa(${index})">X</button>
+                <button class="text-red-500 font-bold" onclick="deleteBahasa(${index})">X</button>
                 <button class="text-blue-500" onclick="editBahasa(${index})">✎</button>
             </div>
         `;

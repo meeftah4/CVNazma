@@ -109,8 +109,35 @@
         }
     }
 
+    // Fungsi untuk validasi step 1
+    function validateStep1() {
+        const name = document.getElementById('nameInput')?.value.trim();
+        const email = document.getElementById('emailInput')?.value.trim();
+        const address = document.getElementById('addressInput')?.value.trim();
+
+        // Tampilkan/hilangkan pesan error
+        document.getElementById('nameError').classList.toggle('hidden', !!name);
+        document.getElementById('emailError').classList.toggle('hidden', !!email);
+        document.getElementById('addressError').classList.toggle('hidden', !!address);
+
+        return !!(name && email && address);
+    }
+
     // Stepper click handler
     function goToStep(step) {
+        // Jika mau ke step 2/3, validasi dulu step 1
+        if ((step === 2 || step === 3)) {
+            // Pastikan form step-1 sedang aktif
+            const step1 = document.getElementById('step-1');
+            if (step1 && !step1.classList.contains('hidden')) {
+                if (!validateStep1()) {
+                    // Fokus ke step 1 jika validasi gagal
+                    setActiveStep(1);
+                    return;
+                }
+            }
+        }
+
         // Simpan data step yang sedang aktif sebelum pindah step
         const currentStep = document.querySelector('.step:not(.hidden)');
         if (currentStep) {

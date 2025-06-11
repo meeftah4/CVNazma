@@ -6,22 +6,25 @@
     <div class="mb-4">
         <label class="block font-normal mb-1" style="color:#01287E;">Nama lengkap</label>
         <input type="text" id="nameInput" name="name" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required>
+        <span id="nameError" class="text-red-500 text-sm hidden">Nama lengkap wajib di isi!</span>
     </div>
 
     <div class="mb-4 flex gap-4">
         <div class="w-1/2">
             <label class="block font-normal mb-1" style="color:#01287E;">Alamat Email</label>
             <input type="email" id="emailInput" name="email" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required>
+            <span id="emailError" class="text-red-500 text-sm hidden">Alamat Email wajib di isi!</span>
         </div>
         <div class="w-1/2">
             <label class="block font-normal mb-1" style="color:#01287E;">Nomor Handphone</label>
-            <input type="text" id="phoneInput" name="phone" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required>
+            <input type="text" id="phoneInput" name="phone" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
         </div>
     </div>
 
     <div class="mb-4">
         <label class="block font-normal mb-1" style="color:#01287E;">Alamat</label>
-        <textarea id="addressInput" name="address" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md p-2"></textarea>
+        <textarea id="addressInput" name="address" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required></textarea>
+        <span id="addressError" class="text-red-500 text-sm hidden">Alamat wajib di isi!</span>
     </div>
 
     <div class="mb-6 flex gap-4">
@@ -46,14 +49,32 @@
 
 <script>
 function saveStep1AndGoToStep2() {
+    // Validasi wajib isi
+    let valid = true;
+
+    const name = document.getElementById('nameInput')?.value.trim();
+    const email = document.getElementById('emailInput')?.value.trim();
+    const address = document.getElementById('addressInput')?.value.trim();
+
+    // Tampilkan/hilangkan pesan error
+    document.getElementById('nameError').classList.toggle('hidden', !!name);
+    document.getElementById('emailError').classList.toggle('hidden', !!email);
+    document.getElementById('addressError').classList.toggle('hidden', !!address);
+
+    if (!name || !email || !address) {
+        valid = false;
+    }
+
+    if (!valid) return;
+
     // Pastikan window.tempData dan profil ada
     window.tempData = window.tempData || {};
     window.tempData.profil = window.tempData.profil || [{}];
     window.tempData.profil[0] = {
-        name: document.getElementById('nameInput')?.value || '',
-        email: document.getElementById('emailInput')?.value || '',
+        name,
+        email,
         phone: document.getElementById('phoneInput')?.value || '',
-        address: document.getElementById('addressInput')?.value || '',
+        address,
         linkedin: document.getElementById('linkedinInput')?.value || '',
         portfolio: document.getElementById('portfolioInput')?.value || '',
         description: window.tempData.profil?.[0]?.description || '',

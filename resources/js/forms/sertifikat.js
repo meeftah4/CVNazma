@@ -105,7 +105,7 @@ window.renderSertifikat = function () {
                 <p>${data.certificateName || ''}</p>
             </div>
             <div class="flex items-start space-x-2 h-full pr-4">
-                <button class="text-red-500" onclick="deleteSertifikat(${index})">X</button>
+                <button class="text-red-500 font-bold" onclick="deleteSertifikat(${index})">X</button>
                 <button class="text-blue-500" onclick="editSertifikat(${index})">✎</button>
             </div>
         `;

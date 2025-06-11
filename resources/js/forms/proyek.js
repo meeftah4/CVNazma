@@ -176,7 +176,7 @@ window.renderProyek = function () {
                 ` : ''}
             </div>
             <div class="flex items-start space-x-2 h-full pr-4">
-                <button class="text-red-500" onclick="deleteProyek(${index})">X</button>
+                <button class="text-red-500 font-bold" onclick="deleteProyek(${index})">X</button>
                 <button class="text-[#01287E]" onclick="editProyek(${index})">✎</button>
             </div>
         `;

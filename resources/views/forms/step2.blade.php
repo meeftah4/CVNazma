@@ -46,7 +46,7 @@
         <div class="mb-4">
             <div class="bg-white rounded-md shadow p-0">
                 <div 
-                    class="dropdown-header w-full flex justify-between items-center px-6 border-b font-bold text-blue-900 rounded-t-md text-base"
+                    class="dropdown-header w-full flex justify-between items-center px-6 font-bold text-blue-900 rounded-t-md text-base"
                     data-dropdown="{{ strtolower(str_replace(' ', '', $field)) }}"
                     style="min-height: 50px; padding-top: 0.75rem; padding-bottom: 0.75rem; cursor: pointer;"
                 >
@@ -77,6 +77,7 @@
                         </button>
                     </div>
                 </div>
+                <div class="border-b border-gray-200 mx-6"></div>
                 <div id="{{ strtolower(str_replace(' ', '', $field)) }}Dropdown" class="hidden relative">
                     @include('partials.' . strtolower(str_replace(' ', '-', $field)))
                 </div>

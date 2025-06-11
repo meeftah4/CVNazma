@@ -1,4 +1,3 @@
-<div>
 <div class="flex flex-col md:flex-row gap-4">
         <!-- Form Section -->
         <div class="w-full md:w-1/2">
@@ -11,23 +10,47 @@
         </div>
 
         <!-- Live Preview Section -->
-        <div class="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-lg flex flex-col h-full">
-            <!-- Konten preview scrollable -->
-            <div class="flex-1 overflow-y-auto" style="max-height: 670px;">
+        <div class="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-lg flex flex-col">
+            <div id="previewWrapper" style="overflow-y:auto;">
                 @include('components.view-cv')
             </div>
         </div>
     </div>
 </div>
 
-
-
 <script>
-    function showFormStep(step) {
-        document.querySelectorAll('.step').forEach(el => el.classList.add('hidden'));
-        const targetStep = document.getElementById('step-' + step);
-        if (targetStep) targetStep.classList.remove('hidden');
-    }
+function syncPreviewHeightWithForm(step) {
+    const formDiv = document.querySelector('#cvForm');
+    const previewDiv = document.getElementById('previewWrapper');
+    if (!formDiv || !previewDiv) return;
+
+    // Reset height dulu agar offsetHeight form akurat
+    previewDiv.style.height = 'auto';
+
+    // Samakan tinggi preview dengan form
+    previewDiv.style.height = formDiv.offsetHeight + 'px';
+    previewDiv.style.overflowY = 'auto';
+}
+
+// Panggil saat step berubah
+function showFormStep(step) {
+    document.querySelectorAll('.step').forEach(el => el.classList.add('hidden'));
+    const targetStep = document.getElementById('step-' + step);
+    if (targetStep) targetStep.classList.remove('hidden');
+    syncPreviewHeightWithForm(step);
+}
+
+// Pantau perubahan form agar preview selalu sinkron
+const observer = new MutationObserver(() => {
+    const step = document.querySelector('.step:not(.hidden)')?.id?.split('-')[1] || 1;
+    syncPreviewHeightWithForm(Number(step));
+});
+observer.observe(document.getElementById('cvForm'), { childList: true, subtree: true, attributes: true });
+
+// Inisialisasi awal
+document.addEventListener('DOMContentLoaded', function () {
+    syncPreviewHeightWithForm(1);
+});
 
     function updateContactPreview() {
         const email = document.getElementById('emailInput')?.value || '';

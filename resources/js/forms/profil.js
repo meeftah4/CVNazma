@@ -73,7 +73,7 @@ window.renderDataRow = function (id) {
         row.innerHTML = `
             <p class="text-gray-700 pl-4">${data.description}</p>
             <div class="flex items-start space-x-2 h-full pr-4">
-                <button class="text-red-500" onclick="deleteData('${id}')">X</button>
+                <button class="text-red-500 font-bold" onclick="deleteData('${id}')">X</button>
                 <button class="text-[#01287E]" onclick="editData('${id}')">✎</button>
             </div>
         `;

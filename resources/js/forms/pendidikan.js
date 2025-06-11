@@ -165,7 +165,7 @@ window.renderPendidikan = function () {
                 ` : ''}
             </div>
             <div class="flex items-start space-x-2 h-full pr-4">
-                <button class="text-red-500" onclick="deletePendidikan(${index})">X</button>
+                <button class="text-red-500 font-bold" onclick="deletePendidikan(${index})">X</button>
                 <button class="text-blue-500" onclick="editPendidikan(${index})">✎</button>
             </div>
         `;
