@@ -34,6 +34,11 @@ Route::get('/template', function () {
     ]);
 });
 
+Route::get('/paket', function () {
+    return view('pages.paket', [
+    ]);
+});
+
 Route::get('/rating', function () {
     return view('dashboard.rating');
 })->name('rating');
@@ -129,22 +134,8 @@ Route::post('/cvs-users/upload-photo', [CvsUsersController::class, 'uploadPhoto'
 Route::post('/midtrans/get-snap-token', [\App\Http\Controllers\TransactionsController::class, 'getSnapToken'])->middleware('auth');
 Route::post('/midtrans/callback', [TransactionsController::class, 'midtransCallback']);
 Route::post('/midtrans/check-status', [\App\Http\Controllers\TransactionsController::class, 'checkStatus'])->middleware('auth');
-Route::get('/cvats/cv-complete', function () {
-    $user = Auth::user();
-    $cvsy_id = request('cvsy_id');
-    $template = request('template', 'basic');
-    $cv = \App\Models\Cvs_Users::where('id', $cvsy_id)
-        ->where('user_id', $user->id)
-        ->firstOrFail();
-
-    return view('pages.cv-complete', [
-        'cv' => $cv,
-        'template' => $template,
-        'cvsy_id' => $cvsy_id,
-    ]);
-})->middleware('auth');
+Route::get('/cvats/cv-complete', [\App\Http\Controllers\CvCompleteController::class, 'show'])->name('cv.complete')->middleware('auth');
 Route::get('/indonesia/{template}/download', [\App\Http\Controllers\CvsUserTemplateController::class, 'downloadTemplate']);
-//Route::get('/indonesia/{template}', [\App\Http\Controllers\CvsUserTemplateController::class, 'showTemplate']);
 Route::delete('/cvs-users/{id}', [\App\Http\Controllers\CvsUsersController::class, 'destroy'])->name('cvs-users.destroy');
 Route::get('/cv-user/{template}', [\App\Http\Controllers\CvsUserTemplateController::class, 'showTemplate']);
 Route::get('/cv-user/{template}/download', [\App\Http\Controllers\CvsUserTemplateController::class, 'downloadTemplate']);

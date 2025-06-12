@@ -29,9 +29,18 @@ class UsersController extends Controller
             // Login pengguna setelah registrasi
             Auth::login($user);
 
+            // Tambahan: jika AJAX, return JSON saja
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['success' => true, 'user' => $user]);
+            }
+
             // Flash message sukses
             return redirect('/')->with('success', 'Registrasi berhasil! Selamat datang di CV Nazma.');
         } catch (\Exception $e) {
+            // Jika terjadi kesalahan, kembalikan respons JSON dengan status 500
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['success' => false, 'message' => 'Registrasi gagal! Silakan coba lagi.'], 500);
+            }
             // Flash message gagal
             return redirect('/')->with('error', 'Registrasi gagal! Silakan coba lagi.');
         }
@@ -40,32 +49,35 @@ class UsersController extends Controller
     public function login(Request $request)
     {
         try {
-            // Validasi input
             $credentials = $request->validate([
                 'email' => 'required|email',
                 'password' => 'required|string|min:8',
             ]);
 
-            // Cek kredensial
             if (Auth::attempt($credentials)) {
                 $request->session()->regenerate();
-
-                // Ambil pengguna yang sedang login
                 $user = Auth::user();
 
-                // Cek apakah pengguna adalah admin
-                if ($user->role === 'admin') {
-                    // Redirect ke dashboard admin
-                    return redirect('/dashboard')->with('success', 'Login berhasil! Selamat datang, Admin.');
+                // Tambahan: jika AJAX, return JSON saja
+                if ($request->ajax() || $request->wantsJson()) {
+                    return response()->json(['success' => true, 'user' => $user]);
                 }
 
-                // Jika bukan admin, redirect ke halaman utama
+                if ($user->role === 'admin') {
+                    return redirect('/dashboard')->with('success', 'Login berhasil! Selamat datang, Admin.');
+                }
                 return redirect('/')->with('success', 'Login berhasil! Selamat datang, ' . $user->name . '.');
             }
 
-            // Flash message gagal
+            // Jika gagal
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['success' => false, 'message' => 'Email atau password salah.'], 401);
+            }
             return redirect('/')->with('error', 'Login gagal! Email atau password salah.');
         } catch (\Exception $e) {
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['success' => false, 'message' => 'Terjadi kesalahan! Silakan coba lagi.'], 500);
+            }
             return redirect('/')->with('error', 'Terjadi kesalahan! Silakan coba lagi.');
         }
     }

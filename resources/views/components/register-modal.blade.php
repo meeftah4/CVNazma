@@ -31,7 +31,8 @@
                 </button>
             </form>
             <p class="register-modal-social-text">Atau daftar dengan</p>
-            <button class="register-modal-google-button" onclick="window.location.href='{{ route('google.login') }}'">
+            <button class="register-modal-google-button"
+                onclick="window.location.href='{{ route('google.login') }}?redirect=' + encodeURIComponent(window.location.href)">
                 <img src="{{ asset('images/google_logo.png') }}" alt="Google" class="register-modal-google-icon">
                 Daftar dengan Google
             </button>

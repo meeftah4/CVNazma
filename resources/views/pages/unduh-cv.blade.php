@@ -125,7 +125,11 @@
                             confirmButton: 'swal2-login-btn'
                         }
                     }).then(() => {
-                        window.location.href = "{{ route('login') }}?redirect={{ urlencode(request()->fullUrl()) }}";
+                        // window.location.href = "{{ route('login') }}?redirect={{ urlencode(request()->fullUrl()) }}";
+                        // Ganti dengan buka modal login
+                        if (window.closeSwalAndOpenLoginModal) {
+                            window.closeSwalAndOpenLoginModal();
+                        }
                     });
                     return;
                 @endif
@@ -309,6 +313,61 @@
             window.location.href = '/';
         }
     };
+
+    window.closeSwalAndOpenLoginModal = function() {
+        // Tutup SweetAlert2
+        Swal.close();
+
+        // Tampilkan modal login (atau register)
+        if (document.getElementById('login-modal')) {
+            document.getElementById('login-modal').classList.remove('hidden');
+        }
+        // Jika ingin bisa register juga, bisa tambahkan tombol di modal login
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // LOGIN MODAL
+        const loginForm = document.querySelector('.login-modal-form');
+        if (loginForm) {
+            loginForm.onsubmit = async function(e) {
+                e.preventDefault();
+                const formData = new FormData(loginForm);
+                const res = await fetch('/masuk', {
+                    method: 'POST',
+                    headers: {'X-Requested-With': 'XMLHttpRequest'},
+                    body: formData
+                });
+                if (res.ok) {
+                    document.getElementById('login-modal').classList.add('hidden');
+                    // (Opsional) reload navbar/user info via AJAX jika ingin update tampilan
+                    // User tetap di halaman ini, data tetap ada
+                } else {
+                    Swal.fire('Gagal', 'Login gagal. Cek email/password.', 'error');
+                }
+            };
+        }
+
+        // REGISTER MODAL
+        const registerForm = document.querySelector('.register-modal-form');
+        if (registerForm) {
+            registerForm.onsubmit = async function(e) {
+                e.preventDefault();
+                const formData = new FormData(registerForm);
+                const res = await fetch('/daftar', {
+                    method: 'POST',
+                    headers: {'X-Requested-With': 'XMLHttpRequest'},
+                    body: formData
+                });
+                if (res.ok) {
+                    document.getElementById('register-modal').classList.add('hidden');
+                    // (Opsional) reload navbar/user info via AJAX jika ingin update tampilan
+                    // User tetap di halaman ini, data tetap ada
+                } else {
+                    Swal.fire('Gagal', 'Registrasi gagal. Cek data Anda.', 'error');
+                }
+            };
+        }
+    });
     </script>
 
     <!-- Midtrans Snap.js -->
@@ -355,6 +414,19 @@
             border: none;
         }
         .swal2-login-btn:focus, .swal2-login-btn:hover {
+            background-color: #e6a84f !important;
+            color: #01287E !important;
+        }
+
+        /* Atur warna tombol OK SweetAlert2 (default confirm button) */
+        .swal2-confirm {
+            background-color: #FFBC5D !important;
+            color: #01287E !important;
+            font-weight: bold;
+            border-radius: 8px;
+            border: none;
+        }
+        .swal2-confirm:focus, .swal2-confirm:hover {
             background-color: #e6a84f !important;
             color: #01287E !important;
         }

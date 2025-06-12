@@ -5,9 +5,6 @@
 
 @section('content')
 @php
-    // Ambil nama template dan id dari request
-    $template = request('template', 'basic');
-    $cvsy_id = request('cvsy_id');
     $templateNames = [
         'basic' => 'Klasik Minimalis',
         'template1' => 'Modern Elegan',
