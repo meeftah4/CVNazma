@@ -1,7 +1,10 @@
+body, html, * {
+    font-family: 'Kantumruy', sans-serif !important;
+}
+
 /* Body styling */
 .home-page {
     background-color: #F4F8FF; /* Tailwind's bg-blue-50 */
-    font-family: 'Kantumruy', sans-serif;
 }
 
 /* Hero Section */

@@ -39,9 +39,6 @@ Route::get('/paket', function () {
     ]);
 });
 
-Route::get('/rating', function () {
-    return view('dashboard.rating');
-})->name('rating');
 
 Route::get('/template-cv-html', [TemplatesController::class, 'showTemplates']);
 
@@ -139,3 +136,4 @@ Route::get('/indonesia/{template}/download', [\App\Http\Controllers\CvsUserTempl
 Route::delete('/cvs-users/{id}', [\App\Http\Controllers\CvsUsersController::class, 'destroy'])->name('cvs-users.destroy');
 Route::get('/cv-user/{template}', [\App\Http\Controllers\CvsUserTemplateController::class, 'showTemplate']);
 Route::get('/cv-user/{template}/download', [\App\Http\Controllers\CvsUserTemplateController::class, 'downloadTemplate']);
+Route::post('/rating', [RatingController::class, 'store'])->name('rating.store');

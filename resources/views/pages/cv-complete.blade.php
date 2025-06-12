@@ -3,6 +3,9 @@
 
 @section('title', 'Unduh CV')
 
+@vite(['resources/css/cv-complete.css'])
+
+
 @section('content')
 @php
     $templateNames = [
@@ -16,18 +19,18 @@
     $templateDisplay = $templateNames[$template] ?? $template;
 @endphp
 
-<div class="min-h-screen flex flex-col items-center justify-center py-8 px-4 bg-[#f5f8ff]">
-    <h1 class="text-2xl font-bold mb-4 text-[#1a237e]">Pembayaran Berhasil!</h1>
-    <p class="mb-6 text-gray-700">Silakan preview dan unduh CV Anda di bawah ini.</p>
+<div class="cv-complete-container">
+    <h1 class="cv-complete-title">Pembayaran Berhasil!</h1>
+    <p class="cv-complete-desc">Silakan preview dan unduh CV Anda di bawah ini.</p>
 
     <!-- Preview CV -->
-    <div class="w-full max-w-[210mm] mb-6">
-        <div class="bg-white shadow-md rounded-lg overflow-hidden">
-            <div class="w-[210mm] h-[297mm] mx-auto bg-white">
+    <div class="cv-preview-box">
+        <div class="cv-preview-bg">
+            <div class="cv-preview-frame">
                 <iframe 
                     id="cvPreview"
                     src="{{ url('cv-user/' . $template) }}?cvsy_id={{ $cvsy_id }}"
-                    class="w-full h-full border-0"
+                    class="cv-iframe"
                     loading="lazy"
                     title="Preview {{ $templateDisplay }}"
                     sandbox="allow-same-origin allow-scripts"
@@ -37,14 +40,115 @@
     </div>
 
     <!-- Tombol Unduh PDF -->
-    <a href="{{ url('cv-user/' . $template . '/download') }}?cvsy_id={{ $cvsy_id }}" 
-       class="bg-[#2196f3] text-white px-6 py-3 rounded-lg font-bold shadow hover:bg-[#1769aa] transition block text-center">
-        Unduh CV
-    </a>
+    <div class="cv-complete-btn-group">
+        <a href="{{ url('/') }}" class="cv-home-btn">
+            Home
+        </a>
+        <button type="button" class="cv-download-btn" id="openRatingModal">
+            Unduh CV
+        </button>
+    </div>
 
-    <!-- Tombol Kembali ke Home -->
-    <a href="{{ url('/') }}" class="mt-4 inline-block bg-gray-200 text-[#1a237e] px-6 py-3 rounded-lg font-bold shadow hover:bg-gray-300 transition">
-        Kembali ke Home
-    </a>
+    <!-- Modal Rating -->
+    <div class="rating-modal-overlay" id="ratingModalOverlay">
+        <div class="rating-modal">
+            <img src="{{ asset('images/rating.png') }}" alt="Review" class="rating-modal-img">
+            <div class="rating-modal-title">Ulasan</div>
+            <form id="ratingForm">
+                <div class="rating-modal-label">Nilai</div>
+                <div class="rating-stars" id="ratingStars">
+                    <!-- Bintang akan diisi JS -->
+                </div>
+                <div class="rating-modal-label">Deskripsi</div>
+                <textarea class="rating-modal-textarea" name="desc" rows="4" placeholder="Tulis ulasan"></textarea>
+                <button type="submit" class="rating-modal-submit">Simpan</button>
+            </form>
+        </div>
+    </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const openBtn = document.getElementById('openRatingModal');
+    const modal = document.getElementById('ratingModalOverlay');
+    const form = document.getElementById('ratingForm');
+    let selectedRating = 0;
+
+    // Key unik per CV (template + cvsy_id)
+    const templateKey = 'cv_has_rated_{{ $template }}_{{ $cvsy_id }}';
+
+    // Generate stars
+    const starsContainer = document.getElementById('ratingStars');
+    let stars = [];
+    for (let i = 1; i <= 5; i++) {
+        const star = document.createElement('span');
+        star.className = 'rating-star';
+        star.innerHTML = '☆'; // Outline by default
+        star.dataset.value = i;
+        star.addEventListener('mouseenter', function() {
+            updateStars(i);
+        });
+        star.addEventListener('mouseleave', function() {
+            updateStars(selectedRating);
+        });
+        star.addEventListener('click', function() {
+            selectedRating = i;
+            updateStars(selectedRating);
+        });
+        starsContainer.appendChild(star);
+        stars.push(star);
+    }
+    function updateStars(rating = 0) {
+        stars.forEach((star, idx) => {
+            if (idx < rating) {
+                star.innerHTML = '★'; // Filled
+                star.classList.add('selected');
+            } else {
+                star.innerHTML = '☆'; // Outline
+                star.classList.remove('selected');
+            }
+        });
+    }
+    updateStars(0);
+
+    // Cek apakah sudah rating untuk CV ini
+    function hasRated() {
+        return localStorage.getItem(templateKey) === '1';
+    }
+    function setRated() {
+        localStorage.setItem(templateKey, '1');
+    }
+
+    // Open modal
+    openBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (hasRated()) {
+            // Sudah rating untuk CV ini, langsung download
+            window.location.href = "{{ url('cv-user/' . $template . '/download') }}?cvsy_id={{ $cvsy_id }}";
+        } else {
+            // Belum rating, tampilkan modal
+            modal.style.display = 'flex';
+        }
+    });
+
+    // Submit rating
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (selectedRating === 0) {
+            alert('Silakan pilih rating terlebih dahulu.');
+            return;
+        }
+        setRated();
+        modal.style.display = 'none';
+        window.location.href = "{{ url('cv-user/' . $template . '/download') }}?cvsy_id={{ $cvsy_id }}";
+    });
+
+    // Optional: klik di luar modal untuk close (bisa di-nonaktifkan jika ingin wajib rating)
+    // modal.addEventListener('click', function(e) {
+    //     if (e.target === modal) modal.style.display = 'none';
+    // });
+});
+</script>
+@endpush

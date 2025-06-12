@@ -14,7 +14,7 @@
         </button>
         <form id="profile_picture_form" action="{{ route('profile.picture.update') }}" method="POST" enctype="multipart/form-data" style="display: none;">
             @csrf
-            <input type="file" id="profile_picture_input" name="profile_picture" accept="image/*" onchange="document.getElementById('profile_picture_form').submit();">
+            <input type="file" id="profile_picture_input" name="profile_picture" accept="image/*">
         </form>
     </div>
 
@@ -103,6 +103,84 @@
     </form>
 </div>
 
+<!-- Tambahkan link CropperJS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
+<!-- Modal Cropper -->
+<div id="cropperModal" class="fixed inset-0 bg-black bg-opacity-50 items-center flex justify-center z-50 hidden">
+    <div class="bg-white p-4 rounded shadow max-w-[90vw] max-h-[90vh] flex flex-col items-center relative">
+        <button type="button" onclick="closeCropperModal()" style="position:absolute;top:10px;right:10px;background:none;border:none;font-size:24px;color:#01287E;cursor:pointer;">&times;</button>
+        <div class="mb-2 font-bold text-center" style="color: #01287E;">Crop your photo</div>
+        <img id="imageToCrop" style="max-width:80vw; max-height:60vh; display:block; margin:auto;">
+        <div class="flex justify-center mt-4">
+            <button id="cropBtn" style="background:#FFBC5D; color:#01287E;" class="px-8 py-2 rounded font-bold">Simpan</button>
+        </div>
+    </div>
+</div>
+
+<script>
+let cropper;
+const input = document.getElementById('profile_picture_input');
+const form = document.getElementById('profile_picture_form');
+
+// Saat pilih file, tampilkan modal cropper
+input.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            document.getElementById('imageToCrop').src = ev.target.result;
+            document.getElementById('cropperModal').classList.remove('hidden');
+            cropper = new Cropper(document.getElementById('imageToCrop'), {
+                aspectRatio: 1,
+                viewMode: 1,
+                movable: true,
+                zoomable: true,
+                rotatable: false,
+                scalable: false,
+            });
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+// Simpan hasil crop ke server
+document.getElementById('cropBtn').onclick = function() {
+    const canvas = cropper.getCroppedCanvas({
+        width: 200,
+        height: 200,
+    });
+    canvas.toBlob(function(blob) {
+        // Buat FormData baru, kirim hasil crop
+        const fd = new FormData();
+        fd.append('profile_picture', blob, 'profile_picture.png');
+        fd.append('_token', '{{ csrf_token() }}');
+        fetch("{{ route('profile.picture.update') }}", {
+            method: 'POST',
+            body: fd
+        }).then(() => window.location.reload());
+    }, 'image/png');
+    document.getElementById('cropperModal').classList.add('hidden');
+    cropper.destroy();
+};
+
+function closeCropperModal() {
+    document.getElementById('cropperModal').classList.add('hidden');
+    if (window.cropper) {
+        window.cropper.destroy();
+        window.cropper = null;
+    }
+}
+
+// Klik di luar modal untuk menutup
+document.getElementById('cropperModal').addEventListener('mousedown', function(e) {
+    if (e.target === this) {
+        closeCropperModal();
+    }
+});
+</script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const alertContainer = document.getElementById('alert-container');
@@ -113,3 +191,11 @@
         }
     });
 </script>
+
+<style>
+/* CropperJS: area luar crop jadi hitam */
+.cropper-bg {
+    background-color: #000 !important;
+    background-image: none !important;
+}
+</style>

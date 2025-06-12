@@ -1,0 +1,93 @@
+#step-1, #step-1 * {
+    font-family: 'Kantumruy', sans-serif !important;
+}
+
+#step-1 {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 24px rgba(26,35,126,0.12);
+}
+
+#step-1 h2 {
+    font-size: 1.30rem; /* text-xl */
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #01287E;
+    border-bottom: 1px solid #E5E7EB;
+    padding-bottom: 0.5rem;
+}
+
+#step-1 label {
+    font-size: 1rem; /* text-xl */
+    display: block;
+    font-weight: 400;
+    margin-bottom: 0.25rem;
+    color: #01287E;
+}
+
+#step-1 input[type="text"],
+#step-1 input[type="email"],
+#step-1 input[type="url"],
+#step-1 textarea {
+    margin-top: 0.25rem;
+    display: block;
+    width: 100%;
+    border: 1px solid #d1d5db; /* border-gray-300 */
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+    font-family: 'Kantumruy', sans-serif;
+}
+
+#step-1 .mb-4 {
+    margin-bottom: 1rem;
+}
+
+#step-1 .mb-6 {
+    margin-bottom: 1.5rem;
+}
+
+#step-1 .flex {
+    display: flex;
+}
+
+#step-1 .gap-4 {
+    gap: 1rem;
+}
+
+#step-1 .w-1\/2 {
+    width: 50%;
+}
+
+#step-1 .justify-center {
+    justify-content: center;
+}
+
+#step-1 button {
+    background: #FFBC5D;
+    color: #01287E;
+    font-weight: bold;
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.375rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+    transition: filter 0.2s;
+    font-size: 1rem;
+    font-family: 'Kantumruy', sans-serif;
+}
+
+#step-1 button:hover {
+    filter: brightness(0.95);
+}
+
+#step-1 .text-red-500 {
+    color: #ef4444;
+}
+
+#step-1 .text-sm {
+    font-size: 0.875rem;
+}
+
+#step-1 .hidden {
+    display: none;
+}

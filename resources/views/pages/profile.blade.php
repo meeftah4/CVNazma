@@ -26,7 +26,7 @@
                         <a href="{{ route('profile.main') }}" class="{{ Request::is('profile/main') ? 'active' : '' }}">Profil</a>
                     </li>
                     <li>
-                        <a href="{{ route('profile.ats') }}" class="{{ Request::is('profile/ats') ? 'active' : '' }}">CV ATS Saya</a>
+                        <a href="{{ route('profile.ats') }}" class="{{ Request::is('profile/ats') ? 'active' : '' }}">Cv Ats Saya</a>
                     </li>
                 </ul>
             </div>

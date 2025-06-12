@@ -1,6 +1,10 @@
 {{-- filepath: d:\Magang\CVNazma\resources\views\forms\step2.blade.php --}}
 <style>
 /* Membatasi tinggi elemen daftar dan membuatnya expand */
+#step-2, #step-2 * {
+    font-family: 'Kantumruy', sans-serif !important;
+}
+
 #profilList, #pengalamankerjaList, #proyekList, #keahlianList, #pendidikanList, #bahasaList, #sertifikatList, #hobiList {
     max-height: none; /* Tidak ada batas tinggi */
     overflow-y: visible; /* Biarkan konten meluas ke bawah */
