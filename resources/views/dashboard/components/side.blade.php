@@ -191,6 +191,18 @@
             </a>
         </li>
         <li>
+            <a href="{{ route('dashboard.package') }}" class="sidebar-link{{ request()->is('dashboard/package') ? ' active' : '' }}">
+                <i class="fas fa-box"></i>
+                <span>Paket</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('dashboard.price') }}" class="sidebar-link{{ request()->is('dashboard/price') ? ' active' : '' }}">
+                <i class="fas fa-tags"></i>
+                <span>Harga</span>
+            </a>
+        </li>
+        <li>
             <a href="/dashboard/faqs" class="sidebar-link{{ request()->is('dashboard/faqs*') ? ' active' : '' }}">
                 <i class="fas fa-question-circle"></i>
                 <span>Faq</span>

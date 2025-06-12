@@ -93,6 +93,12 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/dashboard/faqs/{id}', [FaqsController::class, 'destroy'])->name('faq.destroy');
     Route::get('/dashboard/faqs/create', [FaqsController::class, 'create'])->name('faq.create');
     Route::post('/dashboard/faqs', [FaqsController::class, 'store'])->name('faq.store');
+    Route::get('/dashboard/package', function () {
+        return view('dashboard.package');
+    })->name('dashboard.package');
+    Route::get('/dashboard/price', function () {
+        return view('dashboard.price');
+    })->name('dashboard.price');
 });
 
 // Template Routes
