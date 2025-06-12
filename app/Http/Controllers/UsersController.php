@@ -115,7 +115,12 @@ class UsersController extends Controller
     public function showAtsProfile()
     {
         $user = Auth::user();
-        $cvs = \App\Models\Cvs_Users::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
+        $cvs = \App\Models\Cvs_Users::where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->with(['transaction' => function($q) {
+                $q->latest();
+            }])
+            ->get();
 
         return view('pages.profile', [
             'content' => 'components.ats-profil',

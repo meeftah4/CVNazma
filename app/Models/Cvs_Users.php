@@ -16,4 +16,9 @@ class Cvs_Users extends Model
         'user_id', 'name', 'email', 'phone', 'address',
         'linkedin', 'website', 'description', 'cv_picture', 'template_cv'
     ];
+
+    public function transaction()
+    {
+        return $this->hasOne(\App\Models\transactions::class, 'cvsy_id', 'id')->latestOfMany();
+    }
 }
