@@ -136,4 +136,4 @@ Route::get('/indonesia/{template}/download', [\App\Http\Controllers\CvsUserTempl
 Route::delete('/cvs-users/{id}', [\App\Http\Controllers\CvsUsersController::class, 'destroy'])->name('cvs-users.destroy');
 Route::get('/cv-user/{template}', [\App\Http\Controllers\CvsUserTemplateController::class, 'showTemplate']);
 Route::get('/cv-user/{template}/download', [\App\Http\Controllers\CvsUserTemplateController::class, 'downloadTemplate']);
-Route::post('/rating', [RatingController::class, 'store'])->name('rating.store');
+Route::get('cv-user/{template}/preview-ats', [\App\Http\Controllers\CvsUserTemplateController::class, 'previewAtsTemplate'])->name('cv-user.preview-ats');

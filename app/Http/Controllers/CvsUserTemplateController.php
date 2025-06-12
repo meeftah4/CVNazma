@@ -232,4 +232,41 @@ class CvsUserTemplateController extends Controller
             ->header('Content-Type', 'application/pdf')
             ->header('Content-Disposition', 'attachment; filename="CV-' . $template . '.pdf"');
     }
+
+    public function previewAtsTemplate($template, Request $request)
+    {
+        $allowed = ['basic', 'template1', 'template2', 'template3', 'template4', 'template5'];
+        if (!in_array($template, $allowed)) abort(404);
+
+        $cvsy_id = $request->query('cvsy_id');
+        if (!$cvsy_id) abort(404);
+
+        $cv = \App\Models\Cvs_Users::findOrFail($cvsy_id);
+
+        $profil = [[
+            'name' => $cv->name,
+            'email' => $cv->email,
+            'phone' => $cv->phone,
+            'address' => $cv->address,
+            'description' => $cv->description,
+            'photo' => $cv->cv_picture,
+            'linkedin' => $cv->linkedin,
+            'portfolio' => $cv->portfolio,
+        ]];
+        $pengalamankerja = \App\Models\work_experiences::where('cvsy_id', $cvsy_id)->get()->toArray();
+        $proyek = \App\Models\Project::where('cvsy_id', $cvsy_id)->get()->toArray();
+        $pendidikan = \App\Models\educations::where('cvsy_id', $cvsy_id)->get()->toArray();
+        $keahlian = \App\Models\skills::where('cvsy_id', $cvsy_id)->get()->toArray();
+        $bahasa = \App\Models\languages::where('cvsy_id', $cvsy_id)->get()->toArray();
+        $sertifikat = \App\Models\certificate::where('cvsy_id', $cvsy_id)->get()->toArray();
+        $hobi = \App\Models\hobbies::where('cvsy_id', $cvsy_id)->get()->toArray();
+
+        // Render template ke string
+        $content = view('templates.cv-user.' . $template, compact(
+            'profil', 'pengalamankerja', 'proyek', 'pendidikan', 'keahlian', 'bahasa', 'sertifikat', 'hobi'
+        ))->render();
+
+        // Bungkus dengan wrapper A4
+        return view('components.a4-wrapper', compact('content'));
+    }
 }
