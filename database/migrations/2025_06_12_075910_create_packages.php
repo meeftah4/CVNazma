@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transactionspkc', function (Blueprint $table) {
+        Schema::create('packages', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->integer('price');
+            $table->string('description')->nullable();
+            $table->integer('amount')->default(1);
+            $table->integer('original')->nullable();
             $table->timestamps();
         });
     }
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transactionspkc');
+        Schema::dropIfExists('packages');
     }
 };
