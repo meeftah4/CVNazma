@@ -34,7 +34,7 @@
     <div class="cv-container">
         <div class="text-center mb-12 max-w-3xl mx-auto">
             <h1 class="template-title">
-                Template CV
+                Template Cv
             </h1>
             <p class="template-desc">
                 Lihat berbagai desain CV profesional yang tersedia. Pilihannya akan membuat CV Anda tampil menonjol!

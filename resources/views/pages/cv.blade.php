@@ -3,11 +3,21 @@
 @section('title', 'CV Nazma')
 
 @section('content')
+<style>
+#main-content, #main-content * {
+    font-family: 'Kantumruy', sans-serif !important;
+}
+#step-title {
+    font-family: 'Kantumruy', sans-serif !important;
+}
+</style>
 <div style="background-color: #F4F8FF; min-height: 0;" class="pt-4 pb-4">
     <div class="container mx-auto px-4">
         <!-- Stepper & Judul -->
         <div class="flex flex-col items-center mb-12">
-            <div id="step-title" class="text-4xl font-bold mb-12 mt-8 text-center" style="color:#01287E;">
+            <div id="step-title"
+                class="mb-12 mt-8 text-center"
+                style="color:#01287E; font-size:2.50rem; font-weight:bold; font-family:'Kantumruy',sans-serif; letter-spacing:-0.5px; line-height:1.1;">
                 Detail Pribadi
             </div>
             <div class="relative flex items-center w-full max-w-2xl mx-auto">

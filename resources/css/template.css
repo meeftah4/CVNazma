@@ -1,7 +1,10 @@
+html, body, * {
+    font-family: 'Kantumruy', sans-serif !important;
+}
+
 /* Body background */
 body {
     background-color: #F4F8FF;
-    font-family: 'Kantumruy', sans-serif;
     min-height: 100vh;
 }
 
@@ -20,7 +23,7 @@ body {
 .template-title {
     color: #01287E;
     font-weight: bold;
-    font-size: 2.25rem;
+    font-size: 2.50rem;
     margin-bottom: 0.5rem;
 }
 

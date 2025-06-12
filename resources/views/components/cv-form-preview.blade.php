@@ -19,6 +19,12 @@
     </div>
 </div>
 
+<style>
+#cvForm, #cvForm *, #previewWrapper, #previewWrapper * {
+    font-family: 'Kantumruy', sans-serif !important;
+}
+</style>
+
 <script>
 function syncPreviewHeightWithForm(step) {
     const formDiv = document.querySelector('#cvForm');

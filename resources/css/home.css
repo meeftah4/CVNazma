@@ -274,11 +274,6 @@ body, html, * {
     box-sizing: border-box;
 }
 
-.faq-item.active .faq-answer {
-    /* padding diatur oleh JS juga agar animasi halus */
-    /* Jangan set height di sini! */
-}
-
 /* Hilangkan gambar pada tampilan mobile */
 @media (max-width: 768px) {
     .home-page .bagaimana-caranya {

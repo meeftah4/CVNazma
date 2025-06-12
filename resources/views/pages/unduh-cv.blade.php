@@ -18,8 +18,10 @@
 <div class="min-h-screen bg-[#f5f8ff] py-8 px-4 flex flex-col items-center">
     <!-- Header -->
     <div class="text-center mb-6 max-w-2xl">
-        <h1 class="text-2xl md:text-3xl font-bold text-[#1a237e] mb-2">
-            CV ATS anda sudah siap!
+        <h1
+            style="color:#01287E; font-size:2.25rem; font-weight:bold; letter-spacing:-0.5px; line-height:1.1; font-family:'Kantumruy',sans-serif;"
+            class="mb-2 text-center">
+            Cv Ats anda sudah siap!
         </h1>
         <p class="text-gray-500">Lakukan pembayaran untuk mendapatkan CV ATS anda</p>
     </div>
@@ -41,22 +43,13 @@
 
     <!-- Info Section -->
     <div class="w-full max-w-[210mm] space-y-4">
+
         <div class="bg-white rounded-lg shadow-md p-4 text-center">
-            <span class="font-semibold text-lg text-slate-900">
-                {{ $templateNames[$template] ?? $template }}
-            </span>
-        </div>
-        <div class="bg-white rounded-lg shadow-md p-4 text-center">
-            <span class="font-semibold text-[#2196f3] text-lg">
+            <span class="font-semibold text-[#01287E] text-lg">
                 Rp 20.000
             </span>
         </div>
     </div>
-
-    <p class="mt-4 text-xs text-gray-400 text-center max-w-[210mm]">
-        Bisa kontak <a href="#" class="underline text-[#2196f3]">Pelayanan Azura</a> 
-        untuk melengkapi instruksi/foto
-    </p>
 
     <!-- Download Button -->
     <button id="btnBerikutnya" class="mt-6 bg-[#FFBC5D] hover:bg-[#e6a84f] text-[#01287E] font-bold
@@ -117,6 +110,16 @@
                 @if(Auth::guest())
                     Swal.fire({
                         icon: 'info',
+                        iconHtml: `
+                            <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                                <!-- Lingkaran kuning besar -->
+                                <circle cx="32" cy="32" r="32" fill="#FFBC5D"/>
+                                <!-- Lingkaran biru kecil di dalam -->
+                                <circle cx="32" cy="32" r="16" fill="none" stroke="#01287E" stroke-width="3"/>
+                                <!-- Tanda seru biru -->
+                                <text x="32" y="44" text-anchor="middle" font-size="28" font-weight="bold" fill="#01287E" font-family="Arial, sans-serif">!</text>
+                            </svg>
+                        `,
                         title: 'Masuk Diperlukan',
                         text: 'Silakan masuk terlebih dahulu untuk melanjutkan proses unduh CV.',
                         confirmButtonColor: '#FFBC5D',
