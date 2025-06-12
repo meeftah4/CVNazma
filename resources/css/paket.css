@@ -1,0 +1,180 @@
+body {
+    background: #F4F8FF;
+    font-family: 'Kantumruy', sans-serif;
+
+}
+
+.paket-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 0 60px 0;
+    text-align: center;
+}
+
+.paket-title {
+    color: #01287E;
+    font-size: 2.25rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.paket-subtitle {
+    color: #64748b;
+    font-size: 1.125rem;
+    margin-bottom: 40px;
+}
+
+.paket-cards {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+}
+
+.paket-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 32px 32px 24px 32px;
+    width: 320px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.paket-harga {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #01287E;
+    margin-bottom: 2px;
+}
+
+.paket-harga .harga {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.paket-harga .per {
+    font-size: 1rem;
+    font-weight: normal;
+    color: #222;
+    margin-left: 2px;
+}
+
+.paket-original {
+    color: #ff0000;
+    font-size: 1rem;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.paket-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px 0;
+    width: 100%;
+}
+
+.paket-list li {
+    font-size: 1rem;
+    color: #01287E;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.paket-list .check {
+    color: #FF9500;
+    font-size: 1.2rem;
+    margin-top: 2px;
+}
+
+.paket-btn {
+    background: #FFBC5D;
+    color: #01287E;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 0;
+    width: 90%;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.paket-btn:hover {
+    background: #FFBC5D;
+}
+
+/* Modal Konfirmasi */
+.modal-konfirmasi {
+    position: fixed;
+    z-index: 9999;
+    inset: 0;
+    background: rgba(0,0,0,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.modal-content {
+    background: #fff;
+    border-radius: 20px;
+    border: 1px solid #FFBC5D; /* garis kotak abu muda */
+    padding: 48px 40px 40px 40px;
+    width: 480px;
+    max-width: 95vw;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.16);
+    text-align: center;
+    position: relative;
+    margin: 0;
+}
+.modal-title { color: #01287E; font-size: 1.8rem; font-weight: bold; margin-bottom: 12px; }
+.modal-close {
+    position: absolute;
+    right: 18px;
+    top: 5px;
+    font-size: 1.4rem;           
+    font-weight: 700;         
+    cursor: pointer;
+    color: #4f5a69;
+    transition: color 0.2s;
+}
+
+.modal-actions { display: flex; gap: 12px; justify-content: center; margin-top: 18px; }
+.modal-btn-batal {
+    background: #f1f5f9;
+    color: #01287E;
+    border: 2px solid #e2e8f0; 
+    border-radius: 6px;
+    padding: 10px 55px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.modal-btn-lanjut { background: #FFBC5D; color: #01287E; border: none; border-radius: 6px; padding: 10px 55px; cursor: pointer; }
+.modal-btn-batal,
+.modal-btn-lanjut {
+    font-weight: 600;
+}
+.modal-btn-lanjut:disabled { background: #ffe2b8; color: #aaa; cursor: not-allowed; }
+.modal-content p,
+.modal-content label {
+    color: #4f5a69; 
+}
+.modal-content label.checked {
+    color: #01287E !important;
+}
+.modal-btn-lanjut.active {
+    background: #FFBC5D !important;
+    color: #01287E !important;
+}
+
+@media (max-width: 900px) {
+    .paket-cards {
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+    }
+}
