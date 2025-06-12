@@ -117,10 +117,13 @@
                 @if(Auth::guest())
                     Swal.fire({
                         icon: 'info',
-                        title: 'Login Diperlukan',
-                        text: 'Silakan login terlebih dahulu untuk melanjutkan proses unduh CV.',
+                        title: 'Masuk Diperlukan',
+                        text: 'Silakan masuk terlebih dahulu untuk melanjutkan proses unduh CV.',
                         confirmButtonColor: '#FFBC5D',
-                        confirmButtonText: 'Login Sekarang'
+                        confirmButtonText: 'Masuk',
+                        customClass: {
+                            confirmButton: 'swal2-login-btn'
+                        }
                     }).then(() => {
                         window.location.href = "{{ route('login') }}?redirect={{ urlencode(request()->fullUrl()) }}";
                     });
@@ -316,6 +319,85 @@
             .a4-preview {
                 box-shadow: 0 0 10px rgba(0,0,0,0.1);
             }
+        }
+        /* SweetAlert2: warna utama dan aksen */
+        .swal2-popup {
+            border: 1px solid #FFBC5D !important;
+            border-radius: 18px !important;
+        }
+        .swal2-icon.swal2-info {
+            border-color: #01287E !important;   /* Lingkaran kuning */
+            background: #fff !important;
+        }
+        .swal2-icon.swal2-info .swal2-icon-content {
+            color: #01287E !important;          /* Huruf "i" biru tua */
+        }
+        .swal2-icon.swal2-warning,
+        .swal2-icon.swal2-success,
+        .swal2-icon.swal2-error,
+        .swal2-icon.swal2-question {
+            border-color: #FFBC5D !important;
+            color: #FFBC5D !important;
+            background: #fff !important;
+        }
+        .swal2-title {
+            color: #01287E !important;
+            font-weight: 800 !important;
+        }
+        .swal2-html-container, .swal2-content {
+            color: #6b7280 !important; 
+        }
+        .swal2-login-btn {
+            background-color: #FFBC5D !important;
+            color: #01287E !important;
+            font-weight: bold;
+            border-radius: 8px;
+            border: none;
+        }
+        .swal2-login-btn:focus, .swal2-login-btn:hover {
+            background-color: #e6a84f !important;
+            color: #01287E !important;
+        }
+
+        /* Modal Validasi: border dan shadow */
+        #modalValidasi > div {
+            border: 2.5px solid #FFBC5D !important;
+            box-shadow: 0 8px 32px 0 rgba(1,40,126,0.10) !important;
+        }
+        #modalValidasi h2 {
+            color: #01287E !important;
+            font-weight: 800 !important;
+        }
+        #modalValidasi .bg-[#FFBC5D] {
+            background: #FFBC5D !important;
+        }
+        #modalValidasi .text-[#01287E] {
+            color: #01287E !important;
+        }
+        #modalValidasi .text-[#2196f3] {
+            color: #2196f3 !important;
+        }
+        #modalValidasi button#btnLanjutkan {
+            background: #FFBC5D !important;
+            color: #01287E !important;
+            font-weight: bold;
+            border: none;
+        }
+        #modalValidasi button#btnLanjutkan:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        #modalValidasi button#btnKembali {
+            color: #01287E !important;
+            border: 1.5px solid #e0e7ef !important;
+            background: #f4f6fa !important;
+            font-weight: bold;
+        }
+        #modalValidasi label span {
+            color: #01287E !important;
+        }
+        #modalValidasi label input:checked + span {
+            color: #FFBC5D !important;
         }
     </style>
 @endsection
