@@ -34,6 +34,11 @@ Route::get('/template', function () {
     ]);
 });
 
+Route::get('/paket', function () {
+    return view('pages.paket', [
+    ]);
+});
+
 Route::get('/rating', function () {
     return view('dashboard.rating');
 })->name('rating');
