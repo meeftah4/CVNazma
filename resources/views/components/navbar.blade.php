@@ -16,6 +16,7 @@
                 <li><a href="/">Home</a></li>
                 <li><a href="/cvats">Cv Ats</a></li>
                 <li><a href="/template">Template Cv</a></li>
+                <li><a href="/paket">Paket</a></li>
                 @if (Auth::check())
                     {{-- Jika admin, tambahkan tombol ke dashboard --}}
                     @if (Auth::user()->role === 'admin')

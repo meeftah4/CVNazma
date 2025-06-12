@@ -2,7 +2,7 @@
 
 @section('title', 'CV Nazma')
 
-@vite(['resources/css/profile.css'])
+@vite(['resources/css/profile.css', 'resources/css/template.css'])
 
 @section('content')
 <!DOCTYPE html>
@@ -30,13 +30,13 @@
         }
     </script>
 </head>
-<body class="font-sans min-h-screen" style="background-color: #F4F8FF;">
-    <div class="container mx-auto px-6 py-10 max-w-7xl">
+<body>
+    <div class="cv-container">
         <div class="text-center mb-12 max-w-3xl mx-auto">
-            <h1 class="font-bold text-4xl mb-2" style="color: #01287E;">
-                Preview Template CV
+            <h1 class="template-title">
+                Template CV
             </h1>
-            <p class="text-gray-600 text-lg">
+            <p class="template-desc">
                 Lihat berbagai desain CV profesional yang tersedia. Pilihannya akan membuat CV Anda tampil menonjol!
             </p>
         </div>
@@ -52,16 +52,16 @@
             ];
         @endphp
 
-        <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+        <div class="template-grid">
             @foreach ($templateList as $tpl)
             <div 
-                class="template-card rounded-xl shadow-md border border-white bg-white flex flex-col h-full"
+                class="template-card"
                 title="Preview {{ $tpl['name'] }}">
 
                 <!-- Bagian Preview -->
-                <div class="relative bg-slate-50 rounded-t-xl overflow-hidden inline-block w-full">
-                    <div class="w-[254px] h-[360px] mx-auto">
-                        <div class="scale-[0.32] origin-top-left w-[794px] h-[1123px] pointer-events-none">
+                <div class="template-preview-bg">
+                    <div class="template-preview-frame-wrap">
+                        <div class="template-preview-frame-inner">
                             <iframe
                                 src="{{ url('view/' . $tpl['key']) }}?preview=1"
                                 class="w-full h-full border-0"
@@ -74,17 +74,17 @@
                 </div>
 
                 <!-- Bagian Info -->
-                <div class="p-5 border-t border-gray-100 bg-white mt-auto">
-                    <div class="font-semibold text-lg text-slate-900 mb-2">
+                <div class="template-info">
+                    <div class="template-info-title">
                         {{ $tpl['name'] }}
                     </div>
-                    <div class="flex justify-between items-center">
+                    <div>
                         @if($tpl['label'] === 'Pro')
-                            <span class="bg-blue-600 text-white px-3 py-1 rounded-full uppercase text-xs font-semibold tracking-wide">
+                            <span class="template-info-label-pro">
                                 Pro
                             </span>
                         @elseif($tpl['label'] === 'Gratis')
-                            <span class="bg-green-500 text-white px-3 py-1 rounded-full uppercase text-xs font-semibold tracking-wide">
+                            <span class="template-info-label-gratis">
                                 Gratis
                             </span>
                         @endif
@@ -93,22 +93,19 @@
             </div>
             @endforeach
         </div>
-        <div class="max-w-3xl mt-16 text-left">
-            <div class="text-base md:text-lg font-semibold mb-2 text-[#1e3a8a]">
+        <div class="cv-stats">
+            <div class="cv-stats-title">
             Lebih dari <span class="font-bold">112.872</span> pengguna sudah membuat CV mereka
             </div>
-            <div class="text-gray-500 mb-2">
+            <div class="cv-stats-desc">
             Dengan pembuat CV, Anda dapat dengan cepat dan mudah membuat CV yang profesional dan unik dalam 5 menit.
             </div>
-            <div class="flex items-center gap-4">
+            <div class="cv-stats-row">
                 <a href="/cvats"
-                   class="inline-block px-6 py-3"
-                   style="background-color: #FFBC5D; color: #01287E; font-weight: 600; border-radius: 30px; transition: background-color 0.3s;"
-                   onmouseover="this.style.backgroundColor='#ffa726'"
-                   onmouseout="this.style.backgroundColor='#FFBC5D'">
+                   class="cv-stats-btn">
                     Buat sekarang
                 </a>
-                <div class="text-xs text-gray-400 mt-2 md:mt-0">
+                <div class="cv-stats-note">
                     Nikmati akses mudah dan pelajari peluang dan template ATS!
                 </div>
             </div>
