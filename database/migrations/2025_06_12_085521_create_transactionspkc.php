@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('transactionspkc', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pkc_id')->constrained('packages')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('id_order')->unique();
             $table->integer('gross_amount');
             $table->string('payment_method');

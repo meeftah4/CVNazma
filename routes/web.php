@@ -18,6 +18,7 @@ use App\Http\Controllers\HobbiesController;
 use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\CvsUserTemplateController;
 use App\Models\transactions;
+use App\Http\Controllers\PublicPackageController;
 
 // Page Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -34,11 +35,7 @@ Route::get('/template', function () {
     ]);
 });
 
-Route::get('/paket', function () {
-    return view('pages.paket', [
-    ]);
-});
-
+Route::get('/paket', [PublicPackageController::class, 'index'])->name('paket');
 
 Route::get('/template-cv-html', [TemplatesController::class, 'showTemplates']);
 
@@ -93,9 +90,14 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/dashboard/faqs/{id}', [FaqsController::class, 'destroy'])->name('faq.destroy');
     Route::get('/dashboard/faqs/create', [FaqsController::class, 'create'])->name('faq.create');
     Route::post('/dashboard/faqs', [FaqsController::class, 'store'])->name('faq.store');
-    Route::get('/dashboard/package', function () {
-        return view('dashboard.package');
-    })->name('dashboard.package');
+    Route::resource('dashboard/package', \App\Http\Controllers\PackagesController::class)->except(['show'])->names([
+        'index' => 'dashboard.package.index',
+        'create' => 'dashboard.package.create',
+        'store' => 'dashboard.package.store',
+        'edit' => 'dashboard.package.edit',
+        'update' => 'dashboard.package.update',
+        'destroy' => 'dashboard.package.destroy'
+    ]);
     Route::get('/dashboard/price', function () {
         return view('dashboard.price');
     })->name('dashboard.price');

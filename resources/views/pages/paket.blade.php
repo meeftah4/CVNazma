@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'CV Nazma')
+@section('title', 'CV Nazna')
 
 @vite(['resources/css/paket.css'])
 
@@ -12,32 +12,30 @@
         Upgrade kariermu dengan harga paket spesial!
     </p>    
     <div class="paket-cards">
+        @forelse($packages as $package)
         <div class="paket-card">
             <div class="paket-harga">
-                <span class="harga">Rp. 20.000</span><span class="per">/5 cv</span>
+                <span class="harga">Rp. {{ number_format($package->price, 0, ',', '.') }}</span>
+                <span class="per">/{{ $package->amount }} cv</span>
             </div>
-            <div class="paket-original">Harga original: 30k</div>
+            @if($package->original)
+            <div class="paket-original">Harga original: {{ number_format($package->original, 0, ',', '.') }}</div>
+            @endif
             <ul class="paket-list">
                 <li><span class="check">&#10003;</span> Penawaran terbatas</li>
                 <li><span class="check">&#10003;</span> Akses penuh semua template</li>
-                <li><span class="check">&#10003;</span> Akses penuh membuat cv sebanyak 5 kali</li>
-                <li><span class="check">&#10003;</span> Gratis 1 template CV setelah 5 kali buat</li>
+                <li><span class="check">&#10003;</span> Akses penuh membuat cv sebanyak {{ $package->amount }} kali</li>
+                @if($package->bonus)
+                <li><span class="check">&#10003;</span> Bonus {{ $package->bonus }} template CV</li>
+                @endif
             </ul>
-            <button class="paket-btn" data-harga="20000" data-cv="5">Ayo mulai</button>
+            <button class="paket-btn" data-harga="{{ $package->price }}" data-cv="{{ $package->amount }}">Ayo mulai</button>
         </div>
+        @empty
         <div class="paket-card">
-            <div class="paket-harga">
-                <span class="harga">Rp. 40.000</span><span class="per">/10 cv</span>
-            </div>
-            <div class="paket-original">Harga original: 50k</div>
-            <ul class="paket-list">
-                <li><span class="check">&#10003;</span> Penawaran terbatas</li>
-                <li><span class="check">&#10003;</span> Akses penuh semua template</li>
-                <li><span class="check">&#10003;</span> Akses penuh membuat cv sebanyak 10 kali</li>
-                <li><span class="check">&#10003;</span> Gratis 2 template CV setelah 10 kali buat</li>
-            </ul>
-            <button class="paket-btn" data-harga="40000" data-cv="10">Ayo mulai</button>
+            <p>Tidak ada paket tersedia.</p>
         </div>
+        @endforelse
     </div>
 </div>
 

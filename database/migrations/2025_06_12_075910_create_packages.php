@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('price');
-            $table->string('description')->nullable();
             $table->integer('amount')->default(1);
             $table->integer('original')->nullable();
+            $table->integer('bonus')->nullable();
             $table->timestamps();
         });
     }

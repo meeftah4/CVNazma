@@ -135,58 +135,56 @@
 
 <div class="package-table-container">
     <div class="flex justify-end mb-3">
-        <a href="#" 
+        <a href="{{ route('dashboard.package.create') }}" 
            class="package-tambah-btn text-white px-4 py-2 rounded-md shadow hover:scale-105 transition">
            Tambah
         </a>
     </div>
+    @if(session('success'))
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+            <strong class="font-bold">Berhasil!</strong>
+            <span class="block sm:inline">{{ session('success') }}</span>
+        </div>
+    @endif
     <table class="package-table">
         <thead>
             <tr>
                 <th>No</th>
                 <th>Nama Paket</th>
-                <th>Deskripsi</th>
+                <th>Harga (Diskon)</th>
+                <th>Jumlah</th>
+                <th>Harga Asli</th>
+                <th>Bonus</th> <!-- Tambahkan ini -->
                 <th>Tanggal Dibuat</th>
                 <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
+            @forelse ($packages as $index => $package)
             <tr>
-                <td>1</td>
-                <td class="name">Paket Basic</td>
-                <td class="desc">Cocok untuk fresh graduate, 1 template CV, file PDF.</td>
+                <td>{{ $index + 1 }}</td>
+                <td class="name">{{ $package->name }}</td>
+                <td>Rp {{ number_format($package->price, 0, ',', '.') }}</td>
+                <td>{{ $package->amount }}</td>
+                <td>Rp {{ $package->original ? number_format($package->original, 0, ',', '.') : '-' }}</td>
+                <td>{{ $package->bonus ?? '-' }}</td> <!-- Tambahkan ini -->
                 <td>
-                    <span class="package-badge">01 Jan 2024</span>
+                    <span class="package-badge">{{ $package->created_at->format('d M Y') }}</span>
                 </td>
                 <td>
-                    <a href="#" class="package-action-btn package-edit-btn">Edit</a>
-                    <button type="button" class="package-action-btn package-delete-btn" onclick="return confirm('Apakah Anda yakin?')">Hapus</button>
+                    <a href="{{ route('dashboard.package.edit', $package->id) }}" class="package-action-btn package-edit-btn">Edit</a>
+                    <form action="{{ route('dashboard.package.destroy', $package->id) }}" method="POST" class="inline-block" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="package-action-btn package-delete-btn" onclick="return confirm('Apakah Anda yakin ingin menghapus paket ini?')">Hapus</button>
+                    </form>
                 </td>
             </tr>
+            @empty
             <tr>
-                <td>2</td>
-                <td class="name">Paket Pro</td>
-                <td class="desc">Untuk profesional, 3 template CV, file PDF & Word.</td>
-                <td>
-                    <span class="package-badge">15 Feb 2024</span>
-                </td>
-                <td>
-                    <a href="#" class="package-action-btn package-edit-btn">Edit</a>
-                    <button type="button" class="package-action-btn package-delete-btn" onclick="return confirm('Apakah Anda yakin?')">Hapus</button>
-                </td>
+                <td colspan="9" class="text-center py-4">Tidak ada data paket.</td>
             </tr>
-            <tr>
-                <td>3</td>
-                <td class="name">Paket Premium</td>
-                <td class="desc">All access, konsultasi karir, 5 template, file PDF & Word.</td>
-                <td>
-                    <span class="package-badge">10 Mar 2024</span>
-                </td>
-                <td>
-                    <a href="#" class="package-action-btn package-edit-btn">Edit</a>
-                    <button type="button" class="package-action-btn package-delete-btn" onclick="return confirm('Apakah Anda yakin?')">Hapus</button>
-                </td>
-            </tr>
+            @endforelse
         </tbody>
     </table>
 </div>

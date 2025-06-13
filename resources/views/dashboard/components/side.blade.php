@@ -191,7 +191,7 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('dashboard.package') }}" class="sidebar-link{{ request()->is('dashboard/package') ? ' active' : '' }}">
+            <a href="{{ route('dashboard.package.index') }}" class="sidebar-link{{ request()->is('dashboard/package') ? ' active' : '' }}">
                 <i class="fas fa-box"></i>
                 <span>Paket</span>
             </a>
