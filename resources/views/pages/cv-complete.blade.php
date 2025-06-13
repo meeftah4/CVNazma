@@ -53,12 +53,11 @@
     <div class="rating-modal-overlay" id="ratingModalOverlay">
         <div class="rating-modal">
             <img src="{{ asset('images/rating.png') }}" alt="Review" class="rating-modal-img">
-            <div class="rating-modal-title">Ulasan</div>
+            <div class="rating-modal-title">Bagaimana Pengalaman Anda?</div>
+            <div class="rating-modal-subtitle">Beri rating & ulasan untuk membantu kami meningkatkan layanan!</div>
             <form id="ratingForm">
-                <div class="rating-modal-label">Nilai</div>
-                <div class="rating-stars" id="ratingStars">
-                    <!-- Bintang akan diisi JS -->
-                </div>
+                <div class="rating-modal-label">Nilai Anda untuk CV ini</div>
+                <div class="rating-stars" id="ratingStars"></div>
                 <div class="rating-modal-label">Deskripsi</div>
                 <textarea class="rating-modal-textarea" name="desc" rows="4" placeholder="Tulis ulasan"></textarea>
                 <button type="submit" class="rating-modal-submit">Simpan</button>

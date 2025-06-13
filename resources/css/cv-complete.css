@@ -133,32 +133,27 @@
 }
 
 .rating-modal-title {
-    font-size: 20px;
+    font-size: 1.5rem;
     font-weight: 700;
-    background: #FFBC5D;
     color: #01287E;
-    border-radius: 0.75rem;
-    margin-bottom: 1.5rem;
-    padding: 0.5rem 0;
-    box-shadow: 0 2px 8px #f8b65833;
+    margin-bottom: 0.15rem;   /* semula 0.25rem, diperkecil */
 }
-.rating-modal-label {
-    text-align: left;
-    font-size: 1.1rem;
-    color: #01287E;
-    font-weight: 500;
-    margin-bottom: 0.25rem;
-    margin-top: 1rem;
+.rating-modal-subtitle {
+    font-size: 1rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;    /* semula 1rem, diperkecil */
 }
-
 .rating-stars {
+    font-size: 2.8rem;        /* tetap besar */
+    color: #FFBC5D;
+    margin-bottom: 0.2rem;    /* diperkecil agar bintang dan elemen bawahnya lebih rapat */
+    margin-top: 0;            /* pastikan tidak ada margin atas */
+    letter-spacing: 0.1em;
+    cursor: pointer;
     display: flex;
-    gap: 0.25rem;
-    font-size: 2rem;
-    justify-content: flex-start;
-    margin-bottom: 1rem;
+    justify-content: center;
+    gap: 0.12em;              /* bisa diperkecil jika antar bintang ingin lebih rapat */
 }
-
 .rating-star {
     color: #FFBC5D;
     font-size: 2rem;
@@ -167,38 +162,49 @@
 }
 .rating-star.selected {
     color: #FFBC5D;
+    text-shadow: 0 2px 8px #ffe2b8;
+    transform: scale(1.15);
+    transition: transform 0.2s;
+}
+
+.rating-modal-label {
+    font-weight: 600;
+    color: #01287E;
+    margin-bottom: 0.05rem;   /* diperkecil agar label dan bintang lebih rapat */
+    font-size: 1.3rem;
+
+    
 }
 
 .rating-modal-textarea {
     width: 100%;
-    border-radius: 0.5rem;
-    border: none;
-    padding: 0.75rem;
+    border-radius: 8px;
+    border: 1.5px solid #FFBC5D;
+    padding: 10px;
     font-size: 1rem;
-    margin-bottom: 1.5rem;
-    margin-top: 0.25rem;
-    resize: none;
-    box-shadow: 0 2px 8px #d1d5db55;
-    background: #fff;
+    margin-bottom: 0.7rem;    /* semula 1.2rem, diperkecil */
+    resize: vertical;
+    transition: border 0.2s;
 }
-
-.rating-modal-textarea::placeholder {
-    color: #b0b7c3;
-    opacity: 1;
+.rating-modal-textarea:focus {
+    border-color: #01287E;
+    outline: none;
 }
 
 .rating-modal-submit {
     background: #FFBC5D;
     color: #01287E;
-    font-weight: 700;
-    font-size: 1.25rem;
+    font-weight: bold;
     border: none;
-    border-radius: 0.75rem;
-    padding: 0.5rem 2.5rem;
+    border-radius: 8px;
+    padding: 10px 32px;
+    font-size: 1.1rem;
     cursor: pointer;
-    box-shadow: 0 2px 8px #f8b65833;
-    transition: background 0.2s;
+    box-shadow: 0 2px 8px #ffe2b8;
+    transition: background 0.2s, transform 0.2s;
 }
 .rating-modal-submit:hover {
-    background: #f8b658;
+    background: #f5b459;
+    color: #01287E;
+    transform: translateY(-2px) scale(1.04);
 }

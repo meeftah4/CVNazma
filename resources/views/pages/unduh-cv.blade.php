@@ -66,14 +66,14 @@
             </button>
             <div class="flex flex-col items-center mb-4">
                 <div class="bg-[#FFBC5D] rounded-full p-3 mb-2 shadow">
-                    <svg class="w-8 h-8 text-[#01287E]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <svg class="w-8 h-8 text-[#01287E] ikon-animasi" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/>
                     </svg>
                 </div>
-                <h2 class="text-2xl font-extrabold mb-2 text-[#1a237e]">Validasi Data</h2>
+                <h2 class="text-2xl font-extrabold mb-2 text-[#01287E]">Validasi Data</h2>
             </div>
             <p class="mb-6 text-gray-700 leading-relaxed">
-                Data yang Anda masukkan <span class="font-semibold text-[#2196f3]">sudah sesuai</span> dan tidak ada kesalahan.<br>
+                Data yang Anda masukkan <span class="font-semibold text-[#EA4335]">sudah sesuai</span> dan tidak ada kesalahan.<br>
                 Silakan lanjutkan untuk proses pembayaran.
             </p>
             <!-- Checkbox Persetujuan -->
@@ -388,8 +388,8 @@
             border-radius: 18px !important;
         }
         .swal2-icon.swal2-info {
-            border-color: #01287E !important;   /* Lingkaran kuning */
-            background: #fff !important;
+            border: none !important;
+            background: transparent !important;
         }
         .swal2-icon.swal2-info .swal2-icon-content {
             color: #01287E !important;          /* Huruf "i" biru tua */
@@ -473,6 +473,19 @@
         }
         #modalValidasi label input:checked + span {
             color: #FFBC5D !important;
+        }
+
+        /* Animasi bounce untuk ikon validasi */
+        .ikon-animasi {
+            animation: bounce-exclamasi 1.2s infinite;
+            transform-origin: 50% 60%;
+        }
+        @keyframes bounce-exclamasi {
+            0%, 100% { transform: translateY(0);}
+            20% { transform: translateY(-8px);}
+            40% { transform: translateY(0);}
+            60% { transform: translateY(-4px);}
+            80% { transform: translateY(0);}
         }
     </style>
 @endsection

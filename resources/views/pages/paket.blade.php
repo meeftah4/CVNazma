@@ -46,17 +46,18 @@
     <div class="modal-content">
         <!-- Icon menarik di atas judul -->
         <div style="display:flex; justify-content:center; margin-bottom:12px;">
-            <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-                <circle cx="28" cy="28" r="24" fill="#FFBC5D"/>
-                <circle cx="28" cy="28" r="16" fill="none"/>
-                <circle cx="28" cy="28" r="13" stroke="#01287E" stroke-width="2"/>
-                <rect x="27" y="19" width="2" height="12" rx="1" fill="#01287E"/>
-                <circle cx="28" cy="35" r="1.5" fill="#01287E"/>
-            </svg>
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" class="ikon-animasi">
+            <circle cx="28" cy="28" r="24" fill="#FFBC5D"/>
+            <circle cx="28" cy="28" r="16" fill="none"/>
+            <circle cx="28" cy="28" r="13" stroke="#01287E" stroke-width="2"/>
+            <rect x="27" y="19" width="2" height="12" rx="1" fill="#01287E"/>
+            <circle cx="28" cy="35" r="1.5" fill="#01287E"/>
+        </svg>
         </div>
         <span class="modal-close" onclick="tutupModal()">&times;</span>
         <h2 class="modal-title">Konfirmasi Pembelian Paket</h2>
-        <p>Apakah Anda yakin ingin membeli paket ini dan melanjutkan ke pembayaran?</p>
+        <p>Apakah <span class="font-semibold text-[#EA4335]">Anda yakin </span>ingin membeli paket ini dan melanjutkan ke pembayaran?</p>
+        
         <label style="display:block; margin:16px 0;">
             <input type="checkbox" id="setuju-checkbox">
             Saya setuju dan ingin melanjutkan pembayaran.
